@@ -13,10 +13,8 @@ return new class extends Migration
     {
         Schema::create('guru', function (Blueprint $table) {
             $table->string('nip', 20)->primary();
-
-            $table->integer('id_user');
-            $table->index('id_user');
-            $table->foreign('id_user')->references('id_user')->on('users')->onDelete('cascade');
+        
+            $table->foreignId('id_user')->constrained('users', 'id_user')->onDelete('cascade');
 
             $table->string('nama_guru', 100);
             $table->string('tempat_lahir', 50);

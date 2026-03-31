@@ -181,7 +181,7 @@
                 </div>
 
                 <!-- Login Form -->
-                <form action="{{ route('login') }}" method="POST" id="loginForm" class="space-y-5 lg:space-y-6">
+                <form action="{{ route('login.process') }}" method="POST" id="loginForm" class="space-y-5 lg:space-y-6">
                     @csrf
                     
                     <!-- Username Input -->

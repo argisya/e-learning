@@ -3,6 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\role;
+use App\Models\siswa;
+use App\Models\guru;
+
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -17,10 +21,15 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'admin@gmail.com',
+        role::create([
+            'nama_role' => 'Admin'
+        ]);
+
+        User::create([
+            'id_role' => 1,
+            'username' => 'admin',
             'password' => bcrypt('password123'),
+            'email' => 'admin@gmail.com'
         ]);
     }
 }

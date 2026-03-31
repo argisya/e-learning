@@ -18,27 +18,23 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+    protected $primaryKey = 'id_user';
+    public $incrementing = true;
+    protected $keyType = 'int';
+
     protected $fillable = [
-        'name',
+        'id_user',
+        'id_role',
+        'username',
         'email',
         'password',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [

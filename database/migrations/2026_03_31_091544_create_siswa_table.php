@@ -14,15 +14,11 @@ return new class extends Migration
         Schema::create('siswa', function (Blueprint $table) {
             $table->string('nis', 20)->primary();
 
-            $table->integer('id_user');
-            $table->index('id_user');
-            $table->foreign('id_user')->references('id_user')->on('users')->onDelete('cascade');
+            $table->foreignId('id_user')->constrained('users', 'id_user')->onDelete('cascade');
             
-            $table->integer('id_kelas');
-            $table->index('id_kelas');
-            $table->foreign('id_kelas')->references('id_kelas')->on('kelas')->onDelete('cascade');
+            $table->foreignId('id_kelas')->constrained('kelas', 'id_kelas')->onDelete('cascade');
 
-            $table->integer('nisn', 50)->unique();
+            $table->integer('nisn')->unique();
             $table->string('nama_siswa', 100);
             $table->string('tempat_lahir', 50);
             $table->date('tanggal_lahir');
