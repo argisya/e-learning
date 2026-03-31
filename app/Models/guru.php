@@ -16,7 +16,6 @@ class Guru extends Model
     protected $keyType = 'string';
 
     protected $fillable = [
-        'nip',
         'id_user',
         'nama_guru',
         'tempat_lahir',

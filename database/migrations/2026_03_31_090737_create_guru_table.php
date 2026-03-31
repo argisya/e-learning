@@ -13,9 +13,7 @@ return new class extends Migration
     {
         Schema::create('guru', function (Blueprint $table) {
             $table->string('nip', 20)->primary();
-        
             $table->foreignId('id_user')->constrained('users', 'id_user')->onDelete('cascade');
-
             $table->string('nama_guru', 100);
             $table->string('tempat_lahir', 50);
             $table->date('tanggal_lahir');
@@ -28,7 +26,6 @@ return new class extends Migration
             $table->string('masa_kerja', 20);
             $table->string('jabatan', 50);
             $table->string('no_sk', 50);
-
             $table->timestamps();
         });
     }

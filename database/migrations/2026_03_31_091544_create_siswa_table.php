@@ -13,11 +13,8 @@ return new class extends Migration
     {
         Schema::create('siswa', function (Blueprint $table) {
             $table->string('nis', 20)->primary();
-
             $table->foreignId('id_user')->constrained('users', 'id_user')->onDelete('cascade');
-            
             $table->foreignId('id_kelas')->constrained('kelas', 'id_kelas')->onDelete('cascade');
-
             $table->integer('nisn')->unique();
             $table->string('nama_siswa', 100);
             $table->string('tempat_lahir', 50);
@@ -27,7 +24,6 @@ return new class extends Migration
             $table->string('status_keluarga', 50);
             $table->string('no_hp', 15);
             $table->text('alamat');
-
             $table->timestamps();
         });
     }
