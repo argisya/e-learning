@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Roles;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -45,7 +46,8 @@ class LoginController extends Controller
                             'id_user' => $admin->id_user,
                             'id_role' => $admin->id_role,
                             'username' => $admin->username,
-                            'gmail' => $admin->gmail
+                            'email' => $admin->email,
+                            'nama_role' => $admin->roles->nama_role
                         ]);
                         return redirect()->route('admin.dashboard.dashboard');
 
@@ -69,7 +71,8 @@ class LoginController extends Controller
                                     'id_guru' => $guru->id_guru,
                                     'id_role' => $guru->id_role,
                                     'username' => $guru->username,
-                                    'email' => $guru->email
+                                    'email' => $guru->email,
+                                    'nama_role' => $guru->roles->nama_role
                                 ]);
                                 return redirect()->route('admin.dashboard.dashboard');
 
@@ -104,7 +107,8 @@ class LoginController extends Controller
                                     'id_siswa' => $siswa->id_siswa,
                                     'id_role' => $siswa->id_role,
                                     'username' => $siswa->username,
-                                    'email' => $siswa->email
+                                    'email' => $siswa->email,
+                                    'nama_role' => $siswa->roles->nama_role
                                 ]);
                                 return redirect()->route('admin.dashboard.dashboard');
 
