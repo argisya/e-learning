@@ -19,8 +19,8 @@
         <ul class="space-y-1 px-3">
             <!-- Dashboard -->
             <li>
-                <a href="" 
-                   class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl transition-all-300 {{ request()->routeIs('dashboard') ? 'active' : 'text-gray-600 hover:bg-primary-50' }}">
+                <a href="{{ route('admin.dashboard.index') }}" 
+                   class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl transition-all-300 {{ request()->routeIs('admin.dashboard.index') ? 'active' : 'text-gray-600 hover:bg-primary-50' }}">
                     <i class="fas fa-home w-5 text-center"></i>
                     <span class="font-medium">Dashboard</span>
                 </a>
@@ -41,8 +41,8 @@
                        class="block px-4 py-2 rounded-lg text-sm {{ request()->routeIs('admin.dashboard.index') ? 'bg-primary-100 text-primary-700' : 'text-gray-500 hover:bg-gray-50' }}">
                         Dashboard Guru
                     </a>
-                    <a href=""{{ route('admin.guru.data.index') }}"" 
-                       class="block px-4 py-2 rounded-lg text-sm {{ request()->routeIs('admin.guru.data') ? 'bg-primary-100 text-primary-700' : 'text-gray-500 hover:bg-gray-50' }}">
+                    <a href="{{ route('admin.guru.data.index') }}" 
+                       class="block px-4 py-2 rounded-lg text-sm {{ request()->routeIs('admin.guru.data.index') ? 'bg-primary-100 text-primary-700' : 'text-gray-500 hover:bg-gray-50' }}">
                         Data Guru
                     </a>
                     <a href="" 
