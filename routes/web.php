@@ -9,7 +9,10 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-// Login Routes
+// Admin ROutes
+// Login
 Route::get('/', [LoginController::class, 'index'])->name('login');
 Route::get('admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard.dashboard');
 Route::post('/loginProcess', [LoginController::class, 'loginProcess'])->name('login.process');
+
+// Guru
