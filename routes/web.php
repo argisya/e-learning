@@ -14,6 +14,6 @@ Route::get('/login', function () {
 
 Route::post('/loginProcess', [LoginController::class, 'loginProcess'])->name('login.process');
 
-Route::get('/ceklogin', function () {
-        return view('welcome');
-})->name('welcome');
+Route::get('admin/dashboard', function () {
+        return view('admin.dashboard.dashboard');
+})->name('admin.dashboard.dashboard');

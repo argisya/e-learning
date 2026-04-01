@@ -47,7 +47,7 @@ class LoginController extends Controller
                             'username' => $admin->username,
                             'gmail' => $admin->gmail
                         ]);
-                        return redirect()->route('welcome');
+                        return redirect()->route('admin.dashboard.dashboard');
 
                     }else{
 
@@ -71,7 +71,7 @@ class LoginController extends Controller
                                     'username' => $guru->username,
                                     'email' => $guru->email
                                 ]);
-                                return redirect()->route('welcome');
+                                return redirect()->route('admin.dashboard.dashboard');
 
                             }else{
 
@@ -106,7 +106,7 @@ class LoginController extends Controller
                                     'username' => $siswa->username,
                                     'email' => $siswa->email
                                 ]);
-                                return redirect()->route('welcome');
+                                return redirect()->route('admin.dashboard.dashboard');
 
                             }else{
 
