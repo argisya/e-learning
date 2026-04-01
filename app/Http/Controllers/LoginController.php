@@ -49,7 +49,7 @@ class LoginController extends Controller
                             'email' => $admin->email,
                             'nama_role' => $admin->roles->nama_role
                         ]);
-                        return redirect()->route('admin.dashboard.dashboard');
+                        return redirect()->route('admin.dashboard.index');
 
                     }else{
 
@@ -74,7 +74,7 @@ class LoginController extends Controller
                                     'email' => $guru->email,
                                     'nama_role' => $guru->roles->nama_role
                                 ]);
-                                return redirect()->route('admin.dashboard.dashboard');
+                                return redirect()->route('guru.dashboard.index');
 
                             }else{
 
@@ -110,7 +110,7 @@ class LoginController extends Controller
                                     'email' => $siswa->email,
                                     'nama_role' => $siswa->roles->nama_role
                                 ]);
-                                return redirect()->route('admin.dashboard.dashboard');
+                                return redirect()->route('siswa.dashboard.index');
 
                             }else{
 

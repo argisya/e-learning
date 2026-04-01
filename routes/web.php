@@ -33,7 +33,7 @@ Route::post('/loginProcess', [LoginController::class, 'loginProcess'])->name('lo
 
 // Admin Routes
 // Admin Dashboard Routes
-Route::get('admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard.dashboard');
+Route::get('admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard.index');
 Route::get('admin/kelas', [KelasController::class, 'index'])->name('admin.kelas.index');
 Route::get('admin/pengumuman', [PengumumanController::class, 'index'])->name('admin.pengumuman.index');
 Route::get('admin/rapor', [RaporController::class, 'index'])->name('admin.rapor.index');
