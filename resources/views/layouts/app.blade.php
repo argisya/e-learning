@@ -133,12 +133,12 @@
 <body class="font-sans antialiased bg-gray-50">
     <div class="min-h-screen flex">
         <!-- Sidebar -->
-        @include('layouts.partials.sidebar')
+        @include('layouts.partials.admin.sidebar')
         
         <!-- Main Content -->
         <div class="flex-1 flex flex-col content-transition" id="mainContent">
             <!-- Navbar -->
-            @include('layouts.partials.navbar')
+            @include('layouts.partials.admin.navbar')
             
             <!-- Page Content -->
             <main class="flex-1 p-6 lg:p-8 overflow-y-auto custom-scrollbar">
