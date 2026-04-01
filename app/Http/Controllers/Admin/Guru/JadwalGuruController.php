@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Admin\Guru;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class DataController extends Controller
+class JadwalGuruController extends Controller
 {
     public function index()
     {
-        return view('admin.guru.data.index');
+        return view('admin.guru.jadwal.index');
     }
 }

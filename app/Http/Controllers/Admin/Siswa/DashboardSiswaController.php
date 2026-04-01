@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Admin\Siswa;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class DataController extends Controller
+class DashboardSiswaController extends Controller
 {
     public function index()
     {
-        return view('admin.siswa.data.index');
+        return view('admin.siswa.dashboard.index');
     }
 }

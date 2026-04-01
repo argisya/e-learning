@@ -3,7 +3,24 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\AdminDashboardController;
+
+// Admin Controllers
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\KelasController;
+use App\Http\Controllers\Admin\PengumumanController;
+use App\Http\Controllers\Admin\RaporController;
+
+// Admin Guru Controller
+use App\Http\Controllers\Admin\Guru\AbsensiGuruController;
+use App\Http\Controllers\Admin\Guru\DashboardGuruController;
+use App\Http\Controllers\Admin\Guru\DataGuruController;
+use App\Http\Controllers\Admin\Guru\JadwalGuruController;
+
+// Admin Siswa Controller
+use App\Http\Controllers\Admin\Siswa\AbsensiSiswaController;
+use App\Http\Controllers\Admin\Siswa\DashboardSiswaController;
+use App\Http\Controllers\Admin\Siswa\DataSiswaController;
+use App\Http\Controllers\Admin\Siswa\JadwalSiswaController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -14,6 +31,21 @@ Route::get('/', [LoginController::class, 'index'])->name('login');
 Route::post('/loginProcess', [LoginController::class, 'loginProcess'])->name('login.process');
 // Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
-// Login Admin Routes
+// Admin Routes
+// Admin Dashboard Routes
 Route::get('admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard.dashboard');
-Route::get('admin/guru', [AdminGuruController::class, 'index'])->name('admin.guru.data');
+Route::get('admin/kelas', [KelasController::class, 'index'])->name('admin.kelas.index');
+Route::get('admin/pengumuman', [PengumumanController::class, 'index'])->name('admin.pengumuman.index');
+Route::get('admin/rapor', [RaporController::class, 'index'])->name('admin.rapor.index');
+
+// Admin Guru Routes
+Route::get('admin/guru/dashboard', [DashboardGuruController::class, 'index'])->name('admin.guru.dashboard.index');
+Route::get('admin/guru/data', [DataGuruController::class, 'index'])->name('admin.guru.data.index');
+Route::get('admin/guru/jadwal', [JadwalGuruController::class, 'index'])->name('admin.guru.jadwal.index');
+Route::get('admin/guru/absensi', [AbsensiGuruController::class, 'index'])->name('admin.guru.absensi.index');
+
+// Admin Siswa Routes
+Route::get('admin/siswa/dashboard', [DashboardSiswaController::class, 'index'])->name('admin.siswa.dashboard.index');
+Route::get('admin/siswa/data', [DataSiswaController::class, 'index'])->name('admin.siswa.data.index');
+Route::get('admin/siswa/jadwal', [JadwalSiswaController::class, 'index'])->name('admin.siswa.jadwal.index');
+Route::get('admin/siswa/absensi', [AbsensiSiswaController::class, 'index'])->name('admin.siswa.absensi.index');

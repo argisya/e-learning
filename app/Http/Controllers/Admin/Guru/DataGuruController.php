@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Admin\Guru;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class DashboardController extends Controller
+class DataGuruController extends Controller
 {
     public function index()
     {
-        return view('admin.guru.dashboard.index');
+        return view('admin.guru.data.index');
     }
 }
