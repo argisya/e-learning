@@ -7,7 +7,7 @@
     <!-- Breadcrumb -->
     <nav class="flex items-center space-x-2 text-sm text-gray-500" aria-label="Breadcrumb">
         <ol role="list" class="flex items-center space-x-2">
-            <li><a href="{{ route('dashboard') }}" class="hover:text-primary-600"><i class="fas fa-home"></i></a></li>
+            <li><a href="" class="hover:text-primary-600"><i class="fas fa-home"></i></a></li>
             <li><span class="mx-2">/</span></li>
             <li><a href="#" class="hover:text-primary-600">Guru</a></li>
             <li><span class="mx-2">/</span></li>
@@ -28,7 +28,7 @@
             <button type="submit" form="exportForm" class="btn-secondary btn-action px-4 py-2">
                 <i class="fas fa-download mr-2"></i>Export
             </button>
-            <a href="{{ route('data-guru.create') }}" class="btn-primary btn-action px-4 py-2">
+            <a href="" class="btn-primary btn-action px-4 py-2">
                 <i class="fas fa-plus mr-2"></i>Tambah Guru
             </a>
         </div>
@@ -484,7 +484,7 @@
                 </div>
                 <h3 class="text-xl font-bold text-gray-800 mb-2">Konfirmasi Hapus Data</h3>
                 <p class="text-gray-600 mb-6">Apakah Anda yakin ingin menghapus data guru ini? Data tidak dapat dikembalikan setelah dihapus.</p>
-                <form action="{{ route('data-guru.destroy', ['id' => '']) }}" method="POST">
+                <form action="" method="POST">
                     @csrf
                     @method('DELETE')
                     <div class="flex justify-center gap-3">
