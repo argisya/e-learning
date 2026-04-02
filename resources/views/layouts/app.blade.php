@@ -133,7 +133,15 @@
 <body class="font-sans antialiased bg-gray-50">
     <div class="min-h-screen flex">
         <!-- Sidebar -->
-        @include('layouts.partials.admin.sidebar')
+         @auth
+            @if(auth()->user()->role == 'admin')
+                @include('layouts.partials.admin.sidebar')
+            @elseif(auth()->user()->role == 'guru')
+                @include('layouts.partials.guru.sidebar')
+            @elseif(auth()->user()->role == 'siswa')
+                @include('layouts.partials.siswa.sidebar')
+            @endif
+        @endauth
         
         <!-- Main Content -->
         <div class="flex-1 flex flex-col content-transition" id="mainContent">

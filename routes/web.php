@@ -22,8 +22,16 @@ use App\Http\Controllers\Admin\Siswa\DashboardSiswaController;
 use App\Http\Controllers\Admin\Siswa\DataSiswaController;
 use App\Http\Controllers\Admin\Siswa\JadwalSiswaController;
 
-Route::get('/', function () {
+Route::get('/auth', function () {
     return view('auth.login');
+});
+
+//testing
+Route::get('/admin/guru/data/create', function () {
+    return view('admin.guru.data.create');
+});
+Route::get('/admin/guru/data/edit', function () {
+    return view('admin.guru.data.edit');
 });
 
 // Login Routes
