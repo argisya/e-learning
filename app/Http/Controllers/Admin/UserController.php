@@ -39,6 +39,7 @@ class UserController extends Controller
             'username' => $request->username,
             'password' => bcrypt($request->password),
             'email' => $request->email,
+            'status' => 'Aktif',
             'id_role' => $request->id_role,
         ]);
 
@@ -68,6 +69,7 @@ class UserController extends Controller
             'nama_lengkap' => $request->nama_lengkap,
             'username' => $request->username,
             'email' => $request->email,
+            'status' => $request->status,
             'id_role' => $request->id_role,
         ]);
 

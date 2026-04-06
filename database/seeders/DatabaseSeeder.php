@@ -53,7 +53,8 @@ class DatabaseSeeder extends Seeder
             'nama_lengkap' => 'Admin',
             'username' => 'admin',
             'password' => bcrypt('password123'),
-            'email' => 'admin@gmail.com'
+            'email' => 'admin@gmail.com',
+            'status' => 'Aktif'
         ]);
 
         $userGuru = User::create([
@@ -61,7 +62,8 @@ class DatabaseSeeder extends Seeder
             'nama_lengkap' => 'Guru',
             'username' => 'guru',
             'password' => bcrypt('password123'),
-            'email' => 'guru@gmail.com'
+            'email' => 'guru@gmail.com',
+            'status' => 'Aktif'
         ]);
 
         $userSiswa = User::create([
@@ -69,7 +71,8 @@ class DatabaseSeeder extends Seeder
             'nama_lengkap' => 'Siswa',
             'username' => 'siswa',
             'password' => bcrypt('password123'),
-            'email' => 'siswa@gmail.com'
+            'email' => 'siswa@gmail.com',
+            'status' => 'Aktif'
         ]);
 
         // Create Guru

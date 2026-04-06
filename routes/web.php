@@ -1,4 +1,4 @@
- <?php
+<?php
 
 use Illuminate\Support\Facades\Route;
 
@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\KelasController;
 use App\Http\Controllers\Admin\PengumumanController;
 use App\Http\Controllers\Admin\RaporController;
+use App\Http\Controllers\Admin\UserController;
 
 // Admin Guru Controller
 use App\Http\Controllers\Admin\Guru\AbsensiGuruController;
@@ -21,9 +22,6 @@ use App\Http\Controllers\Admin\Siswa\AbsensiSiswaController;
 use App\Http\Controllers\Admin\Siswa\DashboardSiswaController;
 use App\Http\Controllers\Admin\Siswa\DataSiswaController;
 use App\Http\Controllers\Admin\Siswa\JadwalSiswaController;
-
-// Admin Users Controller
-use App\Http\Controllers\Admin\UserController;
 
 Route::get('/auth', function () {
     return view('auth.login');
