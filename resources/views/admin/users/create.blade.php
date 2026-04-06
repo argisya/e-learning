@@ -98,7 +98,7 @@
                             
                             <!-- Role Admin -->
                             <label class="relative cursor-pointer ">
-                                <input type="radio" name="role" value="admin" {{ old('role') === 'admin' ? 'checked' : '' }} required onchange="showAdditionalFields(this.value)">
+                                <input type="radio" name="role" value="Admin" {{ old('role') === 'Admin' ? 'checked' : '' }} required onchange="showAdditionalFields(this.value)">
                                 <div class="p-4 border-2 border-gray-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-all group">
                                     <div class="w-10 h-10 rounded-lg bg-red-100 flex items-center justify-center mb-2 group-hover:bg-red-500 group-hover:text-white transition-colors">
                                         <i class="fas fa-user-shield text-red-600 text-lg group-hover:text-white"></i>
@@ -109,7 +109,7 @@
                             
                             <!-- Role Guru -->
                             <label class="relative cursor-pointer">
-                                <input type="radio" name="role" value="guru" {{ old('role') === 'guru' ? 'checked' : '' }} required onchange="showAdditionalFields(this.value)">
+                                <input type="radio" name="role" value="Guru" {{ old('role') === 'Guru' ? 'checked' : '' }} required onchange="showAdditionalFields(this.value)">
                                 <div class="p-4 border-2 border-gray-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-all group">
                                     <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center mb-2 group-hover:bg-blue-500 group-hover:text-white transition-colors">
                                         <i class="fas fa-chalkboard-teacher text-blue-600 text-lg group-hover:text-white"></i>
@@ -120,7 +120,7 @@
                             
                             <!-- Role Siswa -->
                             <label class="relative cursor-pointer">
-                                <input type="radio" name="role" value="siswa" {{ old('role') === 'siswa' ? 'checked' : '' }} required onchange="showAdditionalFields(this.value)">
+                                <input type="radio" name="role" value="Siswa" {{ old('role') === 'Siswa' ? 'checked' : '' }} required onchange="showAdditionalFields(this.value)">
                                 <div class="p-4 border-2 border-gray-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-all group">
                                     <div class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center mb-2 group-hover:bg-green-500 group-hover:text-white transition-colors">
                                         <i class="fas fa-user-graduate text-green-600 text-lg group-hover:text-white"></i>
@@ -133,26 +133,6 @@
                         <p class="text-xs text-gray-500 mt-2">* Pilih role untuk menentukan hak akses user</p>
                     </div>
                     
-                    <!-- Status Akun -->
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Status Akun <span class="text-red-500">*</span></label>
-                        <div class="flex items-center gap-6">
-                            <label class="flex items-center gap-2 cursor-pointer">
-                                <input type="radio" name="status" value="active" checked {{ old('status', 'active') === 'active' ? 'checked' : '' }}>
-                                <div class="flex items-center gap-1">
-                                    <span class="status-dot status-active"></span>
-                                    <span class="text-gray-700">Aktif</span>
-                                </div>
-                            </label>
-                            <label class="flex items-center gap-2 cursor-pointer">
-                                <input type="radio" name="status" value="inactive" {{ old('status') === 'inactive' ? 'checked' : '' }}>
-                                <div class="flex items-center gap-1">
-                                    <span class="status-dot status-inactive"></span>
-                                    <span class="text-gray-700">Tidak Aktif</span>
-                                </div>
-                            </label>
-                        </div>
-                    </div>
                 </div>
             </div>
             
@@ -189,6 +169,7 @@
 
 Gunakan kredensial berikut untuk login:
 Username: [username_anda]
+Password: [password_anda]
 Tempat login: https://platform.sekolah.sch.id/login
 
 Jika ada pertanyaan, hubungi administrator.
