@@ -155,7 +155,6 @@
                     </div>
                 </div>
             </div>
-            @endsection
             
                 <!-- Section 2: Additional Settings -->
                 <div id="additionalSettings" class="mb-8 pb-8 border-b hidden">
@@ -212,6 +211,7 @@ Tim E-Learning</textarea>
             </form>
         </div>
     </div>
+    @endsection
     
     <script>
         // Password Strength Checker
