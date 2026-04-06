@@ -59,3 +59,6 @@ Route::get('admin/siswa/dashboard', [DashboardSiswaController::class, 'index'])-
 Route::get('admin/siswa/data', [DataSiswaController::class, 'index'])->name('admin.siswa.data.index');
 Route::get('admin/siswa/jadwal', [JadwalSiswaController::class, 'index'])->name('admin.siswa.jadwal.index');
 Route::get('admin/siswa/absensi', [AbsensiSiswaController::class, 'index'])->name('admin.siswa.absensi.index');
+
+// Admin Users Routes
+Route::get('admin/users', [UserController::class, 'index'])->name('admin.users.index');

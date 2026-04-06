@@ -20,9 +20,6 @@ class DataGuruController extends Controller
     public function store(Request $request)
     {
         $nip = $request->nip;
-        $id_user = session('id_user');
-        dd($id_user);
-        $nama_lengkap = $request->nama_lengkap;
         $tempat_lahir = $request->tempat_lahir;
         $tanggal_lahir = $request->tanggal_lahir;
         $jenis_kelamin = $request->jenis_kelamin;
