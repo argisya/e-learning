@@ -18,7 +18,7 @@
     
     <!-- Content Card -->
     <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-sm border overflow-hidden">
-        <form action="" method="POST" novalidate id="createForm" class="p-6 lg:p-8">
+        <form action="{{ route('admin.users.store') }}" method="POST" novalidate id="createForm" class="p-6 lg:p-8">
             
             @csrf
             
@@ -56,7 +56,7 @@
                         <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password <span class="text-red-500">*</span></label>
                         <div class="relative">
                             <i class="fas fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                            <input type="password" id="password" name="password" placeholder="Min. 8 karakter, gabungan huruf & angka" required autocomplete="new-password" onkeyup="checkStrength(this.value)" class="w-full pl-10 pr-12 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
+                            <input type="password" id="password" name="password" value="akademik26" placeholder="Min. 8 karakter, gabungan huruf & angka" required autocomplete="new-password" onkeyup="checkStrength(this.value)" class="w-full pl-10 pr-12 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
                             <div id="strengthMeter" class="strength-meter hidden"></div>
                         </div>
                         <div class="flex items-center gap-2 mt-2">
@@ -98,7 +98,7 @@
                             
                             <!-- Role Admin -->
                             <label class="relative cursor-pointer ">
-                                <input type="radio" name="role" value="Admin" {{ old('role') === 'Admin' ? 'checked' : '' }} required onchange="showAdditionalFields(this.value)">
+                                <input type="radio" name="id_role" value="1" {{ old('role') === 'Admin' ? 'checked' : '' }} required onchange="showAdditionalFields(this.value)">
                                 <div class="p-4 border-2 border-gray-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-all group">
                                     <div class="w-10 h-10 rounded-lg bg-red-100 flex items-center justify-center mb-2 group-hover:bg-red-500 group-hover:text-white transition-colors">
                                         <i class="fas fa-user-shield text-red-600 text-lg group-hover:text-white"></i>
@@ -109,7 +109,7 @@
                             
                             <!-- Role Guru -->
                             <label class="relative cursor-pointer">
-                                <input type="radio" name="role" value="Guru" {{ old('role') === 'Guru' ? 'checked' : '' }} required onchange="showAdditionalFields(this.value)">
+                                <input type="radio" name="id_role" value="2" {{ old('role') === 'Guru' ? 'checked' : '' }} required onchange="showAdditionalFields(this.value)">
                                 <div class="p-4 border-2 border-gray-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-all group">
                                     <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center mb-2 group-hover:bg-blue-500 group-hover:text-white transition-colors">
                                         <i class="fas fa-chalkboard-teacher text-blue-600 text-lg group-hover:text-white"></i>
@@ -120,7 +120,7 @@
                             
                             <!-- Role Siswa -->
                             <label class="relative cursor-pointer">
-                                <input type="radio" name="role" value="Siswa" {{ old('role') === 'Siswa' ? 'checked' : '' }} required onchange="showAdditionalFields(this.value)">
+                                <input type="radio" name="id_role" value="3" {{ old('role') === 'Siswa' ? 'checked' : '' }} required onchange="showAdditionalFields(this.value)">
                                 <div class="p-4 border-2 border-gray-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-all group">
                                     <div class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center mb-2 group-hover:bg-green-500 group-hover:text-white transition-colors">
                                         <i class="fas fa-user-graduate text-green-600 text-lg group-hover:text-white"></i>
