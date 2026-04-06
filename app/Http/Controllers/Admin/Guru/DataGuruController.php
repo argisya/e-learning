@@ -9,7 +9,9 @@ class DataGuruController extends Controller
 {
     public function index()
     {
-        return view('admin.guru.data.index');
+        return view('admin.guru.data.index', [
+            'guru' => DB::table('guru')->join('users', 'guru.id_user', '=', 'users.id_user')->get()
+        ]);
     }
 
     public function create()
