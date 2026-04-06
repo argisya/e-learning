@@ -22,6 +22,9 @@ use App\Http\Controllers\Admin\Siswa\DashboardSiswaController;
 use App\Http\Controllers\Admin\Siswa\DataSiswaController;
 use App\Http\Controllers\Admin\Siswa\JadwalSiswaController;
 
+// Admin Users Controller
+use App\Http\Controllers\Admin\UserController;
+
 Route::get('/auth', function () {
     return view('auth.login');
 });
