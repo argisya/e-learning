@@ -200,7 +200,10 @@
                         
                         <td class="px-6 py-4 text-right hidden lg:table-cell">
                             <div class="flex items-center justify-end gap-2">
-                                <button class="icon-btn icon-edit" onclick="openModal('modalEdit{{ $user->id_user }}')" title="Edit">
+                                <button 
+                                class="icon-btn icon-edit" 
+                                onclick="window.location.href=`{{ route('admin.users.edit', $user->id_user) }}`"
+                                title="Edit">
                                     <i class="fas fa-pen"></i>
                                 </button>
                                 <button class="icon-btn icon-delete" onclick="confirmDelete({{ $user->id_user }})" title="Hapus">
