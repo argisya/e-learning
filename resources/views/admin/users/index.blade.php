@@ -1,366 +1,307 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manajemen User - E-Learning</title>
+@extends('layouts.app')
+
+@section('title', 'Users')
+
+@section('content')
+<div class="min-h-screen py-8 px-4">
     
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <script>
-        tailwind.config = { 
-            theme: { 
-                extend: { 
-                    colors: { 
-                        primary: { 
-                            50: '#f0f4ff', 100: '#e0eaff', 200: '#c7d7fe', 300: '#a4bcfd',
-                            400: '#8098f9', 500: '#667eea', 600: '#5a67d8', 700: '#4c51bf',
-                            800: '#434190', 900: '#3c366b' 
-                        } 
-                    } 
-                } 
-            } 
-        }
-    </script>
-    
-    <style>
-        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-        
-        /* Badge Styles */
-        .badge {
-            @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium;
-        }
-        
-        .badge-admin {
-            @apply bg-red-100 text-red-700;
-        }
-        
-        .badge-guru {
-            @apply bg-blue-100 text-blue-700;
-        }
-        
-        .badge-siswa {
-            @apply bg-green-100 text-green-700;
-        }
-        
-        .badge-staff {
-            @apply bg-yellow-100 text-yellow-700;
-        }
-        
-        /* Status Indicator */
-        .status-dot {
-            @apply w-2 h-2 rounded-full ml-1;
-        }
-        
-        .status-active {
-            @apply bg-green-500;
-        }
-        
-        .status-inactive {
-            @apply bg-gray-400;
-        }
-    </style>
-</head>
-<body class="bg-gray-50 font-sans">
-    <div class="min-h-screen py-8 px-4">
-        
-        <!-- Header -->
-        <div class="max-w-6xl mx-auto mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div>
-                <h1 class="text-2xl lg:text-3xl font-bold text-gray-800">Manajemen User</h1>
-                <p class="text-gray-500 mt-1 text-sm">Kelola akun pengguna sistem aplikasi e-learning</p>
-            </div>
-            <div class="flex items-center gap-3">
-                <button onclick="openModal('modalFilter')" class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-                    <i class="fas fa-filter"></i> Filter
-                </button>
-                <button onclick="openModal('modalExport')" class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-                    <i class="fas fa-download"></i> Export
-                </button>
-                <a href="" class="inline-flex items-center gap-2 gradient-bg text-white px-4 py-2 rounded-lg hover:opacity-90 transition-all shadow-md">
-                    <i class="fas fa-plus"></i> Tambah User
-                </a>
-            </div>
+    <!-- Header -->
+    <div class="max-w-6xl mx-auto mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+            <h1 class="text-2xl lg:text-3xl font-bold text-gray-800">Manajemen User</h1>
+            <p class="text-gray-500 mt-1 text-sm">Kelola akun pengguna sistem aplikasi e-learning</p>
         </div>
+        <div class="flex items-center gap-3">
+            <button onclick="openModal('modalFilter')" class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                <i class="fas fa-filter"></i> Filter
+            </button>
+            <button onclick="openModal('modalExport')" class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                <i class="fas fa-download"></i> Export
+            </button>
+            <a href="" class="inline-flex items-center gap-2 gradient-bg text-white px-4 py-2 rounded-lg hover:opacity-90 transition-all shadow-md">
+                <i class="fas fa-plus"></i> Tambah User
+            </a>
+        </div>
+    </div>
+    
+    <!-- Stats Cards -->
+    <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         
-        <!-- Stats Cards -->
-        <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-            
-            <!-- Total Users -->
-            <div class="bg-white rounded-xl p-6 border shadow-sm hover:shadow-md transition-shadow">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm text-gray-500">Total User</p>
-                        <p class="text-2xl font-bold text-gray-800 mt-1">156</p>
-                        <p class="text-xs text-green-600 mt-2">
-                            <i class="fas fa-arrow-up"></i> 12 dari bulan lalu
-                        </p>
-                    </div>
-                    <div class="w-12 h-12 rounded-lg bg-primary-100 flex items-center justify-center">
-                        <i class="fas fa-users text-primary-600 text-xl"></i>
-                    </div>
+        <!-- Total Users -->
+        <div class="bg-white rounded-xl p-6 border shadow-sm hover:shadow-md transition-shadow">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-gray-500">Total User</p>
+                    <p class="text-2xl font-bold text-gray-800 mt-1">156</p>
+                    <p class="text-xs text-green-600 mt-2">
+                        <i class="fas fa-arrow-up"></i> 12 dari bulan lalu
+                    </p>
                 </div>
-            </div>
-            
-            <!-- Admin -->
-            <div class="bg-white rounded-xl p-6 border shadow-sm hover:shadow-md transition-shadow">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm text-gray-500">Administrator</p>
-                        <p class="text-2xl font-bold text-gray-800 mt-1">4</p>
-                    </div>
-                    <div class="w-12 h-12 rounded-lg bg-red-100 flex items-center justify-center">
-                        <i class="fas fa-user-shield text-red-600 text-xl"></i>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Guru -->
-            <div class="bg-white rounded-xl p-6 border shadow-sm hover:shadow-md transition-shadow">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm text-gray-500">Guru</p>
-                        <p class="text-2xl font-bold text-gray-800 mt-1">86</p>
-                    </div>
-                    <div class="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center">
-                        <i class="fas fa-chalkboard-teacher text-blue-600 text-xl"></i>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Aktif Hari Ini -->
-            <div class="bg-white rounded-xl p-6 border shadow-sm hover:shadow-md transition-shadow">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm text-gray-500">Online Hari Ini</p>
-                        <p class="text-2xl font-bold text-gray-800 mt-1">42</p>
-                    </div>
-                    <div class="w-12 h-12 rounded-lg bg-green-100 flex items-center justify-center">
-                        <i class="fas fa-wifi text-green-600 text-xl"></i>
-                    </div>
+                <div class="w-12 h-12 rounded-lg bg-primary-100 flex items-center justify-center">
+                    <i class="fas fa-users text-primary-600 text-xl"></i>
                 </div>
             </div>
         </div>
         
-        <!-- Content Card -->
-        <div class="max-w-6xl mx-auto bg-white rounded-xl shadow-sm border overflow-hidden">
-            
-            <!-- Search Bar -->
-            <div class="p-6 border-b bg-gray-50">
-                <div class="flex flex-col lg:flex-row gap-4">
-                    
-                    <!-- Search Input -->
-                    <div class="flex-1 relative">
-                        <input type="text" placeholder="Cari berdasarkan nama, username, atau email..." 
-                               class="w-full pl-10 pr-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
-                        <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                    </div>
-                    
-                    <!-- Filters -->
-                    <div class="flex flex-wrap gap-3">
-                        
-                        <!-- Filter Role -->
-                        <select id="filterRole" onchange="applyFilters()" class="px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
-                            <option value="">Semua Role</option>
-                            <option value="admin">Administrator</option>
-                            <option value="guru">Guru</option>
-                            <option value="siswa">Siswa</option>
-                            <option value="staff">Staff</option>
-                        </select>
-                        
-                        <!-- Filter Status -->
-                        <select id="filterStatus" onchange="applyFilters()" class="px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
-                            <option value="">Semua Status</option>
-                            <option value="active">Aktif</option>
-                            <option value="inactive">Tidak Aktif</option>
-                        </select>
-                        
-                        <!-- Sort -->
-                        <select id="filterSort" onchange="applyFilters()" class="px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
-                            <option value="">Urutkan...</option>
-                            <option value="newest">Terbaru</option>
-                            <option value="oldest">Terlama</option>
-                            <option value="az">A-Z</option>
-                        </select>
-                    </div>
+        <!-- Admin -->
+        <div class="bg-white rounded-xl p-6 border shadow-sm hover:shadow-md transition-shadow">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-gray-500">Administrator</p>
+                    <p class="text-2xl font-bold text-gray-800 mt-1">4</p>
+                </div>
+                <div class="w-12 h-12 rounded-lg bg-red-100 flex items-center justify-center">
+                    <i class="fas fa-user-shield text-red-600 text-xl"></i>
                 </div>
             </div>
-            
-            <!-- Table -->
-            <div class="overflow-x-auto">
-                <table class="w-full text-sm">
-                    <thead class="bg-gradient-to-r from-primary-500 to-secondary-500 text-white">
-                        <tr>
-                            <th scope="col" class="px-6 py-4 text-left w-16">
-                                <input type="checkbox" class="rounded">
-                            </th>
-                            <th scope="col" class="px-6 py-4 text-left">Nama Lengkap</th>
-                            <th scope="col" class="px-6 py-4 text-left">Username</th>
-                            <th scope="col" class="px-6 py-4 text-left">Email</th>
-                            <th scope="col" class="px-6 py-4 text-left">Role</th>
-                            <th scope="col" class="px-6 py-4 text-left">Status</th>
-                            <th scope="col" class="px-6 py-4 text-left">Terdaftar</th>
-                            <th scope="col" class="px-6 py-4 text-right hidden lg:table-cell">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-200 bg-white">
-                        
-                        <!-- Row 1 -->
-                        <tr class="hover:bg-gray-50 transition-colors">
-                            <td class="px-6 py-4">
-                                <input type="checkbox" class="rounded">
-                            </td>
-                            <td class="px-6 py-4">
-                                <div class="flex items-center gap-3">
-                                    <img src="{{ asset('images/avatar.jpg') }}" alt="" class="w-10 h-10 rounded-full object-cover border-2">
-                                    <div>
-                                        <p class="font-medium text-gray-800">Admin Utama</p>
-                                        <p class="text-xs text-gray-500 hidden sm:block">admin@sekolah.sch.id</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 font-mono text-gray-700">admin</td>
-                            <td class="px-6 py-4 text-gray-700 hidden md:table-cell">admin@sekolah.sch.id</td>
-                            <td class="px-6 py-4">
-                                <span class="badge badge-admin">
-                                    <i class="fas fa-user-shield"></i> Administrator
-                                </span>
-                            </td>
-                            <td class="px-6 py-4">
-                                <span class="inline-flex items-center">
-                                    <span class="status-dot status-active"></span>
-                                    <span class="text-xs text-gray-600 hidden sm:inline">Aktif</span>
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 text-gray-600 text-xs">15 Jan 2024</td>
-                            <td class="px-6 py-4 text-right hidden lg:table-cell">
-                                <div class="flex items-center justify-end gap-2">
-                                    <button class="icon-btn icon-view" onclick="openModal('modalView1')" title="Lihat Detail">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                    <button class="icon-btn icon-edit" onclick="openModal('modalEdit1')" title="Edit">
-                                        <i class="fas fa-pen"></i>
-                                    </button>
-                                    <button class="icon-btn icon-delete" onclick="confirmDelete(1)" title="Hapus">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        
-                        <!-- Row 2 -->
-                        <tr class="hover:bg-gray-50 transition-colors">
-                            <td class="px-6 py-4">
-                                <input type="checkbox" class="rounded">
-                            </td>
-                            <td class="px-6 py-4">
-                                <div class="flex items-center gap-3">
-                                    <img src="{{ asset('images/avatar.jpg') }}" alt="" class="w-10 h-10 rounded-full object-cover border-2">
-                                    <div>
-                                        <p class="font-medium text-gray-800">Dr. Ahmad Fauzi, M.Pd.</p>
-                                        <p class="text-xs text-gray-500 hidden sm:block">ahmad.fauzi@sekolah.sch.id</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 font-mono text-gray-700">afauzi</td>
-                            <td class="px-6 py-4 text-gray-700 hidden md:table-cell">ahmad.fauzi@sekolah.sch.id</td>
-                            <td class="px-6 py-4">
-                                <span class="badge badge-guru">
-                                    <i class="fas fa-chalkboard-teacher"></i> Guru
-                                </span>
-                            </td>
-                            <td class="px-6 py-4">
-                                <span class="inline-flex items-center">
-                                    <span class="status-dot status-active"></span>
-                                    <span class="text-xs text-gray-600 hidden sm:inline">Aktif</span>
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 text-gray-600 text-xs">12 Feb 2024</td>
-                            <td class="px-6 py-4 text-right hidden lg:table-cell">
-                                <div class="flex items-center justify-end gap-2">
-                                    <button class="icon-btn icon-view" onclick="openModal('modalView2')" title="Lihat Detail">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                    <button class="icon-btn icon-edit" onclick="openModal('modalEdit2')" title="Edit">
-                                        <i class="fas fa-pen"></i>
-                                    </button>
-                                    <button class="icon-btn icon-delete" onclick="confirmDelete(2)" title="Hapus">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        
-                        <!-- Row 3 -->
-                        <tr class="hover:bg-gray-50 transition-colors">
-                            <td class="px-6 py-4">
-                                <input type="checkbox" class="rounded">
-                            </td>
-                            <td class="px-6 py-4">
-                                <div class="flex items-center gap-3">
-                                    <img src="{{ asset('images/avatar.jpg') }}" alt="" class="w-10 h-10 rounded-full object-cover border-2">
-                                    <div>
-                                        <p class="font-medium text-gray-800">Siti Nurhaliza</p>
-                                        <p class="text-xs text-gray-500 hidden sm:block">snurhaliza@sekolah.sch.id</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 font-mono text-gray-700">snurhaliza</td>
-                            <td class="px-6 py-4 text-gray-700 hidden md:table-cell">snurhaliza@sekolah.sch.id</td>
-                            <td class="px-6 py-4">
-                                <span class="badge badge-siswa">
-                                    <i class="fas fa-user-graduate"></i> Siswa
-                                </span>
-                            </td>
-                            <td class="px-6 py-4">
-                                <span class="inline-flex items-center">
-                                    <span class="status-dot status-inactive"></span>
-                                    <span class="text-xs text-gray-600 hidden sm:inline">Tidak Aktif</span>
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 text-gray-600 text-xs">20 Mar 2024</td>
-                            <td class="px-6 py-4 text-right hidden lg:table-cell">
-                                <div class="flex items-center justify-end gap-2">
-                                    <button class="icon-btn icon-view" onclick="openModal('modalView3')" title="Lihat Detail">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                    <button class="icon-btn icon-edit" onclick="openModal('modalEdit3')" title="Edit">
-                                        <i class="fas fa-pen"></i>
-                                    </button>
-                                    <button class="icon-btn icon-delete" onclick="confirmDelete(3)" title="Hapus">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        
-                        <!-- More rows can be added here... -->
-                    </tbody>
-                </table>
+        </div>
+        
+        <!-- Guru -->
+        <div class="bg-white rounded-xl p-6 border shadow-sm hover:shadow-md transition-shadow">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-gray-500">Guru</p>
+                    <p class="text-2xl font-bold text-gray-800 mt-1">86</p>
+                </div>
+                <div class="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center">
+                    <i class="fas fa-chalkboard-teacher text-blue-600 text-xl"></i>
+                </div>
             </div>
-            
-            <!-- Pagination -->
-            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 p-6 border-t">
-                <p class="text-sm text-gray-600">
-                    Menampilkan <span class="font-medium">1</span> sampai <span class="font-medium">10</span> dari <span class="font-medium">156</span> data
-                </p>
-                <div class="flex items-center gap-2">
-                    <button disabled class="btn-pagination-disabled px-4 py-2 rounded-lg border">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <button class="pagination-btn active">1</button>
-                    <button class="pagination-btn">2</button>
-                    <button class="pagination-btn">3</button>
-                    <button class="pagination-btn">...</button>
-                    <button class="pagination-btn">16</button>
-                    <button class="btn-pagination-active px-4 py-2 rounded-lg border">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
+        </div>
+        
+        <!-- Aktif Hari Ini -->
+        <div class="bg-white rounded-xl p-6 border shadow-sm hover:shadow-md transition-shadow">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-gray-500">Online Hari Ini</p>
+                    <p class="text-2xl font-bold text-gray-800 mt-1">42</p>
+                </div>
+                <div class="w-12 h-12 rounded-lg bg-green-100 flex items-center justify-center">
+                    <i class="fas fa-wifi text-green-600 text-xl"></i>
                 </div>
             </div>
         </div>
     </div>
+    
+    <!-- Content Card -->
+    <div class="max-w-6xl mx-auto bg-white rounded-xl shadow-sm border overflow-hidden">
+        
+        <!-- Search Bar -->
+        <div class="p-6 border-b bg-gray-50">
+            <div class="flex flex-col lg:flex-row gap-4">
+                
+                <!-- Search Input -->
+                <div class="flex-1 relative">
+                    <input type="text" placeholder="Cari berdasarkan nama, username, atau email..." 
+                            class="w-full pl-10 pr-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
+                    <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                </div>
+                
+                <!-- Filters -->
+                <div class="flex flex-wrap gap-3">
+                    
+                    <!-- Filter Role -->
+                    <select id="filterRole" onchange="applyFilters()" class="px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
+                        <option value="">Semua Role</option>
+                        <option value="admin">Administrator</option>
+                        <option value="guru">Guru</option>
+                        <option value="siswa">Siswa</option>
+                        <option value="staff">Staff</option>
+                    </select>
+                    
+                    <!-- Filter Status -->
+                    <select id="filterStatus" onchange="applyFilters()" class="px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
+                        <option value="">Semua Status</option>
+                        <option value="active">Aktif</option>
+                        <option value="inactive">Tidak Aktif</option>
+                    </select>
+                    
+                    <!-- Sort -->
+                    <select id="filterSort" onchange="applyFilters()" class="px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
+                        <option value="">Urutkan...</option>
+                        <option value="newest">Terbaru</option>
+                        <option value="oldest">Terlama</option>
+                        <option value="az">A-Z</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Table -->
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+                <thead class="bg-gradient-to-r from-primary-500 to-secondary-500 text-white">
+                    <tr>
+                        <th scope="col" class="px-6 py-4 text-left w-16">
+                            <input type="checkbox" class="rounded">
+                        </th>
+                        <th scope="col" class="px-6 py-4 text-left">Nama Lengkap</th>
+                        <th scope="col" class="px-6 py-4 text-left">Username</th>
+                        <th scope="col" class="px-6 py-4 text-left">Email</th>
+                        <th scope="col" class="px-6 py-4 text-left">Role</th>
+                        <th scope="col" class="px-6 py-4 text-left">Status</th>
+                        <th scope="col" class="px-6 py-4 text-left">Terdaftar</th>
+                        <th scope="col" class="px-6 py-4 text-right hidden lg:table-cell">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 bg-white">
+                    
+                    <!-- Row 1 -->
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="px-6 py-4">
+                            <input type="checkbox" class="rounded">
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center gap-3">
+                                <img src="{{ asset('images/avatar.jpg') }}" alt="" class="w-10 h-10 rounded-full object-cover border-2">
+                                <div>
+                                    <p class="font-medium text-gray-800">Admin Utama</p>
+                                    <p class="text-xs text-gray-500 hidden sm:block">admin@sekolah.sch.id</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 font-mono text-gray-700">admin</td>
+                        <td class="px-6 py-4 text-gray-700 hidden md:table-cell">admin@sekolah.sch.id</td>
+                        <td class="px-6 py-4">
+                            <span class="badge badge-admin">
+                                <i class="fas fa-user-shield"></i> Administrator
+                            </span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="inline-flex items-center">
+                                <span class="status-dot status-active"></span>
+                                <span class="text-xs text-gray-600 hidden sm:inline">Aktif</span>
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-gray-600 text-xs">15 Jan 2024</td>
+                        <td class="px-6 py-4 text-right hidden lg:table-cell">
+                            <div class="flex items-center justify-end gap-2">
+                                <button class="icon-btn icon-view" onclick="openModal('modalView1')" title="Lihat Detail">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="icon-btn icon-edit" onclick="openModal('modalEdit1')" title="Edit">
+                                    <i class="fas fa-pen"></i>
+                                </button>
+                                <button class="icon-btn icon-delete" onclick="confirmDelete(1)" title="Hapus">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <!-- Row 2 -->
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="px-6 py-4">
+                            <input type="checkbox" class="rounded">
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center gap-3">
+                                <img src="{{ asset('images/avatar.jpg') }}" alt="" class="w-10 h-10 rounded-full object-cover border-2">
+                                <div>
+                                    <p class="font-medium text-gray-800">Dr. Ahmad Fauzi, M.Pd.</p>
+                                    <p class="text-xs text-gray-500 hidden sm:block">ahmad.fauzi@sekolah.sch.id</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 font-mono text-gray-700">afauzi</td>
+                        <td class="px-6 py-4 text-gray-700 hidden md:table-cell">ahmad.fauzi@sekolah.sch.id</td>
+                        <td class="px-6 py-4">
+                            <span class="badge badge-guru">
+                                <i class="fas fa-chalkboard-teacher"></i> Guru
+                            </span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="inline-flex items-center">
+                                <span class="status-dot status-active"></span>
+                                <span class="text-xs text-gray-600 hidden sm:inline">Aktif</span>
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-gray-600 text-xs">12 Feb 2024</td>
+                        <td class="px-6 py-4 text-right hidden lg:table-cell">
+                            <div class="flex items-center justify-end gap-2">
+                                <button class="icon-btn icon-view" onclick="openModal('modalView2')" title="Lihat Detail">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="icon-btn icon-edit" onclick="openModal('modalEdit2')" title="Edit">
+                                    <i class="fas fa-pen"></i>
+                                </button>
+                                <button class="icon-btn icon-delete" onclick="confirmDelete(2)" title="Hapus">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <!-- Row 3 -->
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="px-6 py-4">
+                            <input type="checkbox" class="rounded">
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center gap-3">
+                                <img src="{{ asset('images/avatar.jpg') }}" alt="" class="w-10 h-10 rounded-full object-cover border-2">
+                                <div>
+                                    <p class="font-medium text-gray-800">Siti Nurhaliza</p>
+                                    <p class="text-xs text-gray-500 hidden sm:block">snurhaliza@sekolah.sch.id</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 font-mono text-gray-700">snurhaliza</td>
+                        <td class="px-6 py-4 text-gray-700 hidden md:table-cell">snurhaliza@sekolah.sch.id</td>
+                        <td class="px-6 py-4">
+                            <span class="badge badge-siswa">
+                                <i class="fas fa-user-graduate"></i> Siswa
+                            </span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="inline-flex items-center">
+                                <span class="status-dot status-inactive"></span>
+                                <span class="text-xs text-gray-600 hidden sm:inline">Tidak Aktif</span>
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-gray-600 text-xs">20 Mar 2024</td>
+                        <td class="px-6 py-4 text-right hidden lg:table-cell">
+                            <div class="flex items-center justify-end gap-2">
+                                <button class="icon-btn icon-view" onclick="openModal('modalView3')" title="Lihat Detail">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="icon-btn icon-edit" onclick="openModal('modalEdit3')" title="Edit">
+                                    <i class="fas fa-pen"></i>
+                                </button>
+                                <button class="icon-btn icon-delete" onclick="confirmDelete(3)" title="Hapus">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <!-- More rows can be added here... -->
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Pagination -->
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 p-6 border-t">
+            <p class="text-sm text-gray-600">
+                Menampilkan <span class="font-medium">1</span> sampai <span class="font-medium">10</span> dari <span class="font-medium">156</span> data
+            </p>
+            <div class="flex items-center gap-2">
+                <button disabled class="btn-pagination-disabled px-4 py-2 rounded-lg border">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="pagination-btn active">1</button>
+                <button class="pagination-btn">2</button>
+                <button class="pagination-btn">3</button>
+                <button class="pagination-btn">...</button>
+                <button class="pagination-btn">16</button>
+                <button class="btn-pagination-active px-4 py-2 rounded-lg border">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
     
     <!-- ================= MODALS ================= -->
     
@@ -559,5 +500,3 @@
             }
         });
     </script>
-</body>
-</html>
