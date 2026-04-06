@@ -14,7 +14,7 @@ use App\Models\Nilai;
 use App\Models\OrangTuaSiswa;
 use App\Models\Pengumuman;
 use App\Models\Rapor;
-use App\Models\Roles;
+use App\Models\Role;
 use App\Models\Siswa;
 use App\Models\User;
 
@@ -30,20 +30,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create Roles first
-        $adminRole = Roles::create([
+        // Create Role first
+        $adminRole = Role::create([
             'nama_role' => 'Admin'
         ]);
 
-        $guruRole = Roles::create([
+        $guruRole = Role::create([
             'nama_role' => 'Guru'
         ]);
 
-        $siswaRole = Roles::create([
+        $siswaRole = Role::create([
             'nama_role' => 'Siswa'
         ]);
 
-        $orangtuaRole = Roles::create([
+        $orangtuaRole = Role::create([
             'nama_role' => 'Orang Tua'
         ]);
 
