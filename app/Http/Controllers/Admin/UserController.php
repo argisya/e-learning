@@ -14,6 +14,10 @@ class UserController extends Controller
     {
         return view('admin.users.index', [
             'users' => DB::table('users')->join('roles', 'users.id_role', '=', 'roles.id_role')->get(),
+            'total_users' => User::count(),
+            'total_admins' => User::where('id_role', 1)->count(),
+            'total_guru' => User::where('id_role', 2)->count(),
+            'total_siswa' => User::where('id_role', 3)->count()
         ]);
     }
 

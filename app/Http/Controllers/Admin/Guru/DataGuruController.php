@@ -34,7 +34,7 @@ class DataGuruController extends Controller
             'status_pernikahan' => 'required',
             'no_hp' => 'required|unique:guru|min:10|max:15',
             'alamat' => 'required',
-            'foto' => 'image|mimes:jpeg,png,jpg,svg|file|max:2048',
+            'foto' => 'image|mimes:jpeg,png,jpg|file|max:2048',
         ], $messages = [
             'id_user.required' => 'Nama lengkap harus diisi',
             'nip.required' => 'NIP harus diisi',
@@ -48,7 +48,7 @@ class DataGuruController extends Controller
             'no_hp.unique' => 'No HP sudah digunakan',
             'alamat.required' => 'Alamat harus diisi',
             'foto.image' => 'File yang diunggah harus berupa gambar',
-            'foto.mimes' => 'Format gambar yang diperbolehkan: jpeg, png, jpg, svg',
+            'foto.mimes' => 'Format gambar yang diperbolehkan: jpeg, png, jpg',
             'foto.max' => 'Ukuran gambar maksimal 2MB',
         ]);
 
@@ -91,7 +91,7 @@ class DataGuruController extends Controller
             'status_pernikahan' => 'required',
             'no_hp' => 'required',
             'alamat' => 'required',
-            'foto' => 'image|mimes:jpeg,png,jpg,svg|file|max:2048',
+            'foto' => 'image|mimes:jpeg,png,jpg|file|max:2048',
         ];
         $messages = [
             'id_user.required' => 'Nama lengkap harus diisi',
@@ -103,7 +103,7 @@ class DataGuruController extends Controller
             'no_hp.required' => 'No HP harus diisi',
             'alamat.required' => 'Alamat harus diisi',
             'foto.image' => 'File yang diunggah harus berupa gambar',
-            'foto.mimes' => 'Format gambar yang diperbolehkan: jpeg, png, jpg, svg',
+            'foto.mimes' => 'Format gambar yang diperbolehkan: jpeg, png, jpg',
             'foto.max' => 'Ukuran gambar maksimal 2MB',
         ];
         $validatedData = $request->validate($rules, $messages);
