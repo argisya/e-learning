@@ -51,6 +51,8 @@ Route::get('admin/guru/dashboard', [DashboardGuruController::class, 'index'])->n
 Route::get('admin/guru/data', [DataGuruController::class, 'index'])->name('admin.guru.data.index');
 Route::get('admin/guru/jadwal', [JadwalGuruController::class, 'index'])->name('admin.guru.jadwal.index');
 Route::get('admin/guru/absensi', [AbsensiGuruController::class, 'index'])->name('admin.guru.absensi.index');
+Route::get('admin/guru/data/create', [DataGuruController::class, 'create'])->name('admin.guru.data.create');
+Route::get('admin/guru/data/edit/{nip}', [DataGuruController::class, 'edit'])->name('admin.guru.data.edit');
 
 // Admin Siswa Routes
 Route::get('admin/siswa/dashboard', [DashboardSiswaController::class, 'index'])->name('admin.siswa.dashboard.index');
