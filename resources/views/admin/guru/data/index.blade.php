@@ -96,52 +96,64 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 bg-white">
-                        <!-- Sample Data -->
-                        @foreach(range(1,1) as $index)
+                        
+                        @forelse($guru as $item)
                         <tr class="hover:bg-gray-50 transition-colors">
-                            <td class="px-6 py-4 text-gray-600">{{ $index }}</td>
+                            <td class="px-6 py-4 text-gray-600">{{ $loop->iteration }}</td>
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-3">
-                                    <img src="{{ asset('images/avatar.jpg') }}" alt="" 
-                                         class="w-10 h-10 rounded-full object-cover border-2">
+                                    <img src="{{ $item->foto ? asset('storage/' . $item->foto) : asset('images/avatar.jpg') }}" alt="Avatar" 
+                                        class="w-10 h-10 rounded-full object-cover border-2">
                                     <div>
-                                        <h1>asep</h1>    
+                                        <h1 class="font-medium text-gray-900">{{ $item->nama_lengkap }}</h1>  
                                     </div>
                                 </div>
                             </td>
-                            <td class="px-6 py-4 text-gray-700 font-mono text-xs">198501012008011001</td>
-                            <td class="px-6 py-4 text-gray-700">Bandung, 15 Januari 1985</td>
+                            <td class="px-6 py-4 text-gray-700 font-mono text-xs">{{ $item->nip ?? '-' }}</td>
+                            <td class="px-6 py-4 text-gray-700">{{ $item->tempat_lahir }}, {{ \Carbon\Carbon::parse($item->tanggal_lahir)->translatedFormat('d F Y') }}</td>
                             <td class="px-6 py-4">
-                                <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs bg-blue-50 text-blue-700">
-                                    <i class="fas fa-mars"></i> Laki-laki
+                                @if($item->jenis_kelamin == 'Laki-laki' || $item->jenis_kelamin == 'L')
+                                    <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs bg-blue-50 text-blue-700">
+                                        <i class="fas fa-mars"></i> Laki-laki
+                                    </span>
+                                @else
+                                    <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs bg-pink-50 text-pink-700">
+                                        <i class="fas fa-venus"></i> Perempuan
+                                    </span>
+                                @endif
+                            </td>
+                            <td class="px-6 py-4 text-gray-700">{{ $item->agama }}</td>
+                            <td class="px-6 py-4">
+                                <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs {{ $item->status_pernikahan == 'Menikah' ? 'bg-green-50 text-green-700' : 'bg-gray-50 text-gray-700' }}">
+                                    <i class="fas {{ $item->status_pernikahan == 'Menikah' ? 'fa-ring' : 'fa-user' }}"></i> {{ $item->status_pernikahan }}
                                 </span>
                             </td>
-                            <td class="px-6 py-4 text-gray-700">Islam</td>
-                            <td class="px-6 py-4">
-                                <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs bg-green-50 text-green-700">
-                                    <i class="fas fa-ring"></i> Menikah
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 text-gray-700">+62 812-3456-7890</td>
+                            <td class="px-6 py-4 text-gray-700">{{ $item->no_hp }}</td>
                             <td class="px-6 py-4 text-right hidden lg:table-cell">
                                 <div class="flex items-center justify-end gap-2">
-                                    <button class="icon-btn icon-view" onclick="openModal('modalView{{ $index }}')" title="Lihat Detail">
+                                    <button class="icon-btn icon-view" onclick="openModal('modalView{{ $item->nip }}')" title="Lihat Detail">
                                         <i class="fas fa-eye"></i>
                                     </button>
                                     <button 
-                                        type= "button"
+                                        type="button"
                                         class="icon-btn icon-edit" 
-                                        onclick="window.location.href=`{{ route('admin.guru.data.edit', ['nip']) }}`"
+                                        onclick="window.location.href=`{{ route('admin.guru.data.edit', $item->nip) }}`"
                                         title="Edit">
                                         <i class="fas fa-pen"></i>
                                     </button>
-                                    <button class="icon-btn icon-delete" onclick="confirmDelete({{ $index }})" title="Hapus">
+                                    <button class="icon-btn icon-delete" onclick="confirmDelete({{ $item->nip }})" title="Hapus">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </div>
                             </td>
                         </tr>
-                        @endforeach
+                        @empty
+                        <tr>
+                            <td colspan="9" class="px-6 py-8 text-center text-gray-500">
+                                Belum ada data guru yang ditambahkan.
+                            </td>
+                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
@@ -246,46 +258,72 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 bg-white">
-                        @foreach(range(1, 1) as $index)
+                        @forelse($guru as $item)
                         <tr class="hover:bg-gray-50 transition-colors">
-                            <td class="px-6 py-4 text-gray-600">{{ $index }}</td>
+                            
+                            <td class="px-6 py-4 text-gray-600">{{ $loop->iteration }}</td>
+                            
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-3">
-                                    <img src="{{ asset('images/avatar.jpg') }}" alt="" 
-                                         class="w-10 h-10 rounded-full object-cover border-2">
+                                    
                                     <div>
-                                        <h1>nama</h1>
+                                        <h1 class="font-medium text-gray-900">{{ $item->nama_lengkap }}</h1>
                                     </div>
                                 </div>
                             </td>
-                            <td class="px-6 py-4 text-gray-700 font-mono text-xs">198501012008011001</td>
+                            
+                            <td class="px-6 py-4 text-gray-700 font-mono text-xs">{{ $item->nip ?? '-' }}</td>
+                            
                             <td class="px-6 py-4">
-                                <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs bg-blue-50 text-blue-700 font-medium">
-                                    <i class="fas fa-check-circle"></i> PNS
-                                </span>
+                                @if($item->status == 'PNS')
+                                    <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs bg-blue-50 text-blue-700 font-medium">
+                                        <i class="fas fa-check-circle"></i> PNS
+                                    </span>
+                                @elseif($item->status == 'PPPK')
+                                    <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs bg-green-50 text-green-700 font-medium">
+                                        <i class="fas fa-check-circle"></i> PPPK
+                                    </span>
+                                @else
+                                    <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs bg-gray-50 text-gray-700 font-medium">
+                                        <i class="fas fa-user"></i> {{ $item->status }}
+                                    </span>
+                                @endif
                             </td>
-                            <td class="px-6 py-4 text-gray-700">17 tahun 3 bulan</td>
+                            
+                            <td class="px-6 py-4 text-gray-700">{{ $item->masa_kerja }}</td>
+                            
                             <td class="px-6 py-4">
                                 <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs bg-purple-50 text-purple-700 font-medium">
-                                    <i class="fas fa-chalkboard-teacher"></i> Kepala Seksi Kurikulum
+                                    <i class="fas fa-chalkboard-teacher"></i> {{ $item->jabatan }}
                                 </span>
                             </td>
-                            <td class="px-6 py-4 text-gray-700 text-xs">SK: 012/SKB/PD/2020<br>tgl: 15-06-2020</td>
+                            
+                            <td class="px-6 py-4 text-gray-700 text-xs">
+                                SK: {{ $item->no_sk }}<br>
+                            </td>
+                            
                             <td class="px-6 py-4 text-right hidden lg:table-cell">
                                 <div class="flex items-center justify-end gap-2">
-                                    <button class="icon-btn icon-view" onclick="openModal('modalViewPeg{{ $index }}')" title="Lihat Detail">
+                                    <button class="icon-btn icon-view" onclick="openModal('modalViewPeg{{ $item->nip }}')" title="Lihat Detail">
                                         <i class="fas fa-eye"></i>
                                     </button>
-                                    <button class="icon-btn icon-edit" onclick="openModal('modalEditPeg{{ $index }}')" title="Edit">
+                                    <button class="icon-btn icon-edit" onclick="openModal('modalEditPeg{{ $item->nip }}')" title="Edit">
                                         <i class="fas fa-pen"></i>
                                     </button>
-                                    <button class="icon-btn icon-delete" onclick="confirmDelete({{ $index }})" title="Hapus">
+                                    <button class="icon-btn icon-delete" onclick="confirmDelete({{ $item->nip }})" title="Hapus">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </div>
                             </td>
                         </tr>
-                        @endforeach
+                        
+                        @empty
+                        <tr>
+                            <td colspan="8" class="px-6 py-8 text-center text-gray-500">
+                                Belum ada data yang ditambahkan.
+                            </td>
+                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>

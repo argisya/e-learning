@@ -126,6 +126,28 @@
         .content-transition {
             transition: margin-left 0.3s ease-in-out;
         }
+        
+        /* Status Dot Styling */
+        .status-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: status-pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes status-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        
+        .status-dot.status-active {
+            background-color: #10b981 !important;
+        }
+        
+        .status-dot.status-inactive {
+            background-color: #ef4444 !important;
+        }
     </style>
     
     @stack('styles')

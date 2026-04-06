@@ -32,7 +32,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm text-gray-500">Total User</p>
-                    <p class="text-2xl font-bold text-gray-800 mt-1">156</p>
+                    <p class="text-2xl font-bold text-gray-800 mt-1">{{ $total_users }}</p>
                     <p class="text-xs text-green-600 mt-2">
                         <i class="fas fa-arrow-up"></i> 12 dari bulan lalu
                     </p>
@@ -48,7 +48,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm text-gray-500">Administrator</p>
-                    <p class="text-2xl font-bold text-gray-800 mt-1">4</p>
+                    <p class="text-2xl font-bold text-gray-800 mt-1">{{ $total_admin }}</p>
                 </div>
                 <div class="w-12 h-12 rounded-lg bg-red-100 flex items-center justify-center">
                     <i class="fas fa-user-shield text-red-600 text-xl"></i>
@@ -61,7 +61,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm text-gray-500">Guru</p>
-                    <p class="text-2xl font-bold text-gray-800 mt-1">86</p>
+                    <p class="text-2xl font-bold text-gray-800 mt-1">{{ $total_guru }}</p>
                 </div>
                 <div class="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center">
                     <i class="fas fa-chalkboard-teacher text-blue-600 text-xl"></i>
@@ -69,18 +69,19 @@
             </div>
         </div>
         
-        <!-- Aktif Hari Ini -->
+        <!-- Siswa -->
         <div class="bg-white rounded-xl p-6 border shadow-sm hover:shadow-md transition-shadow">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-gray-500">Online Hari Ini</p>
-                    <p class="text-2xl font-bold text-gray-800 mt-1">42</p>
+                    <p class="text-sm text-gray-500">Siswa</p>
+                    <p class="text-2xl font-bold text-gray-800 mt-1">{{ $total_siswa }}</p>
                 </div>
                 <div class="w-12 h-12 rounded-lg bg-green-100 flex items-center justify-center">
-                    <i class="fas fa-wifi text-green-600 text-xl"></i>
+                    <i class="fas fa-user-graduate text-green-600 text-xl"></i>
                 </div>
             </div>
         </div>
+        
     </div>
     
     <!-- Content Card -->
@@ -146,136 +147,77 @@
                 </thead>
                 <tbody class="divide-y divide-gray-200 bg-white">
                     
-                    <!-- Row 1 -->
+                    @forelse($users as $user)
                     <tr class="hover:bg-gray-50 transition-colors">
+                        
                         <td class="px-6 py-4">
-                            <input type="checkbox" class="rounded">
+                            <input type="checkbox" class="rounded" value="{{ $user->id_user }}">
                         </td>
+                        
                         <td class="px-6 py-4">
                             <div class="flex items-center gap-3">
-                                <img src="{{ asset('images/avatar.jpg') }}" alt="" class="w-10 h-10 rounded-full object-cover border-2">
                                 <div>
-                                    <p class="font-medium text-gray-800">Admin Utama</p>
-                                    <p class="text-xs text-gray-500 hidden sm:block">admin@sekolah.sch.id</p>
+                                    <p class="font-medium text-gray-800">{{ $user->nama_lengkap }}</p>
+                                    <p class="text-xs text-gray-500 hidden sm:block">{{ $user->email }}</p>
                                 </div>
                             </div>
                         </td>
-                        <td class="px-6 py-4 font-mono text-gray-700">admin</td>
-                        <td class="px-6 py-4 text-gray-700 hidden md:table-cell">admin@sekolah.sch.id</td>
+                        
+                        <td class="px-6 py-4 font-mono text-gray-700">{{ $user->username }}</td>
+                        
+                        <td class="px-6 py-4 text-gray-700 hidden md:table-cell">{{ $user->email }}</td>
+                        
                         <td class="px-6 py-4">
-                            <span class="badge badge-admin">
-                                <i class="fas fa-user-shield"></i> Administrator
-                            </span>
+                            @if(($user->nama_role) == 'Admin')
+                                <span class="badge badge-admin">
+                                    <i class="fas fa-user-shield"></i> Administrator
+                                </span>
+                            @elseif(($user->nama_role) == 'Guru')
+                                <span class="badge badge-guru">
+                                    <i class="fas fa-chalkboard-teacher"></i> Guru
+                                </span>
+                            @else
+                                <span class="badge badge-siswa">
+                                    <i class="fas fa-user-graduate"></i> Siswa
+                                </span>
+                            @endif
                         </td>
+                        
                         <td class="px-6 py-4">
                             <span class="inline-flex items-center">
-                                <span class="status-dot status-active"></span>
-                                <span class="text-xs text-gray-600 hidden sm:inline">Aktif</span>
+                                @if(($user->status) == 'Aktif')
+                                    <span class="status-dot status-active bg-green-500"></span> <span class="text-xs text-gray-600 hidden sm:inline ml-1">Aktif</span>
+                                @else
+                                    <span class="status-dot status-inactive bg-red-500"></span>
+                                    <span class="text-xs text-gray-600 hidden sm:inline ml-1">Tidak Aktif</span>
+                                @endif
                             </span>
                         </td>
-                        <td class="px-6 py-4 text-gray-600 text-xs">15 Jan 2024</td>
+                        
+                        <td class="px-6 py-4 text-gray-600 text-xs">
+                            {{ \Carbon\Carbon::parse($user->created_at)->translatedFormat('d M Y') }}
+                        </td>
+                        
                         <td class="px-6 py-4 text-right hidden lg:table-cell">
                             <div class="flex items-center justify-end gap-2">
-                                <button class="icon-btn icon-view" onclick="openModal('modalView1')" title="Lihat Detail">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                                <button class="icon-btn icon-edit" onclick="openModal('modalEdit1')" title="Edit">
+                                <button class="icon-btn icon-edit" onclick="openModal('modalEdit{{ $user->id_user }}')" title="Edit">
                                     <i class="fas fa-pen"></i>
                                 </button>
-                                <button class="icon-btn icon-delete" onclick="confirmDelete(1)" title="Hapus">
+                                <button class="icon-btn icon-delete" onclick="confirmDelete({{ $user->id_user }})" title="Hapus">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </div>
                         </td>
                     </tr>
                     
-                    <!-- Row 2 -->
-                    <tr class="hover:bg-gray-50 transition-colors">
-                        <td class="px-6 py-4">
-                            <input type="checkbox" class="rounded">
-                        </td>
-                        <td class="px-6 py-4">
-                            <div class="flex items-center gap-3">
-                                <img src="{{ asset('images/avatar.jpg') }}" alt="" class="w-10 h-10 rounded-full object-cover border-2">
-                                <div>
-                                    <p class="font-medium text-gray-800">Dr. Ahmad Fauzi, M.Pd.</p>
-                                    <p class="text-xs text-gray-500 hidden sm:block">ahmad.fauzi@sekolah.sch.id</p>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 font-mono text-gray-700">afauzi</td>
-                        <td class="px-6 py-4 text-gray-700 hidden md:table-cell">ahmad.fauzi@sekolah.sch.id</td>
-                        <td class="px-6 py-4">
-                            <span class="badge badge-guru">
-                                <i class="fas fa-chalkboard-teacher"></i> Guru
-                            </span>
-                        </td>
-                        <td class="px-6 py-4">
-                            <span class="inline-flex items-center">
-                                <span class="status-dot status-active"></span>
-                                <span class="text-xs text-gray-600 hidden sm:inline">Aktif</span>
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 text-gray-600 text-xs">12 Feb 2024</td>
-                        <td class="px-6 py-4 text-right hidden lg:table-cell">
-                            <div class="flex items-center justify-end gap-2">
-                                <button class="icon-btn icon-view" onclick="openModal('modalView2')" title="Lihat Detail">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                                <button class="icon-btn icon-edit" onclick="openModal('modalEdit2')" title="Edit">
-                                    <i class="fas fa-pen"></i>
-                                </button>
-                                <button class="icon-btn icon-delete" onclick="confirmDelete(2)" title="Hapus">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
+                    @empty
+                    <tr>
+                        <td colspan="8" class="px-6 py-8 text-center text-gray-500">
+                            Belum ada data pengguna yang ditambahkan.
                         </td>
                     </tr>
+                    @endforelse
                     
-                    <!-- Row 3 -->
-                    <tr class="hover:bg-gray-50 transition-colors">
-                        <td class="px-6 py-4">
-                            <input type="checkbox" class="rounded">
-                        </td>
-                        <td class="px-6 py-4">
-                            <div class="flex items-center gap-3">
-                                <img src="{{ asset('images/avatar.jpg') }}" alt="" class="w-10 h-10 rounded-full object-cover border-2">
-                                <div>
-                                    <p class="font-medium text-gray-800">Siti Nurhaliza</p>
-                                    <p class="text-xs text-gray-500 hidden sm:block">snurhaliza@sekolah.sch.id</p>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 font-mono text-gray-700">snurhaliza</td>
-                        <td class="px-6 py-4 text-gray-700 hidden md:table-cell">snurhaliza@sekolah.sch.id</td>
-                        <td class="px-6 py-4">
-                            <span class="badge badge-siswa">
-                                <i class="fas fa-user-graduate"></i> Siswa
-                            </span>
-                        </td>
-                        <td class="px-6 py-4">
-                            <span class="inline-flex items-center">
-                                <span class="status-dot status-inactive"></span>
-                                <span class="text-xs text-gray-600 hidden sm:inline">Tidak Aktif</span>
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 text-gray-600 text-xs">20 Mar 2024</td>
-                        <td class="px-6 py-4 text-right hidden lg:table-cell">
-                            <div class="flex items-center justify-end gap-2">
-                                <button class="icon-btn icon-view" onclick="openModal('modalView3')" title="Lihat Detail">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                                <button class="icon-btn icon-edit" onclick="openModal('modalEdit3')" title="Edit">
-                                    <i class="fas fa-pen"></i>
-                                </button>
-                                <button class="icon-btn icon-delete" onclick="confirmDelete(3)" title="Hapus">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    
-                    <!-- More rows can be added here... -->
                 </tbody>
             </table>
         </div>
