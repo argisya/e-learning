@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin\Guru;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Helpers\ImageHelper;
+use App\Models\Guru;
 
 class DataGuruController extends Controller
 {
@@ -22,68 +24,122 @@ class DataGuruController extends Controller
 
     public function store(Request $request)
     {
-        $nip = $request->nip;
-        $tempat_lahir = $request->tempat_lahir;
-        $tanggal_lahir = $request->tanggal_lahir;
-        $jenis_kelamin = $request->jenis_kelamin;
-        $agama = $request->agama;
-        $status_pernikahan = $request->status_pernikahan;
-        $no_hp = $request->no_hp;
-        $email = $request->email;
-        $alamat = $request->alamat;
-
-        $check = $request->validate([
-            'nama_lengkap' => 'required',
+        $validatedData = $request->validate([
+            'id_user' => 'required',
             'nip' => 'required|unique:guru',
             'tempat_lahir' => 'required',
             'tanggal_lahir' => 'required',
             'jenis_kelamin' => 'required',
             'agama' => 'required',
             'status_pernikahan' => 'required',
-            'no_hp' => 'required|unique:gurus',
-            'email' => 'required|email|unique:gurus',
-            'alamat' => 'required'
+            'no_hp' => 'required|unique:guru|min:10|max:15',
+            'alamat' => 'required',
+            'foto' => 'image|mimes:jpeg,png,jpg,svg|file|max:2048',
+        ], $messages = [
+            'id_user.required' => 'Nama lengkap harus diisi',
+            'nip.required' => 'NIP harus diisi',
+            'nip.unique' => 'NIP sudah digunakan',
+            'tempat_lahir.required' => 'Tempat lahir harus diisi',
+            'tanggal_lahir.required' => 'Tanggal lahir harus diisi',
+            'jenis_kelamin.required' => 'Jenis kelamin harus dipilih',
+            'agama.required' => 'Agama harus dipilih',
+            'status_pernikahan.required' => 'Status pernikahan harus dipilih',
+            'no_hp.required' => 'No HP harus diisi',
+            'no_hp.unique' => 'No HP sudah digunakan',
+            'alamat.required' => 'Alamat harus diisi',
+            'foto.image' => 'File yang diunggah harus berupa gambar',
+            'foto.mimes' => 'Format gambar yang diperbolehkan: jpeg, png, jpg, svg',
+            'foto.max' => 'Ukuran gambar maksimal 2MB',
         ]);
 
-        $cari = Guru::where('nip', $nip)->first();
-
-        if($cari == null){
-            $guru = new Guru();
-            $guru->nama_lengkap = $nama_lengkap;
-            $guru->nip = $nip;
-            $guru->tempat_lahir = $tempat_lahir;
-            $guru->tanggal_lahir = $tanggal_lahir;
-            $guru->jenis_kelamin = $jenis_kelamin;
-            $guru->agama = $agama;
-            $guru->status_pernikahan = $status_pernikahan;
-            $guru->no_hp = $no_hp;
-            $guru->email = $email;
-            $guru->alamat = $alamat;
-            $guru->save();
-
-            return redirect()->route('admin.guru.data.index')->with('success', 'Data guru berhasil ditambahkan');
-        } else {
-            return redirect()->route('admin.guru.data.index')->with('error', 'Data guru sudah ada');
+        if($request->file('foto')){
+            $file = $request->file('foto');
+            $extension = $file->getClientOriginalExtension();
+            $originalFileName = date('YmdHis') . '_' . uniqid() . '.' . $extension;
+            $directory = 'storage/guru/';
+            ImageHelper::uploadAndResize($file, $directory, $originalFileName, 385, 400);
+            $validatedData['foto'] = $originalFileName;
         }
+
+        Guru::create($validatedData, $messages);
+        return redirect()->route('admin.guru.data.index')->with('success', 'Data guru berhasil ditambahkan');
     }
 
-    public function show($id)
+    public function show(Request $request)
     {
         return view('admin.guru.data.show');
     }
 
-    public function edit($nip)
+    public function edit(Request $request)
     {
-        return view('admin.guru.data.edit');
+        return view('admin.guru.data.edit', [
+            'guru' => DB::table('guru')->join('users', 'guru.id_user', '=', 'users.id_user')->where('guru.id_guru', $request->id_guru)->first()
+        ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $guru = Guru::find($request->nip);
+        $rules = [
+            'id_user' => 'required',
+            'tempat_lahir' => 'required',
+            'tanggal_lahir' => 'required',
+            'jenis_kelamin' => 'required',
+            'agama' => 'required',
+            'status_pernikahan' => 'required',
+            'no_hp' => 'required',
+            'alamat' => 'required',
+            'foto' => 'image|mimes:jpeg,png,jpg,svg|file|max:2048',
+        ];
+        $messages = [
+            'id_user.required' => 'Nama lengkap harus diisi',
+            'tempat_lahir.required' => 'Tempat lahir harus diisi',
+            'tanggal_lahir.required' => 'Tanggal lahir harus diisi',
+            'jenis_kelamin.required' => 'Jenis kelamin harus dipilih',
+            'agama.required' => 'Agama harus dipilih',
+            'status_pernikahan.required' => 'Status pernikahan harus dipilih',
+            'no_hp.required' => 'No HP harus diisi',
+            'alamat.required' => 'Alamat harus diisi',
+            'foto.image' => 'File yang diunggah harus berupa gambar',
+            'foto.mimes' => 'Format gambar yang diperbolehkan: jpeg, png, jpg, svg',
+            'foto.max' => 'Ukuran gambar maksimal 2MB',
+        ];
+        $validatedData = $request->validate($rules, $messages);
+
+        if($request->file('foto')){
+            if($guru->foto){
+                $oldImagePath = public_path('storage/guru/') . $guru->foto;
+                if(file_exists($oldImagePath)){
+                    unlink($oldImagePath);
+                }
+            }
+            $file = $request->file('foto');
+            $extension = $file->getClientOriginalExtension();
+            $originalFileName = date('YmdHis') . '_' . uniqid() . '.' . $extension;
+            $directory = 'storage/guru/';
+            ImageHelper::uploadAndResize($file, $directory, $originalFileName, 385, 400);
+            $validatedData['foto'] = $originalFileName;
+        }
+
+        $guru->update($validatedData);
+        return redirect()->route('admin.guru.data.index')->with('success', 'Data guru berhasil diupdate');
     }
 
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $guru = Guru::find($request->nip);
+        if($guru->foto){
+            $oldImagePath = public_path('storage/guru/') . $guru->foto;
+            if(file_exists($oldImagePath)){
+                unlink($oldImagePath);
+            }
+        }
+        $guru->delete();
+        return redirect()->route('admin.guru.data.index')->with('success', 'Data guru berhasil dihapus');
+    }
+
+    public function autofill(Request $request){
+        $autofill =  DB::table('users')->join('roles', 'roles.id_role', '=', 'users.id_role')->where("users.id_role", 2)->where("nama_lengkap", $request->nama_lengkap)->get();
+        echo json_encode($autofill);
     }
 }

@@ -86,6 +86,7 @@ class DatabaseSeeder extends Seeder
             'status_pernikahan' => 'Menikah',
             'no_hp' => '081234567890',
             'alamat' => 'Jl. Merdeka No. 123, Jakarta',
+            'foto' => null,
             'golongan' => 'IV/a',
             'masa_kerja' => '10',
             'jabatan' => 'Guru Matematika',

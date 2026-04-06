@@ -12,12 +12,12 @@ class Guru extends Model
     protected $table = 'guru';
     protected $primaryKey = 'nip';
 
-    public $incrementing = true;
+    public $incrementing = false;
     protected $keyType = 'string';
 
     protected $fillable = [
         'id_user',
-        'nama_guru',
+        'nip',
         'tempat_lahir',
         'tanggal_lahir',
         'jenis_kelamin',
@@ -25,6 +25,7 @@ class Guru extends Model
         'status_pernikahan',
         'no_hp',
         'alamat',
+        'foto',
         'golongan',
         'masa_kerja', 
         'jabatan',

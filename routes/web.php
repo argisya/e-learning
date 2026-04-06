@@ -50,10 +50,14 @@ Route::get('admin/rapor', [RaporController::class, 'index'])->name('admin.rapor.
 // Admin Guru Routes
 Route::get('admin/guru/dashboard', [DashboardGuruController::class, 'index'])->name('admin.guru.dashboard.index');
 Route::get('admin/guru/data', [DataGuruController::class, 'index'])->name('admin.guru.data.index');
+Route::get('admin/guru/data/autofill', [DataGuruController::class, 'autofill'])->name('admin.guru.data.autofill');
 Route::get('admin/guru/data/create', [DataGuruController::class, 'create'])->name('admin.guru.data.create');
 Route::get('admin/guru/data/edit/{nip}', [DataGuruController::class, 'edit'])->name('admin.guru.data.edit');
 Route::get('admin/guru/jadwal', [JadwalGuruController::class, 'index'])->name('admin.guru.jadwal.index');
 Route::get('admin/guru/absensi', [AbsensiGuruController::class, 'index'])->name('admin.guru.absensi.index');
+Route::post('admin/guru/data/store', [DataGuruController::class, 'store'])->name('admin.guru.data.store');
+Route::get('admin/guru/data/update', [DataGuruController::class, 'update'])->name('admin.guru.data.update');
+Route::get('admin/guru/data/delete/{nip}', [DataGuruController::class, 'destroy'])->name('admin.guru.data.destroy');
 
 // Admin Siswa Routes
 Route::get('admin/siswa/dashboard', [DashboardSiswaController::class, 'index'])->name('admin.siswa.dashboard.index');
