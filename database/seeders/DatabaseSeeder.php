@@ -50,6 +50,7 @@ class DatabaseSeeder extends Seeder
         // Create Users for Guru and Siswa
         $userAdmin = User::create([
             'id_role' => $adminRole->id_role,
+            'nama_lengkap' => 'Admin',
             'username' => 'admin',
             'password' => bcrypt('password123'),
             'email' => 'admin@gmail.com'
@@ -57,6 +58,7 @@ class DatabaseSeeder extends Seeder
 
         $userGuru = User::create([
             'id_role' => $guruRole->id_role,
+            'nama_lengkap' => 'Guru',
             'username' => 'guru',
             'password' => bcrypt('password123'),
             'email' => 'guru@gmail.com'
@@ -64,6 +66,7 @@ class DatabaseSeeder extends Seeder
 
         $userSiswa = User::create([
             'id_role' => $siswaRole->id_role,
+            'nama_lengkap' => 'Siswa',
             'username' => 'siswa',
             'password' => bcrypt('password123'),
             'email' => 'siswa@gmail.com'
@@ -73,7 +76,6 @@ class DatabaseSeeder extends Seeder
         $guru = Guru::create([
             'nip' => 'NIP001',
             'id_user' => $userGuru->id_user,
-            'nama_guru' => 'John Doe',
             'tempat_lahir' => 'Jakarta',
             'tanggal_lahir' => '1980-01-01',
             'jenis_kelamin' => 'L',
@@ -108,7 +110,6 @@ class DatabaseSeeder extends Seeder
             'id_user' => $userSiswa->id_user,
             'id_kelas' => $kelas->id_kelas,
             'nisn' => 1234567890,
-            'nama_siswa' => 'Jane Doe',
             'tempat_lahir' => 'Bandung',
             'tanggal_lahir' => '2005-05-15',
             'jenis_kelamin' => 'P',

@@ -16,7 +16,6 @@ return new class extends Migration
             $table->foreignId('id_user')->constrained('users', 'id_user')->onDelete('cascade');
             $table->foreignId('id_kelas')->constrained('kelas', 'id_kelas')->onDelete('cascade');
             $table->integer('nisn')->unique();
-            $table->string('nama_siswa', 100);
             $table->string('tempat_lahir', 50);
             $table->date('tanggal_lahir');
             $table->enum('jenis_kelamin', ['L', 'P']);
