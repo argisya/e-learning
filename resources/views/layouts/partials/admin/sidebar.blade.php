@@ -121,6 +121,14 @@
                     @endif
                 </a>
             </li>
+
+            <li>
+                <a href="" 
+                   class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl transition-all-300 {{ request()->routeIs('pengumuman') ? 'active' : 'text-gray-600 hover:bg-primary-50' }}">
+                    <i class="fas fa-circle-user w-5 text-center"></i>
+                    <span class="font-medium">Users</span>
+                </a>
+            </li>
         </ul>
         
         <!-- Quick Stats (Optional) -->

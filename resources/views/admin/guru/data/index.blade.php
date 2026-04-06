@@ -28,7 +28,7 @@
             <button type="submit" form="exportForm" class="btn-secondary btn-action px-4 py-2">
                 <i class="fas fa-download mr-2"></i>Export
             </button>
-            <a href="" class="btn-primary btn-action px-4 py-2">
+            <a href="{{ route('admin.guru.data.create') }}" class="btn-primary btn-action px-4 py-2">
                 <i class="fas fa-plus mr-2"></i>Tambah Guru
             </a>
         </div>
@@ -96,7 +96,8 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 bg-white">
-                        @foreach(range(1, 10) as $index)
+                        <!-- Sample Data -->
+                        @foreach(range(1,1) as $index)
                         <tr class="hover:bg-gray-50 transition-colors">
                             <td class="px-6 py-4 text-gray-600">{{ $index }}</td>
                             <td class="px-6 py-4">
@@ -104,8 +105,7 @@
                                     <img src="{{ asset('images/avatar.jpg') }}" alt="" 
                                          class="w-10 h-10 rounded-full object-cover border-2">
                                     <div>
-                                        <p class="font-medium text-gray-800">Dr. Ahmad Fauzi, M.Pd.</p>
-                                        <p class="text-xs text-gray-500">Guru Matematika</p>
+                                        <h1>asep</h1>    
                                     </div>
                                 </div>
                             </td>
@@ -128,7 +128,11 @@
                                     <button class="icon-btn icon-view" onclick="openModal('modalView{{ $index }}')" title="Lihat Detail">
                                         <i class="fas fa-eye"></i>
                                     </button>
-                                    <button class="icon-btn icon-edit" onclick="openModal('modalEdit{{ $index }}')" title="Edit">
+                                    <button 
+                                        type= "button"
+                                        class="icon-btn icon-edit" 
+                                        onclick="window.location.href=`{{ route('admin.guru.data.edit', ['nip']) }}`"
+                                        title="Edit">
                                         <i class="fas fa-pen"></i>
                                     </button>
                                     <button class="icon-btn icon-delete" onclick="confirmDelete({{ $index }})" title="Hapus">
@@ -242,7 +246,7 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 bg-white">
-                        @foreach(range(1, 10) as $index)
+                        @foreach(range(1, 1) as $index)
                         <tr class="hover:bg-gray-50 transition-colors">
                             <td class="px-6 py-4 text-gray-600">{{ $index }}</td>
                             <td class="px-6 py-4">
@@ -250,8 +254,7 @@
                                     <img src="{{ asset('images/avatar.jpg') }}" alt="" 
                                          class="w-10 h-10 rounded-full object-cover border-2">
                                     <div>
-                                        <p class="font-medium text-gray-800">Dr. Ahmad Fauzi, M.Pd.</p>
-                                        <p class="text-xs text-gray-500">NIP: 198501012008011001</p>
+                                        <h1>nama</h1>
                                     </div>
                                 </div>
                             </td>
@@ -370,105 +373,6 @@
                 <button onclick="closeModal('modalView1')" class="btn-primary w-full sm:w-auto">Tutup</button>
                 <button class="mt-3 w-full inline-flex justify-center rounded-md border border-transparent px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Edit Data</button>
             </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Edit -->
-<div id="modalEdit1" class="modal fixed inset-0 z-[100] hidden overflow-y-auto">
-    <div class="flex items-center justify-center min-h-screen px-4">
-        <div class="fixed inset-0 bg-gray-500 bg-opacity-75" onclick="closeModal('modalEdit1')"></div>
-        <div class="relative bg-white rounded-xl max-w-3xl w-full mx-4">
-            <div class="flex items-center justify-between px-6 py-4 border-b">
-                <h3 class="text-lg font-bold text-gray-800">Edit Data Guru</h3>
-                <button onclick="closeModal('modalEdit1')" class="text-gray-400 hover:text-gray-600">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <form class="p-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Nama Lengkap -->
-                    <div class="form-group">
-                        <label for="nama" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap <span class="text-red-500">*</span></label>
-                        <input type="text" id="nama" class="input-field" value="Dr. Ahmad Fauzi, M.Pd." required>
-                    </div>
-                    
-                    <!-- NIP -->
-                    <div class="form-group">
-                        <label for="nip" class="block text-sm font-medium text-gray-700 mb-1">NIP <span class="text-red-500">*</span></label>
-                        <input type="text" id="nip" class="input-field" value="198501012008011001" readonly>
-                    </div>
-                    
-                    <!-- Tempat Lahir -->
-                    <div class="form-group">
-                        <label for="tempat_lahir" class="block text-sm font-medium text-gray-700 mb-1">Tempat Lahir</label>
-                        <input type="text" id="tempat_lahir" class="input-field" value="Bandung">
-                    </div>
-                    
-                    <!-- Tanggal Lahir -->
-                    <div class="form-group">
-                        <label for="tanggal_lahir" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Lahir</label>
-                        <input type="date" id="tanggal_lahir" class="input-field" value="1985-01-15">
-                    </div>
-                    
-                    <!-- Jenis Kelamin -->
-                    <div class="form-group">
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Jenis Kelamin</label>
-                        <div class="flex items-center gap-4">
-                            <label class="flex items-center gap-2 cursor-pointer">
-                                <input type="radio" name="jk" class="form-radio" checked>
-                                <span>Laki-laki</span>
-                            </label>
-                            <label class="flex items-center gap-2 cursor-pointer">
-                                <input type="radio" name="jk" class="form-radio">
-                                <span>Perempuan</span>
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <!-- Agama -->
-                    <div class="form-group">
-                        <label for="agama" class="block text-sm font-medium text-gray-700 mb-1">Agama</label>
-                        <select id="agama" class="form-select">
-                            <option value="Islam" selected>Islam</option>
-                            <option value="Kristen Protestan">Kristen Protestan</option>
-                            <option value="Kristen Katolik">Kristen Katolik</option>
-                            <option value="Hindu">Hindu</option>
-                            <option value="Buddha">Buddha</option>
-                            <option value="Konghucu">Konghucu</option>
-                        </select>
-                    </div>
-                    
-                    <!-- Status Perkawinan -->
-                    <div class="form-group">
-                        <label for="status_perkawinan" class="block text-sm font-medium text-gray-700 mb-1">Status Perkawinan</label>
-                        <select id="status_perkawinan" class="form-select">
-                            <option value="Belum Kawin">Belum Kawin</option>
-                            <option value="Kawin" selected>Menikah</option>
-                            <option value="Cerai Hidup">Cerai Hidup</option>
-                            <option value="Cerai Mati">Cerai Mati</option>
-                        </select>
-                    </div>
-                    
-                    <!-- No HP -->
-                    <div class="form-group">
-                        <label for="no_hp" class="block text-sm font-medium text-gray-700 mb-1">No. Handphone</label>
-                        <input type="tel" id="no_hp" class="input-field" value="+62 812-3456-7890">
-                    </div>
-                    
-                    <!-- Alamat -->
-                    <div class="form-group col-span-1 md:col-span-2">
-                        <label for="alamat" class="block text-sm font-medium text-gray-700 mb-1">Alamat Lengkap</label>
-                        <textarea id="alamat" class="input-field" rows="3">Jl. Merdeka No. 123, Kota Bandung, Jawa Barat 40111</textarea>
-                    </div>
-                </div>
-                
-                <!-- Form Actions -->
-                <div class="flex justify-end gap-3 mt-8 pt-6 border-t">
-                    <button type="button" onclick="closeModal('modalEdit1')" class="btn-secondary">Batal</button>
-                    <button type="submit" class="btn-primary">Simpan Perubahan</button>
-                </div>
-            </form>
         </div>
     </div>
 </div>
