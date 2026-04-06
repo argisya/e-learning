@@ -59,6 +59,8 @@ class DataGuruController extends Controller
             $directory = 'storage/guru/';
             ImageHelper::uploadAndResize($file, $directory, $originalFileName, 385, 400);
             $validatedData['foto'] = $originalFileName;
+        }else{
+            $validatedData['foto'] = 'default.png';
         }
 
         Guru::create($validatedData, $messages);
@@ -73,7 +75,7 @@ class DataGuruController extends Controller
     public function edit(Request $request)
     {
         return view('admin.guru.data.edit', [
-            'guru' => DB::table('guru')->join('users', 'guru.id_user', '=', 'users.id_user')->where('guru.id_guru', $request->id_guru)->first()
+            'guru' => DB::table('guru')->join('users', 'guru.id_user', '=', 'users.id_user')->where('guru.nip', $request->nip)->first()
         ]);
     }
 
@@ -119,6 +121,8 @@ class DataGuruController extends Controller
             $directory = 'storage/guru/';
             ImageHelper::uploadAndResize($file, $directory, $originalFileName, 385, 400);
             $validatedData['foto'] = $originalFileName;
+        }elseif($guru->foto){
+            $validatedData['foto'] = 'default.png';
         }
 
         $guru->update($validatedData);
