@@ -19,7 +19,9 @@ class DataGuruController extends Controller
 
     public function create()
     {
-        return view('admin.guru.data.create');
+        return view('admin.guru.data.create', [
+            'users' => DB::table('users')->join('roles', 'roles.id_role', '=', 'users.id_role')->where("users.id_role", 2)->get()
+        ]);
     }
 
     public function store(Request $request)
@@ -67,21 +69,16 @@ class DataGuruController extends Controller
         return redirect()->route('admin.guru.data.index')->with('success', 'Data guru berhasil ditambahkan');
     }
 
-    public function show(Request $request)
-    {
-        return view('admin.guru.data.show');
-    }
-
     public function edit(Request $request)
     {
         return view('admin.guru.data.edit', [
-            'guru' => DB::table('guru')->join('users', 'guru.id_user', '=', 'users.id_user')->where('guru.nip', $request->nip)->first()
+            'guru' => Guru::findOrFail($request->nip) 
         ]);
     }
 
     public function update(Request $request)
     {
-        $guru = Guru::find($request->nip);
+        $guru = Guru::findOrFail($request->nip);
         $rules = [
             'id_user' => 'required',
             'tempat_lahir' => 'required',
@@ -131,7 +128,7 @@ class DataGuruController extends Controller
 
     public function destroy(Request $request)
     {
-        $guru = Guru::find($request->nip);
+        $guru = Guru::findOrFail($request->nip);
         if($guru->foto){
             $oldImagePath = public_path('storage/guru/') . $guru->foto;
             if(file_exists($oldImagePath)){
