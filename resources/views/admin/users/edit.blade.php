@@ -5,34 +5,36 @@
 @section('content')
     <div class="min-h-screen py-8 px-4">
         
-        <!-- Header Simple -->
-        <div class="max-w-4xl mx-auto mb-8 flex items-center justify-between">
+        <!-- Header -->
+        <div class="max-w-3xl mx-auto mb-8 flex items-center justify-between">
             <div>
-                <h1 class="text-2xl lg:text-3xl font-bold text-gray-800">Edit Data Guru</h1>
-                <p class="text-gray-500 mt-1 text-sm">{{ __('Update data berikut jika diperlukan.') }}</p>
+                <h1 class="text-2xl lg:text-3xl font-bold text-gray-800">Edit User</h1>
+                <p class="text-gray-500 mt-1 text-sm">{{ __('Update data users berikut jika diperlukan.') }}</p>
             </div>
             <div class="flex items-center gap-3">
-                <button onclick="openModal('modalViewDetail')" class="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors">
-                    <i class="fas fa-eye"></i> Lihat Detail
+                <button onclick="openModal('modalViewDetail')" class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors font-medium">
+                    <i class="fas fa-eye mr-2"></i>Lihat Detail
                 </button>
-                <a href="{{ route('admin.users.index') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-white text-gray-700 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-                    <i class="fas fa-arrow-left"></i> Kembali
+                <a href="{{ route('admin.users.index') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors font-medium">
+                    <i class="fas fa-arrow-left mr-2"></i>Kembali
                 </a>
             </div>
         </div>
         
         <!-- Content Card -->
-        <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-sm border overflow-hidden">
+        <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-sm border overflow-hidden">
+            
+            <!-- Progress Bar -->
             <div class="relative h-1 bg-gray-200">
                 <div class="absolute left-0 top-0 h-full gradient-bg" style="width: 70%"></div>
             </div>
             
-            <form action="{{ route('admin.users.update', $users->id_user) }}" method="POST" enctype="multipart/form-data" novalidate id="editForm" class="p-6 lg:p-8">
+            <form action="" method="POST" enctype="multipart/form-data" novalidate id="editForm" class="p-6 lg:p-8">
                 
                 @csrf
                 @method('PUT')
                 
-                <!-- Profile Photo -->
+                <!-- Profile Photo Section -->
                 <div class="flex flex-col sm:flex-row items-start gap-6 mb-8 pb-8 border-b">
                     <div class="relative">
                         <img src="{{ asset($users->foto ?? 'images/avatar.jpg') }}" alt="Profile" class="w-24 h-24 rounded-xl object-cover border-4 border-primary-100">
@@ -43,144 +45,239 @@
                     </div>
                     <div class="flex-1">
                         <h3 class="text-xl font-bold text-gray-800">{{ $users->nama_lengkap }}</h3>
-                        <p class="text-gray-500 text-sm font-mono">{{ $users->nip }}</p>
+                        <p class="text-gray-500 text-sm font-mono">{{ $users->username }}</p>
                         <div class="flex items-center gap-2 mt-2">
-                            <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs bg-blue-50 text-blue-700 font-medium">
-                                <i class="fas fa-check-circle"></i> {{ ucfirst($users->status_kepagawaian) }}
+                            <span class="badge badge-{{ $users->role === 'admin' ? 'admin' : ($users->role === 'guru' ? 'guru' : ($users->role === 'siswa' ? 'siswa' : 'staff')) }}">
+                                <i class="fas fa-users-{{ $users->role === 'admin' ? 'shield' : ($users->role === 'guru' ? 'chalkboard-teacher' : ($users->role === 'siswa' ? 'graduate' : 'tag')) }}"></i>
+                                {{ ucfirst($users->role) }}
                             </span>
-                            <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs bg-purple-50 text-purple-700 font-medium">
-                                <i class="fas fa-chalkboard-teacher"></i> {{ ucfirst($users->nomenklatur) }}
+                            <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs {{ $users->status === 'active' ? 'bg-green-50 text-green-700' : 'bg-gray-100 text-gray-700' }}">
+                                <span class="status-dot {{ $users->status === 'active' ? 'status-active' : 'status-inactive' }}"></span>
+                                {{ ucfirst($users->status) }}
                             </span>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Section 1: Identitas -->
+                <!-- Section 1: Informasi Akun -->
                 <div class="mb-8 pb-8 border-b">
                     <h2 class="text-lg font-semibold text-gray-800 mb-6 flex items-center gap-2">
-                        <span class="w-8 h-8 rounded-lg bg-primary-100 flex items-center justify-center text-primary-600 text-sm"><i class="fas fa-user-circle"></i></span>
-                        Data Identitas Pribadi
+                        <span class="w-8 h-8 rounded-lg bg-primary-100 flex items-center justify-center text-primary-600 text-sm">
+                            <i class="fas fa-info-circle"></i>
+                        </span>
+                        Informasi Akun
                     </h2>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-6">
+                        
+                        <!-- Nama Lengkap -->
                         <div>
-                            <label for="nama_lengkap" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
-                            <input type="text" id="nama_lengkap" name="nama_lengkap" value="{{ old('nama_lengkap', $users->nama_lengkap) }}" required class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
+                            <label for="nama_lengkap" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap <span class="text-red-500">*</span></label>
+                            <input type="text" id="nama_lengkap" name="nama_lengkap" value="{{ old('nama_lengkap', $users->nama_lengkap) }}" placeholder="Masukkan nama lengkap sesuai KTP" required autocomplete="off" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
+                            @error('nama_lengkap')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                         </div>
+                        
+                        <!-- Username -->
                         <div>
-                            <label for="nip" class="block text-sm font-medium text-gray-700 mb-1">NIP / NKK</label>
-                            <input type="text" id="nip" name="nip" value="{{ old('nip', $users->nip) }}" readonly class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg bg-gray-100 cursor-not-allowed text-gray-500">
-                        </div>  
-                        <div>
-                            <label for="tempat_lahir" class="block text-sm font-medium text-gray-700 mb-1">Tempat Lahir</label>
-                            <input type="text" id="tempat_lahir" name="tempat_lahir" value="{{ old('tempat_lahir', $users->tempat_lahir) }}" required class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
+                            <label for="username" class="block text-sm font-medium text-gray-700 mb-1">Username <span class="text-red-500">*</span></label>
+                            <div class="relative">
+                                <i class="fas fa-users absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                                <input type="text" id="username" name="username" value="{{ old('username', $users->username) }}" placeholder="Pilih username unik" required autocomplete="off" class="w-full pl-10 pr-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">Minimal 6 karakter, hanya huruf dan angka</p>
+                            @error('username')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                         </div>
+                        
+                        <!-- Email -->
                         <div>
-                            <label for="tanggal_lahir" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Lahir</label>
-                            <input type="date" id="tanggal_lahir" name="tanggal_lahir" value="{{ old('tanggal_lahir', $users->tanggal_lahir) }}" required class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email <span class="text-red-500">*</span></label>
+                            <div class="relative">
+                                <i class="fas fa-envelope absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                                <input type="email" id="email" name="email" value="{{ old('email', $users->email) }}" placeholder="nama@email.com" required autocomplete="email" class="w-full pl-10 pr-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
+                            </div>
+                            @error('email')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                         </div>
+                        
+                        <!-- Role -->
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Jenis Kelamin</label>
+                            <label for="role" class="block text-sm font-medium text-gray-700 mb-2">Role / Peran <span class="text-red-500">*</span></label>
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                                
+                                <!-- Admin -->
+                                <label class="relative cursor-pointer">
+                                    <input type="radio" name="role" value="admin" {{ old('role', $users->role) === 'admin' ? 'checked' : '' }} required onchange="showAdditionalFields(this.value)">
+                                    <div class="p-4 border-2 border-gray-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-all group {{ old('role', $users->role) === 'admin' ? 'border-primary-500 bg-primary-50' : '' }}">
+                                        <div class="w-10 h-10 rounded-lg bg-red-100 flex items-center justify-center mb-2 group-hover:bg-red-500 group-hover:text-white transition-colors {{ old('role', $users->role) === 'admin' ? 'bg-red-500 text-white' : 'text-red-600' }}">
+                                            <i class="fas fa-users-shield text-lg"></i>
+                                        </div>
+                                        <p class="text-sm font-medium text-gray-700 text-center">Administrator</p>
+                                    </div>
+                                </label>
+                                
+                                <!-- Guru -->
+                                <label class="relative cursor-pointer">
+                                    <input type="radio" name="role" value="guru" {{ old('role', $users->role) === 'guru' ? 'checked' : '' }} required onchange="showAdditionalFields(this.value)">
+                                    <div class="p-4 border-2 border-gray-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-all group {{ old('role', $users->role) === 'guru' ? 'border-primary-500 bg-primary-50' : '' }}">
+                                        <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center mb-2 group-hover:bg-blue-500 group-hover:text-white transition-colors {{ old('role', $users->role) === 'guru' ? 'bg-blue-500 text-white' : 'text-blue-600' }}">
+                                            <i class="fas fa-chalkboard-teacher text-lg"></i>
+                                        </div>
+                                        <p class="text-sm font-medium text-gray-700 text-center">Guru</p>
+                                    </div>
+                                </label>
+                                
+                                <!-- Siswa -->
+                                <label class="relative cursor-pointer">
+                                    <input type="radio" name="role" value="siswa" {{ old('role', $users->role) === 'siswa' ? 'checked' : '' }} required onchange="showAdditionalFields(this.value)">
+                                    <div class="p-4 border-2 border-gray-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-all group {{ old('role', $users->role) === 'siswa' ? 'border-primary-500 bg-primary-50' : '' }}">
+                                        <div class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center mb-2 group-hover:bg-green-500 group-hover:text-white transition-colors {{ old('role', $users->role) === 'siswa' ? 'bg-green-500 text-white' : 'text-green-600' }}">
+                                            <i class="fas fa-users-graduate text-lg"></i>
+                                        </div>
+                                        <p class="text-sm font-medium text-gray-700 text-center">Siswa</p>
+                                    </div>
+                                </label>
+                                
+                                <!-- Staff -->
+                                <label class="relative cursor-pointer">
+                                    <input type="radio" name="role" value="staff" {{ old('role', $users->role) === 'staff' ? 'checked' : '' }} required onchange="showAdditionalFields(this.value)">
+                                    <div class="p-4 border-2 border-gray-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-all group {{ old('role', $users->role) === 'staff' ? 'border-primary-500 bg-primary-50' : '' }}">
+                                        <div class="w-10 h-10 rounded-lg bg-yellow-100 flex items-center justify-center mb-2 group-hover:bg-yellow-500 group-hover:text-white transition-colors {{ old('role', $users->role) === 'staff' ? 'bg-yellow-500 text-white' : 'text-yellow-600' }}">
+                                            <i class="fas fa-users-tag text-lg"></i>
+                                        </div>
+                                        <p class="text-sm font-medium text-gray-700 text-center">Staff</p>
+                                    </div>
+                                </label>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-2">* Pilih role untuk menentukan hak akses users</p>
+                        </div>
+                        
+                        <!-- Status Akun -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Status Akun <span class="text-red-500">*</span></label>
                             <div class="flex items-center gap-6">
                                 <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="jenis_kelamin" value="Laki-laki" {{ old('jenis_kelamin', $users->jenis_kelamin) === 'Laki-laki' ? 'checked' : '' }}>
-                                    <span class="text-gray-700">Laki-laki</span>
+                                    <input type="radio" name="status" value="active" {{ old('status', $users->status) === 'active' ? 'checked' : '' }}>
+                                    <div class="flex items-center gap-1">
+                                        <span class="status-dot status-active"></span>
+                                        <span class="text-gray-700">Aktif</span>
+                                    </div>
                                 </label>
                                 <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="jenis_kelamin" value="Perempuan" {{ old('jenis_kelamin', $users->jenis_kelamin) === 'Perempuan' ? 'checked' : '' }}>
-                                    <span class="text-gray-700">Perempuan</span>
+                                    <input type="radio" name="status" value="inactive" {{ old('status', $users->status) === 'inactive' ? 'checked' : '' }}>
+                                    <div class="flex items-center gap-1">
+                                        <span class="status-dot status-inactive"></span>
+                                        <span class="text-gray-700">Tidak Aktif</span>
+                                    </div>
                                 </label>
                             </div>
                         </div>
+                    </div>
+                </div>
+                
+                <!-- Section 2: Pengaturan Password -->
+                <div class="mb-8 pb-8 border-b">
+                    <h2 class="text-lg font-semibold text-gray-800 mb-6 flex items-center gap-2">
+                        <span class="w-8 h-8 rounded-lg bg-primary-100 flex items-center justify-center text-primary-600 text-sm">
+                            <i class="fas fa-key"></i>
+                        </span>
+                        Atur Password Baru
+                    </h2>
+                    
+                    <div class="space-y-6">
+                        
+                        <!-- Current Password -->
                         <div>
-                            <label for="agama" class="block text-sm font-medium text-gray-700 mb-1">Agama</label>
-                            <select id="agama" name="agama" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
-                                @foreach(['Islam', 'Kristen Protestan', 'Kristen Katolik', 'Hindu', 'Buddha', 'Konghucu'] as $religion)
-                                    <option value="{{ $religion }}" {{ old('agama', $users->agama) === $religion ? 'selected' : '' }}>{{ ucfirst($religion) }}</option>
-                                @endforeach
-                            </select>
+                            <label for="current_password" class="block text-sm font-medium text-gray-700 mb-1">Password Saat Ini</label>
+                            <div class="relative">
+                                <i class="fas fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                                <input type="password" id="current_password" name="current_password" placeholder="Masukkan password saat ini" autocomplete="current-password" class="w-full pl-10 pr-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">Wajib diisi jika ingin mengubah password</p>
                         </div>
+                        
+                        <!-- New Password -->
                         <div>
-                            <label for="status_pernikahan" class="block text-sm font-medium text-gray-700 mb-1">Status Pernikahan</label>
-                            <select id="status_pernikahan" name="status_pernikahan" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
-                                <option value="Belum Kawin" {{ old('status_pernikahan', $users->status_pernikahan) === 'Belum Kawin' ? 'selected' : '' }}>Belum Kawin</option>
-                                <option value="Kawin" {{ old('status_pernikahan', $users->status_pernikahan) === 'Kawin' ? 'selected' : '' }}>Menikah</option>
-                                <option value="Cerai Hidup" {{ old('status_pernikahan', $users->status_pernikahan) === 'Cerai Hidup' ? 'selected' : '' }}>Cerai Hidup</option>
-                                <option value="Cerai Mati" {{ old('status_pernikahan', $users->status_pernikahan) === 'Cerai Mati' ? 'selected' : '' }}>Cerai Mati</option>
-                            </select>
+                            <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password Baru <span class="text-gray-500 font-normal">(Opsional)</span></label>
+                            <div class="relative">
+                                <i class="fas fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                                <input type="password" id="password" name="password" placeholder="Min. 8 karakter, gabungan huruf & angka" autocomplete="new-password" onkeyup="checkStrength(this.value)" class="w-full pl-10 pr-12 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
+                                <div id="strengthMeter" class="strength-meter hidden"></div>
+                            </div>
+                            <div class="flex items-center gap-2 mt-2">
+                                <span id="strengthText" class="text-xs font-medium"></span>
+                                <label class="flex items-center gap-1 cursor-pointer text-xs text-gray-600">
+                                    <input type="checkbox" onchange="togglePasswordVisibility('password', this)"> Lihat Password
+                                </label>
+                            </div>
                         </div>
+                        
+                        <!-- Konfirmasi Password -->
                         <div>
-                            <label for="no_hp" class="block text-sm font-medium text-gray-700 mb-1">Nomor Handphone</label>
-                            <input type="tel" id="no_hp" name="no_hp" value="{{ old('no_hp', $users->no_hp) }}" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
+                            <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mb-1">Konfirmasi Password <span class="text-gray-500 font-normal">(Opsional)</span></label>
+                            <div class="relative">
+                                <i class="fas fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                                <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Ulangi password baru" autocomplete="new-password" onkeyup="verifyPasswordMatch(this.value)" class="w-full pl-10 pr-10 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
+                                <i id="matchIcon" class="fas fa-check absolute right-3 top-1/2 -translate-y-1/2 text-green-500 hidden"></i>
+                                <i id="unmatchIcon" class="fas fa-times absolute right-3 top-1/2 -translate-y-1/2 text-red-500 hidden"></i>
+                            </div>
                         </div>
-                        <div class="md:col-span-2">
-                            <label for="alamat" class="block text-sm font-medium text-gray-700 mb-1">Alamat Lengkap</label>
-                            <textarea id="alamat" name="alamat" rows="3" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all resize-none">{{ old('alamat', $users->alamat) }}</textarea>
+                        
+                        <!-- Keep Same Password -->
+                        <div class="flex items-center gap-2 p-4 bg-gray-50 rounded-lg">
+                            <input type="checkbox" id="keep_same" checked onchange="disableNewPasswordFields(this.checked)">
+                            <label for="keep_same" class="font-medium text-gray-800">Simpan Password Sama Seperti Sebelumnya</label>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Section 2: Kepegawaian -->
-                <div class="mb-8 pb-8 border-b">
+                <!-- Section 3: Pengaturan Tambahan -->
+                <div id="additionalSettings" class="mb-8 pb-8 border-b hidden">
                     <h2 class="text-lg font-semibold text-gray-800 mb-6 flex items-center gap-2">
-                        <span class="w-8 h-8 rounded-lg bg-primary-100 flex items-center justify-center text-primary-600 text-sm"><i class="fas fa-briefcase"></i></span>
-                        Data Kepegawaian & Jabatan
+                        <span class="w-8 h-8 rounded-lg bg-primary-100 flex items-center justify-center text-primary-600 text-sm">
+                            <i class="fas fa-cog"></i>
+                        </span>
+                        Pengaturan Tambahan
                     </h2>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="status_kepagawaian" class="block text-sm font-medium text-gray-700 mb-1">Status Kepegawaian</label>
-                            <select id="status_kepagawaian" name="status_kepagawaian" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
-                                <option value="PNS" {{ old('status_kepagawaian', $users->status_kepagawaian) === 'PNS' ? 'selected' : '' }}>Pegawai Negeri Sipil</option>
-                                <option value="PPPK" {{ old('status_kepagawaian', $users->status_kepagawaian) === 'PPPK' ? 'selected' : '' }}>PPPK</option>
-                                <option value="TKS" {{ old('status_kepagawaian', $users->status_kepagawaian) === 'TKS' ? 'selected' : '' }}>Tenaga Kontrak Sekolah</option>
-                                <option value="Honorer" {{ old('status_kepagawaian', $users->status_kepagawaian) === 'Honorer' ? 'selected' : '' }}>Honorer Daerah</option>
-                            </select>
+                    <div class="space-y-6">
+                        
+                        <!-- Kirim Email Perubahan -->
+                        <div class="flex items-start gap-4 p-4 bg-gray-50 rounded-lg">
+                            <input type="checkbox" id="send_email_change" checked onchange="enableDisableFields()">
+                            <div class="flex-1">
+                                <label for="send_email_change" class="font-medium text-gray-800">Kirim Email Notifikasi Perubahan</label>
+                                <p class="text-sm text-gray-500 mt-1">Kirim email ke users mengenai perubahan yang dilakukan</p>
+                            </div>
                         </div>
-                        <div>
-                            <label for="nomenklatur" class="block text-sm font-medium text-gray-700 mb-1">Nomenklatur</label>
-                            <input type="text" id="nomenklatur" name="nomenklatur" value="{{ old('nomenklatur', $users->nomenklatur) }}" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
+                        
+                        <!-- Subject Email -->
+                        <div id="subjectEmailField" class="opacity-100 transition-opacity">
+                            <label for="email_subject" class="block text-sm font-medium text-gray-700 mb-1">Subjek Email</label>
+                            <input type="text" id="email_subject" value="Notifikasi Perubahan Data User" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
                         </div>
-                        <div>
-                            <label for="jabatan_struktural" class="block text-sm font-medium text-gray-700 mb-1">Jabatan Struktural</label>
-                            <select id="jabatan_struktural" name="jabatan_struktural" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
-                                <option value="">Tidak ada</option>
-                                <option value="Kepala Sekolah" {{ old('jabatan_struktural', $users->jabatan_struktural) === 'Kepala Sekolah' ? 'selected' : '' }}>Kepala Sekolah</option>
-                                <option value="Wakil Kepala Sekolah" {{ old('jabatan_struktural', $users->jabatan_struktural) === 'Wakil Kepala Sekolah' ? 'selected' : '' }}>Wakil Kepala Sekolah</option>
-                                <option value="Guru BK" {{ old('jabatan_struktural', $users->jabatan_struktural) === 'Guru BK' ? 'selected' : '' }}>Guru BK</option>
-                                <option value="Koordinator" {{ old('jabatan_struktural', $users->jabatan_struktural) === 'Koordinator' ? 'selected' : '' }}>Koordinator</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="nomor_sk_jabatan" class="block text-sm font-medium text-gray-700 mb-1">Nomor SK Jabatan</label>
-                            <input type="text" id="nomor_sk_jabatan" name="nomor_sk_jabatan" value="{{ old('nomor_sk_jabatan', $users->nomor_sk_jabatan) }}" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
-                        </div>
-                        <div>
-                            <label for="tanggal_sk_jabatan" class="block text-sm font-medium text-gray-700 mb-1">Tanggal SK Jabatan</label>
-                            <input type="date" id="tanggal_sk_jabatan" name="tanggal_sk_jabatan" value="{{ old('tanggal_sk_jabatan', $users->tanggal_sk_jabatan) }}" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
-                        </div>
-                        <div>
-                            <label for="masa_kerja" class="block text-sm font-medium text-gray-700 mb-1">Masa Kerja (Tahun)</label>
-                            <input type="number" id="masa_kerja" name="masa_kerja" value="{{ old('masa_kerja', $users->masa_kerja) }}" min="0" max="50" step="0.5" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
-                        </div>
-                        <div>
-                            <label for="pangkat_golongan" class="block text-sm font-medium text-gray-700 mb-1">Pangkat / Golongan</label>
-                            <select id="pangkat_golongan" name="pangkat_golongan" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
-                                <option value="Penata Muda III/a" {{ old('pangkat_golongan', $users->pangkat_golongan) === 'Penata Muda III/a' ? 'selected' : '' }}>Penata Muda III/a</option>
-                                <option value="Penata Muda II/3b" {{ old('pangkat_golongan', $users->pangkat_golongan) === 'Penata Muda II/3b' ? 'selected' : '' }}>Penata Muda II/3b</option>
-                                <option value="Penata Muda Tingkat I III/c" {{ old('pangkat_golongan', $users->pangkat_golongan) === 'Penata Muda Tingkat I III/c' ? 'selected' : '' }}>Penata Muda Tingkat I III/c</option>
-                                <option value="Penata III/d" {{ old('pangkat_golongan', $users->pangkat_golongan) === 'Penata III/d' ? 'selected' : '' }}>Penata III/d</option>
-                            </select>
+                        
+                        <!-- Email Body -->
+                        <div id="bodyEmailField" class="opacity-100 transition-opacity">
+                            <label for="email_body" class="block text-sm font-medium text-gray-700 mb-1">Isi Email</label>
+                            <textarea id="email_body" rows="3" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all resize-none">Yang terhormat {{ $users->nama_lengkap }},
+
+Kami ingin memberitahukan bahwa ada perubahan pada akun Anda di sistem E-Learning Platform.
+
+Detail perubahan:
+Role: {{ ucfirst(old('role', $users->role)) }}
+Status: {{ ucfirst(old('status', $users->status)) }}
+
+Jika ada pertanyaan atau ketidaksesuaian, silakan hubungi administrator.
+
+Terima kasih,
+Tim E-Learning</textarea>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Form Actions -->
                 <div class="flex flex-col sm:flex-row justify-between gap-3 pt-6 border-t">
-                    <button 
-                    type="button" onclick="openModal('modalDeleteConfirmation')" 
-                    class="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors font-medium">
-                        <i class="fas fa-trash-alt"></i> Hapus Data
+                    <button type="button" onclick="openModal('modalDeleteConfirmation')" class="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors font-medium">
+                        <i class="fas fa-trash-alt"></i> Hapus User
                     </button>
                     <button type="submit" class="inline-flex items-center justify-center gap-2 px-6 py-2.5 gradient-bg text-white rounded-lg hover:opacity-90 transition-all font-medium shadow-md">
                         <i class="fas fa-save"></i> Simpan Perubahan
@@ -188,96 +285,251 @@
                 </div>
             </form>
         </div>
-        
-        <!-- Modal View Detail -->
-        <div id="modalViewDetail" class="fixed inset-0 z-[100] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-            <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true" onclick="closeModal('modalViewDetail')"></div>
-                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-                <div class="inline-block align-bottom bg-white rounded-xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full max-h-[90vh] overflow-y-auto">
-                    <div class="sticky top-0 bg-gradient-to-r from-primary-500 to-secondary-500 px-6 py-4 text-white flex items-center justify-between">
-                        <h3 class="text-lg font-bold">Detail Data Guru</h3>
-                        <button onclick="closeModal('modalViewDetail')" class="hover:text-gray-200"><i class="fas fa-times"></i></button>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center gap-4 mb-6 pb-6 border-b">
-                            <img src="{{ asset($users->foto ?? 'images/avatar.jpg') }}" alt="Profile" class="w-20 h-20 rounded-full object-cover border-4 border-primary-100">
-                            <div>
-                                <h4 class="text-xl font-bold text-gray-800">{{ $users->nama_lengkap }}</h4>
-                                <p class="text-sm text-gray-500">{{ $users->nomenklatur }}</p>
-                                <p class="text-xs text-gray-400">NIP: {{ $users->nip }}</p>
-                            </div>
+    </div>
+    @endsection
+    
+    <!-- ================= MODALS ================= -->
+    
+    <!-- Modal View Detail -->
+    <div id="modalViewDetail" class="fixed inset-0 z-[100] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true" onclick="closeModal('modalViewDetail')"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-white rounded-xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-md sm:w-full modal-content">
+                <div class="sticky top-0 bg-gradient-to-r from-primary-500 to-secondary-500 px-6 py-4 text-white flex items-center justify-between">
+                    <h3 class="text-lg font-bold">Detail User</h3>
+                    <button onclick="closeModal('modalViewDetail')" class="hover:text-gray-200"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center gap-4 mb-6 pb-6 border-b">
+                        <img src="{{ asset($users->foto ?? 'images/avatar.jpg') }}" alt="Profile" class="w-20 h-20 rounded-full object-cover border-4 border-primary-100">
+                        <div>
+                            <h4 class="text-xl font-bold text-gray-800">{{ $users->nama_lengkap }}</h4>
+                            <span class="badge badge-{{ $users->role === 'admin' ? 'admin' : ($users->role === 'guru' ? 'guru' : ($users->role === 'siswa' ? 'siswa' : 'staff')) }}">
+                                <i class="fas fa-users-{{ $users->role === 'admin' ? 'shield' : ($users->role === 'guru' ? 'chalkboard-teacher' : ($users->role === 'siswa' ? 'graduate' : 'tag')) }}"></i>
+                                {{ ucfirst($users->role) }}
+                            </span>
+                            <p class="text-xs text-gray-400 mt-1">ID: {{ $users->id }}</p>
                         </div>
-                        <dl class="space-y-4 text-sm">
-                            <div class="grid grid-cols-2 gap-4">
-                                <dt class="font-medium text-gray-500">Tanggal Lahir</dt>
-                                <dd class="text-gray-800">{{ \Carbon\Carbon::parse($users->tanggal_lahir)->isoFormat('D MMMM YYYY') }}</dd>
-                                
-                                <dt class="font-medium text-gray-500">Tempat Lahir</dt>
-                                <dd class="text-gray-800">{{ $users->tempat_lahir }}</dd>
-                                
-                                <dt class="font-medium text-gray-500">Jenis Kelamin</dt>
-                                <dd class="text-gray-800">{{ $users->jenis_kelamin }}</dd>
-                                
-                                <dt class="font-medium text-gray-500">Agama</dt>
-                                <dd class="text-gray-800">{{ $users->agama }}</dd>
-                                
-                                <dt class="font-medium text-gray-500">Status Pernikahan</dt>
-                                <dd class="text-gray-800">{{ $users->status_pernikahan }}</dd>
-                                
-                                <dt class="font-medium text-gray-500">No HP</dt>
-                                <dd class="text-gray-800">{{ $users->no_hp }}</dd>
-                            </div>
+                    </div>
+                    <dl class="space-y-4 text-sm">
+                        <div class="grid grid-cols-2 gap-4">
+                            <dt class="font-medium text-gray-500">Username</dt>
+                            <dd class="text-gray-800">{{ $users->username }}</dd>
                             
-                            <div class="pt-4 border-t">
-                                <dt class="font-medium text-gray-500">Status Kepegawaian</dt>
-                                <dd class="text-gray-800">{{ $users->status_kepagawaian }}</dd>
-                                
-                                <dt class="font-medium text-gray-500">Masa Kerja</dt>
-                                <dd class="text-gray-800">{{ $users->masa_kerja }} Tahun</dd>
-                            </div>
-                        </dl>
-                    </div>
-                    <div class="sticky bottom-0 bg-gray-50 px-6 py-4 border-t">
-                        <button onclick="closeModal('modalViewDetail')" class="gradient-bg text-white w-full px-4 py-2.5 rounded-lg hover:opacity-90 transition-all font-medium">Tutup</button>
-                    </div>
+                            <dt class="font-medium text-gray-500">Email</dt>
+                            <dd class="text-gray-800">{{ $users->email }}</dd>
+                            
+                            <dt class="font-medium text-gray-500">Status</dt>
+                            <dd class="text-gray-800">
+                                <span class="inline-flex items-center gap-1">
+                                    <span class="status-dot {{ $users->status === 'active' ? 'status-active' : 'status-inactive' }}"></span>
+                                    {{ ucfirst($users->status) }}
+                                </span>
+                            </dd>
+                            
+                            <dt class="font-medium text-gray-500">Dibuat</dt>
+                            <dd class="text-gray-800">{{ \Carbon\Carbon::parse($users->created_at)->isoFormat('D MMMM YYYY') }}</dd>
+                            
+                            <dt class="font-medium text-gray-500">Terakhir Update</dt>
+                            <dd class="text-gray-800">{{ \Carbon\Carbon::parse($users->updated_at)->isoFormat('D MMMM YYYY HH:mm') }}</dd>
+                        </div>
+                    </dl>
+                </div>
+                <div class="sticky bottom-0 bg-gray-50 px-6 py-4 border-t flex justify-end gap-3">
+                    <button onclick="closeModal('modalViewDetail')" class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors font-medium">Tutup</button>
+                    <button onclick="closeModal('modalViewDetail')" class="inline-flex items-center justify-center gap-2 px-4 py-2 gradient-bg text-white rounded-lg hover:opacity-90 transition-all font-medium shadow-md">Edit User</button>
                 </div>
             </div>
         </div>
-        @endsection
-        
-        <!-- Modal Delete Confirmation -->
-        <div id="modalDeleteConfirmation" class="fixed inset-0 z-[100] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-            <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true" onclick="closeModal('modalDeleteConfirmation')"></div>
-                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-                <div class="inline-block align-bottom bg-white rounded-xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-md sm:w-full">
-                    <div class="px-6 py-6 text-center">
-                        <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-exclamation-triangle text-red-600 text-3xl"></i>
-                        </div>
-                        <h3 class="text-lg font-bold text-gray-800 mb-2">Konfirmasi Hapus Data</h3>
-                        <p class="text-gray-600 text-sm mb-6">Data guru akan dihapus permanen. Tindakan ini tidak dapat dibatalkan!</p>
-                        <form action="" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <div class="flex justify-center gap-3">
-                                <button type="button" onclick="closeModal('modalDeleteConfirmation')" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors font-medium">Batal</button>
-                                <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors font-medium">Hapus Data</button>
-                            </div>
-                        </form>
+    </div>
+    
+    <!-- Modal Delete Confirmation -->
+    <div id="modalDeleteConfirmation" class="fixed inset-0 z-[100] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true" onclick="closeModal('modalDeleteConfirmation')"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-white rounded-xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-md sm:w-full modal-content">
+                <div class="px-6 py-6 text-center">
+                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-exclamation-triangle text-red-600 text-3xl"></i>
                     </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">Konfirmasi Hapus User</h3>
+                    <p class="text-gray-600 text-sm mb-6">Apakah Anda yakin ingin menghapus users "{{ $users->nama_lengkap }}"? Tindakan ini tidak dapat dibatalkan!</p>
+                    <form action="" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <div class="flex justify-center gap-3">
+                            <button type="button" onclick="closeModal('modalDeleteConfirmation')" class="flex-1 px-4 py-2.5 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors font-medium">Batal</button>
+                            <button type="submit" class="flex-1 px-4 py-2.5 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors font-medium">Hapus User</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
     
     <script>
+        // Close Modal
         function closeModal(modalId) {
             document.getElementById(modalId).classList.add('hidden');
         }
         
+        // Open Modal
         function openModal(modalId) {
             document.getElementById(modalId).classList.remove('hidden');
         }
+        
+        // Password Strength Checker
+        function checkStrength(password) {
+            const meter = document.getElementById('strengthMeter');
+            const text = document.getElementById('strengthText');
+            
+            if (!password || password.length === 0) {
+                meter.classList.add('hidden');
+                text.textContent = '';
+                return;
+            }
+            
+            let strength = 0;
+            
+            if (password.length >= 8) strength++;
+            if (/[a-z]/.test(password)) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/\d/.test(password)) strength++;
+            if (/[^a-zA-Z\d]/.test(password)) strength++;
+            
+            meter.classList.remove('hidden');
+            
+            if (strength <= 2) {
+                meter.className = 'strength-meter weak';
+                text.textContent = 'Lemah';
+                text.className = 'text-xs font-medium text-red-600';
+            } else if (strength <= 4) {
+                meter.className = 'strength-meter medium';
+                text.textContent = 'Sedang';
+                text.className = 'text-xs font-medium text-orange-500';
+            } else {
+                meter.className = 'strength-meter strong';
+                text.textContent = 'Kuat';
+                text.className = 'text-xs font-medium text-green-600';
+            }
+        }
+        
+        // Password Match Verification
+        function verifyPasswordMatch(confirmPassword) {
+            const password = document.getElementById('password').value;
+            const matchIcon = document.getElementById('matchIcon');
+            const unmatchIcon = document.getElementById('unmatchIcon');
+            
+            if (confirmPassword === '') {
+                matchIcon.classList.add('hidden');
+                unmatchIcon.classList.add('hidden');
+                return;
+            }
+            
+            if (password === confirmPassword) {
+                matchIcon.classList.remove('hidden');
+                unmatchIcon.classList.add('hidden');
+            } else {
+                matchIcon.classList.add('hidden');
+                unmatchIcon.classList.remove('hidden');
+            }
+        }
+        
+        // Toggle Password Visibility
+        function togglePasswordVisibility(fieldId, checkbox) {
+            const input = document.getElementById(fieldId);
+            input.type = checkbox.checked ? 'text' : 'password';
+        }
+        
+        // Show Additional Fields Based on Role Selection
+        function showAdditionalFields(role) {
+            const additionalSection = document.getElementById('additionalSettings');
+            additionalSection.classList.remove('hidden');
+        }
+        
+        // Enable/Disable Email Fields
+        function enableDisableFields() {
+            const sendEmail = document.getElementById('send_email_change').checked;
+            const subjectField = document.getElementById('subjectEmailField');
+            const bodyField = document.getElementById('bodyEmailField');
+            
+            subjectField.style.opacity = sendEmail ? '1' : '0.5';
+            bodyField.style.opacity = sendEmail ? '1' : '0.5';
+            
+            if (!sendEmail) {
+                subjectField.querySelector('input').disabled = true;
+                bodyField.querySelector('textarea').disabled = true;
+            } else {
+                subjectField.querySelector('input').disabled = false;
+                bodyField.querySelector('textarea').disabled = false;
+            }
+        }
+        
+        // Disable New Password Fields
+        function disableNewPasswordFields(keepSame) {
+            const passwordField = document.getElementById('password');
+            const confirmField = document.getElementById('password_confirmation');
+            
+            passwordField.disabled = keepSame;
+            confirmField.disabled = keepSame;
+            
+            if (keepSame) {
+                passwordField.style.opacity = '0.5';
+                confirmField.style.opacity = '0.5';
+            } else {
+                passwordField.style.opacity = '1';
+                confirmField.style.opacity = '1';
+            }
+        }
+        
+        // Form Validation
+        document.getElementById('editForm').addEventListener('submit', function(e) {
+            const inputs = this.querySelectorAll('[required]');
+            let isValid = true;
+            let hasError = false;
+            
+            inputs.forEach(input => {
+                if (!input.checkValidity()) {
+                    isValid = false;
+                    input.classList.add('border-red-500');
+                    setTimeout(() => input.classList.remove('border-red-500'), 1000);
+                    hasError = true;
+                } else {
+                    input.classList.remove('border-red-500');
+                }
+            });
+            
+            // Check password fields if not keeping same
+            const keepSame = document.getElementById('keep_same').checked;
+            if (!keepSame) {
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('password_confirmation').value;
+                
+                if (password !== confirmPassword && confirmPassword !== '') {
+                    hasError = true;
+                    isValid = false;
+                    alert('Password tidak cocok!');
+                }
+                
+                if (password.length < 8) {
+                    hasError = true;
+                    isValid = false;
+                    alert('Password minimal 8 karakter!');
+                }
+            }
+            
+            if (!isValid) {
+                e.preventDefault();
+                alert('Harap lengkapi semua field yang wajib diisi!');
+            }
+        });
+        
+        // Keyboard Navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal').forEach(modal => modal.classList.add('hidden'));
+            }
+        });
     </script>
