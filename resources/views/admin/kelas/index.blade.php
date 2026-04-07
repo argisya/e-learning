@@ -14,7 +14,7 @@
                 <button onclick="openModal('modalExport')" class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors whitespace-nowrap">
                     <i class="fas fa-download mr-2"></i>Export
                 </button>
-                <a href="" class="inline-flex items-center gap-2 gradient-bg text-white px-4 py-2 rounded-lg hover:opacity-90 transition-all shadow-md whitespace-nowrap bg-blue-600">
+                <a href="{{ route('admin.kelas.create') }}" class="inline-flex items-center gap-2 gradient-bg text-white px-4 py-2 rounded-lg hover:opacity-90 transition-all shadow-md whitespace-nowrap bg-blue-600">
                     <i class="fas fa-plus mr-2"></i>Tambah Kelas
                 </a>
             </div>
@@ -200,7 +200,7 @@
                                     </td>
 
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        @if($class->status == 'aktif')
+                                        @if($class->status == 'Aktif')
                                             <span class="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-green-100 text-green-700 text-xs">
                                                 <i class="fas fa-circle text-[8px]"></i> Aktif
                                             </span>
