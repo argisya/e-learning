@@ -98,6 +98,45 @@
                     </div>
                 </div>
                 
+                <!-- Role -->
+                <div>
+                    <label for="role" class="block text-sm font-medium text-gray-700 mb-2">Role / Peran <span class="text-red-500">*</span></label>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                        
+                        <!-- Admin -->
+                        <label class="relative cursor-pointer">
+                            <input type="radio" name="role" value="admin" {{ old('role', $users->role) === 'admin' ? 'checked' : '' }} required onchange="showAdditionalFields(this.value)">
+                            <div class="p-4 border-2 border-gray-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-all group {{ old('role', $users->role) === 'admin' ? 'border-primary-500 bg-primary-50' : '' }}">
+                                <div class="w-10 h-10 rounded-lg bg-red-100 flex items-center justify-center mb-2 group-hover:bg-red-500 group-hover:text-white transition-colors {{ old('role', $users->role) === 'admin' ? 'bg-red-500 text-white' : 'text-red-600' }}">
+                                    <i class="fas fa-users-shield text-lg"></i>
+                                </div>
+                                <p class="text-sm font-medium text-gray-700 text-center">Administrator</p>
+                            </div>
+                        </label>
+                        
+                        <!-- Guru -->
+                        <label class="relative cursor-pointer">
+                            <input type="radio" name="role" value="guru" {{ old('role', $users->role) === 'guru' ? 'checked' : '' }} required onchange="showAdditionalFields(this.value)">
+                            <div class="p-4 border-2 border-gray-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-all group {{ old('role', $users->role) === 'guru' ? 'border-primary-500 bg-primary-50' : '' }}">
+                                <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center mb-2 group-hover:bg-blue-500 group-hover:text-white transition-colors {{ old('role', $users->role) === 'guru' ? 'bg-blue-500 text-white' : 'text-blue-600' }}">
+                                    <i class="fas fa-chalkboard-teacher text-lg"></i>
+                                </div>
+                                <p class="text-sm font-medium text-gray-700 text-center">Guru</p>
+                            </div>
+                        </label>
+                        
+                        <!-- Siswa -->
+                        <label class="relative cursor-pointer">
+                            <input type="radio" name="role" value="siswa" {{ old('role', $users->role) === 'siswa' ? 'checked' : '' }} required onchange="showAdditionalFields(this.value)">
+                            <div class="p-4 border-2 border-gray-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-all group {{ old('role', $users->role) === 'siswa' ? 'border-primary-500 bg-primary-50' : '' }}">
+                                <div class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center mb-2 group-hover:bg-green-500 group-hover:text-white transition-colors {{ old('role', $users->role) === 'siswa' ? 'bg-green-500 text-white' : 'text-green-600' }}">
+                                    <i class="fas fa-users-graduate text-lg"></i>
+                                </div>
+                                <p class="text-sm font-medium text-gray-700 text-center">Siswa</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
                 <!-- Section 2: Pengaturan Password -->
                 <div class="mb-8 pb-8 border-b">
                     <h2 class="text-lg font-semibold text-gray-800 mb-6 flex items-center gap-2">
