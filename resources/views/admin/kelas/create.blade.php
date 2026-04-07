@@ -18,7 +18,7 @@
         
         <!-- Content Card -->
         <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-sm border overflow-hidden">
-            <form action="" method="POST" enctype="multipart/form-data" novalidate id="createForm" class="p-6 lg:p-8">
+            <form action="{{ route('admin.kelas.store') }}" method="POST" enctype="multipart/form-data" novalidate id="createForm" class="p-6 lg:p-8">
                 
                 @csrf
                 

@@ -13,7 +13,7 @@ class KelasController extends Controller
     public function index()
     {
         return view('admin.kelas.index', [
-            'kelas' => DB::table('kelas')->join('guru', 'kelas.nip_wali', '=', 'guru.nip')->get()
+            'kelas' => DB::table('kelas')->join('guru', 'kelas.nip_wali', '=', 'guru.nip')->join('users', 'guru.id_user', '=', 'users.id_user')->get()
         ]);
     }
 
