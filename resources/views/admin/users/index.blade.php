@@ -310,7 +310,7 @@
                     </div>
                     <h3 class="text-lg font-bold text-gray-800 mb-2">Konfirmasi Hapus User</h3>
                     <p class="text-gray-600 text-sm mb-6">Apakah Anda yakin ingin menghapus user ini? Data tidak dapat dikembalikan!</p>
-                    <form action="#" method="POST">
+                    <form action="{{ route('admin.users.destroy', $user->id_user) }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <div class="flex justify-center gap-3 w-full">
@@ -428,6 +428,8 @@
         
         // Confirm Delete
         function confirmDelete(id) {
+            const form = document.querySelector('#modalDeleteConfirmation form');
+            form.action = `/admin/users/${id}`;
             openModal('modalDeleteConfirmation');
         }
         
