@@ -40,12 +40,12 @@
                        class="block px-4 py-2 rounded-lg text-sm {{ request()->routeIs('admin.guru.data.index') ? 'bg-primary-100 text-primary-700' : 'text-gray-500 hover:bg-gray-50' }}">
                         Data Guru
                     </a>
-                    <a href="" 
-                       class="block px-4 py-2 rounded-lg text-sm {{ request()->routeIs('guru.jadwal') ? 'bg-primary-100 text-primary-700' : 'text-gray-500 hover:bg-gray-50' }}">
+                    <a href="{{ route('admin.guru.jadwal.index') }}" 
+                       class="block px-4 py-2 rounded-lg text-sm {{ request()->routeIs('admin.guru.jadwal.index') ? 'bg-primary-100 text-primary-700' : 'text-gray-500 hover:bg-gray-50' }}">
                         Jadwal Guru
                     </a>
-                    <a href="" 
-                       class="block px-4 py-2 rounded-lg text-sm {{ request()->routeIs('guru.absensi') ? 'bg-primary-100 text-primary-700' : 'text-gray-500 hover:bg-gray-50' }}">
+                    <a href="{{ route('admin.guru.absensi.index') }}" 
+                       class="block px-4 py-2 rounded-lg text-sm {{ request()->routeIs('admin.guru.absensi.index') ? 'bg-primary-100 text-primary-700' : 'text-gray-500 hover:bg-gray-50' }}">
                         Absensi Guru
                     </a>
                 </div>
@@ -66,7 +66,7 @@
                        class="block px-4 py-2 rounded-lg text-sm {{ request()->routeIs('siswa.dashboard') ? 'bg-primary-100 text-primary-700' : 'text-gray-500 hover:bg-gray-50' }}">
                         Dashboard Siswa
                     </a>
-                    <a href="" 
+                    <a href="{{route('admin.siswa.data.index') }}" 
                        class="block px-4 py-2 rounded-lg text-sm {{ request()->routeIs('siswa.data') ? 'bg-primary-100 text-primary-700' : 'text-gray-500 hover:bg-gray-50' }}">
                         Data Siswa
                     </a>

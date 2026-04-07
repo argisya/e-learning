@@ -27,14 +27,6 @@ Route::get('/auth', function () {
     return view('auth.login');
 });
 
-//testing
-Route::get('/admin/guru/data/create', function () {
-    return view('admin.guru.data.create');
-});
-Route::get('/admin/guru/data/edit', function () {
-    return view('admin.guru.data.edit');
-});
-
 // Login Routes
 Route::get('/', [LoginController::class, 'index'])->name('login');
 Route::post('/loginProcess', [LoginController::class, 'loginProcess'])->name('login.process');
