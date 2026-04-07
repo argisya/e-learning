@@ -70,5 +70,5 @@ Route::get('admin/users', [UserController::class, 'index'])->name('admin.users.i
 Route::get('admin/users/create', [UserController::class, 'create'])->name('admin.users.create');
 Route::get('admin/users/edit/{id_user}', [UserController::class, 'edit'])->name('admin.users.edit');
 Route::post('admin/users/store', [UserController::class, 'store'])->name('admin.users.store');
-Route::post('admin/users/update/{id_user}', [UserController::class, 'update'])->name('admin.users.update');
+Route::put('admin/users/update/{id_user}', [UserController::class, 'update'])->name('admin.users.update');
 Route::post('admin/users/delete/{id_user}', [UserController::class, 'destroy'])->name('admin.users.destroy');

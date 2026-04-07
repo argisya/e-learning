@@ -29,7 +29,7 @@
                 <div class="absolute left-0 top-0 h-full gradient-bg" style="width: 70%"></div>
             </div>
             
-            <form action="" method="POST" enctype="multipart/form-data" novalidate id="editForm" class="p-6 lg:p-8">
+            <form action="{{ route('admin.users.update', $users->id_user) }}" method="POST" enctype="multipart/form-data" novalidate id="editForm" class="p-6 lg:p-8">
                 
                 @csrf
                 @method('PUT')
@@ -48,6 +48,7 @@
                         
                         <!-- Nama Lengkap -->
                         <div>
+                            <input type="hidden" name="id_user" value="{{ $users->id_user }}">
                             <label for="nama_lengkap" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap <span class="text-red-500">*</span></label>
                             <input type="text" id="nama_lengkap" name="nama_lengkap" value="{{ old('nama_lengkap', $users->nama_lengkap) }}" placeholder="Masukkan nama lengkap sesuai KTP" required autocomplete="off" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
                             @error('nama_lengkap')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
@@ -80,14 +81,14 @@
                             <label class="block text-sm font-medium text-gray-700 mb-2">Status Akun <span class="text-red-500">*</span></label>
                             <div class="flex items-center gap-6">
                                 <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="status" value="active" {{ old('status', $users->status) === 'active' ? 'checked' : '' }}>
+                                    <input type="radio" name="status" value="Aktif" {{ old('status', $users->status) === 'Aktif' ? 'checked' : '' }}>
                                     <div class="flex items-center gap-1">
                                         <span class="status-dot status-active"></span>
                                         <span class="text-gray-700">Aktif</span>
                                     </div>
                                 </label>
                                 <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="status" value="inactive" {{ old('status', $users->status) === 'inactive' ? 'checked' : '' }}>
+                                    <input type="radio" name="status" value="Tidak Aktif" {{ old('status', $users->status) === 'Tidak Aktif' ? 'checked' : '' }}>
                                     <div class="flex items-center gap-1">
                                         <span class="status-dot status-inactive"></span>
                                         <span class="text-gray-700">Tidak Aktif</span>
@@ -105,9 +106,9 @@
                         
                         <!-- Admin -->
                         <label class="relative cursor-pointer">
-                            <input type="radio" name="role" value="admin" {{ old('role', $users->role) === 'admin' ? 'checked' : '' }} required onchange="showAdditionalFields(this.value)">
-                            <div class="p-4 border-2 border-gray-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-all group {{ old('role', $users->role) === 'admin' ? 'border-primary-500 bg-primary-50' : '' }}">
-                                <div class="w-10 h-10 rounded-lg bg-red-100 flex items-center justify-center mb-2 group-hover:bg-red-500 group-hover:text-white transition-colors {{ old('role', $users->role) === 'admin' ? 'bg-red-500 text-white' : 'text-red-600' }}">
+                            <input type="radio" name="id_role" value="1" {{ old('role', $users->role) === '1' ? 'checked' : '' }} required onchange="showAdditionalFields(this.value)">
+                            <div class="p-4 border-2 border-gray-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-all group {{ old('role', $users->role) === '1' ? 'border-primary-500 bg-primary-50' : '' }}">
+                                <div class="w-10 h-10 rounded-lg bg-red-100 flex items-center justify-center mb-2 group-hover:bg-red-500 group-hover:text-white transition-colors {{ old('role', $users->role) === '1' ? 'bg-red-500 text-white' : 'text-red-600' }}">
                                     <i class="fas fa-users-shield text-lg"></i>
                                 </div>
                                 <p class="text-sm font-medium text-gray-700 text-center">Administrator</p>
@@ -116,9 +117,9 @@
                         
                         <!-- Guru -->
                         <label class="relative cursor-pointer">
-                            <input type="radio" name="role" value="guru" {{ old('role', $users->role) === 'guru' ? 'checked' : '' }} required onchange="showAdditionalFields(this.value)">
-                            <div class="p-4 border-2 border-gray-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-all group {{ old('role', $users->role) === 'guru' ? 'border-primary-500 bg-primary-50' : '' }}">
-                                <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center mb-2 group-hover:bg-blue-500 group-hover:text-white transition-colors {{ old('role', $users->role) === 'guru' ? 'bg-blue-500 text-white' : 'text-blue-600' }}">
+                            <input type="radio" name="id_role" value="2" {{ old('role', $users->role) === '2' ? 'checked' : '' }} required onchange="showAdditionalFields(this.value)">
+                            <div class="p-4 border-2 border-gray-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-all group {{ old('role', $users->role) === '2' ? 'border-primary-500 bg-primary-50' : '' }}">
+                                <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center mb-2 group-hover:bg-blue-500 group-hover:text-white transition-colors {{ old('role', $users->role) === '2' ? 'bg-blue-500 text-white' : 'text-blue-600' }}">
                                     <i class="fas fa-chalkboard-teacher text-lg"></i>
                                 </div>
                                 <p class="text-sm font-medium text-gray-700 text-center">Guru</p>
@@ -127,9 +128,9 @@
                         
                         <!-- Siswa -->
                         <label class="relative cursor-pointer">
-                            <input type="radio" name="role" value="siswa" {{ old('role', $users->role) === 'siswa' ? 'checked' : '' }} required onchange="showAdditionalFields(this.value)">
-                            <div class="p-4 border-2 border-gray-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-all group {{ old('role', $users->role) === 'siswa' ? 'border-primary-500 bg-primary-50' : '' }}">
-                                <div class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center mb-2 group-hover:bg-green-500 group-hover:text-white transition-colors {{ old('role', $users->role) === 'siswa' ? 'bg-green-500 text-white' : 'text-green-600' }}">
+                            <input type="radio" name="id_role" value="3" {{ old('role', $users->role) === '3' ? 'checked' : '' }} required onchange="showAdditionalFields(this.value)">
+                            <div class="p-4 border-2 border-gray-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-all group {{ old('role', $users->role) === '3' ? 'border-primary-500 bg-primary-50' : '' }}">
+                                <div class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center mb-2 group-hover:bg-green-500 group-hover:text-white transition-colors {{ old('role', $users->role) === '3' ? 'bg-green-500 text-white' : 'text-green-600' }}">
                                     <i class="fas fa-users-graduate text-lg"></i>
                                 </div>
                                 <p class="text-sm font-medium text-gray-700 text-center">Siswa</p>

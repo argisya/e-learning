@@ -64,8 +64,8 @@ class UserController extends Controller
 
         $request->validate([
             'nama_lengkap' => 'required',
-            'username' => 'required|unique:users,username,' . $request->id_user,
-            'email' => 'required|email|unique:users,email,' . $request->id_user,
+            'username' => 'required|unique:users,username,' . $request->id_user . ',id_user',
+            'email' => 'required|email|unique:users,email,' . $request->id_user . ',id_user',
             'id_role' => 'required|exists:roles,id_role',
         ]);
 
