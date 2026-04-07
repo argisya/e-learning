@@ -19,7 +19,6 @@ class Siswa extends Model
         'id_user',
         'id_kelas',
         'nisn',
-        'nama_siswa',
         'tempat_lahir',
         'tanggal_lahir',
         'jenis_kelamin',
@@ -27,5 +26,6 @@ class Siswa extends Model
         'status_keluarga',
         'no_hp',
         'alamat',
+        'foto',
     ];
 }
