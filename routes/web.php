@@ -35,7 +35,6 @@ Route::post('/loginProcess', [LoginController::class, 'loginProcess'])->name('lo
 // Admin Routes
 // Admin Dashboard Routes
 Route::get('admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard.index');
-Route::get('admin/kelas', [KelasController::class, 'index'])->name('admin.kelas.index');
 Route::get('admin/pengumuman', [PengumumanController::class, 'index'])->name('admin.pengumuman.index');
 Route::get('admin/rapor', [RaporController::class, 'index'])->name('admin.rapor.index');
 
@@ -56,6 +55,14 @@ Route::get('admin/siswa/dashboard', [DashboardSiswaController::class, 'index'])-
 Route::get('admin/siswa/data', [DataSiswaController::class, 'index'])->name('admin.siswa.data.index');
 Route::get('admin/siswa/jadwal', [JadwalSiswaController::class, 'index'])->name('admin.siswa.jadwal.index');
 Route::get('admin/siswa/absensi', [AbsensiSiswaController::class, 'index'])->name('admin.siswa.absensi.index');
+
+// Admin Kelas Routes
+Route::get('admin/kelas', [KelasController::class, 'index'])->name('admin.kelas.index');
+Route::get('admin/kelas/create', [KelasController::class, 'create'])->name('admin.kelas.create');
+Route::get('admin/kelas/edit/{id_kelas}', [KelasController::class, 'edit'])->name('admin.kelas.edit');
+Route::post('admin/kelas/store', [KelasController::class, 'store'])->name('admin.kelas.store');
+Route::put('admin/kelas/update/{id_kelas}', [KelasController::class, 'update'])->name('admin.kelas.update');
+Route::delete('admin/kelas/{id_kelas}', [KelasController::class, 'destroy'])->name('admin.kelas.destroy');
 
 // Admin Users Routes
 Route::get('admin/users', [UserController::class, 'index'])->name('admin.users.index');
