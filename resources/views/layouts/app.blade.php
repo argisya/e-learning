@@ -148,6 +148,21 @@
         .status-dot.status-inactive {
             background-color: #ef4444 !important;
         }
+
+        /* Badge */
+        .badge { @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium; }
+        .badge-admin { @apply bg-red-100 text-red-700; }
+        .badge-guru { @apply bg-blue-100 text-blue-700; }
+        .badge-siswa { @apply bg-green-100 text-green-700; }
+        .badge-staff { @apply bg-yellow-100 text-yellow-700; }
+
+        /* Modal Animation */
+        .modal-content { animation: modalFadeIn 0.2s ease-out; }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
     </style>
     
     @stack('styles')

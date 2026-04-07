@@ -34,30 +34,6 @@
                 @csrf
                 @method('PUT')
                 
-                <!-- Profile Photo Section -->
-                <div class="flex flex-col sm:flex-row items-start gap-6 mb-8 pb-8 border-b">
-                    <div class="relative">
-                        <img src="{{ asset($users->foto ?? 'images/avatar.jpg') }}" alt="Profile" class="w-24 h-24 rounded-xl object-cover border-4 border-primary-100">
-                        <label class="absolute bottom-0 right-0 w-8 h-8 gradient-bg rounded-full flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity text-white" title="Ubah Foto">
-                            <i class="fas fa-camera text-sm"></i>
-                            <input type="file" name="foto_update" accept="image/*" class="hidden">
-                        </label>
-                    </div>
-                    <div class="flex-1">
-                        <h3 class="text-xl font-bold text-gray-800">{{ $users->nama_lengkap }}</h3>
-                        <p class="text-gray-500 text-sm font-mono">{{ $users->username }}</p>
-                        <div class="flex items-center gap-2 mt-2">
-                            <span class="badge badge-{{ $users->role === 'admin' ? 'admin' : ($users->role === 'guru' ? 'guru' : ($users->role === 'siswa' ? 'siswa' : 'staff')) }}">
-                                <i class="fas fa-users-{{ $users->role === 'admin' ? 'shield' : ($users->role === 'guru' ? 'chalkboard-teacher' : ($users->role === 'siswa' ? 'graduate' : 'tag')) }}"></i>
-                                {{ ucfirst($users->role) }}
-                            </span>
-                            <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs {{ $users->status === 'active' ? 'bg-green-50 text-green-700' : 'bg-gray-100 text-gray-700' }}">
-                                <span class="status-dot {{ $users->status === 'active' ? 'status-active' : 'status-inactive' }}"></span>
-                                {{ ucfirst($users->status) }}
-                            </span>
-                        </div>
-                    </div>
-                </div>
                 
                 <!-- Section 1: Informasi Akun -->
                 <div class="mb-8 pb-8 border-b">
@@ -98,57 +74,6 @@
                             @error('email')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                         </div>
                         
-                        <!-- Role -->
-                        <div>
-                            <label for="role" class="block text-sm font-medium text-gray-700 mb-2">Role / Peran <span class="text-red-500">*</span></label>
-                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                                
-                                <!-- Admin -->
-                                <label class="relative cursor-pointer">
-                                    <input type="radio" name="role" value="admin" {{ old('role', $users->role) === 'admin' ? 'checked' : '' }} required onchange="showAdditionalFields(this.value)">
-                                    <div class="p-4 border-2 border-gray-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-all group {{ old('role', $users->role) === 'admin' ? 'border-primary-500 bg-primary-50' : '' }}">
-                                        <div class="w-10 h-10 rounded-lg bg-red-100 flex items-center justify-center mb-2 group-hover:bg-red-500 group-hover:text-white transition-colors {{ old('role', $users->role) === 'admin' ? 'bg-red-500 text-white' : 'text-red-600' }}">
-                                            <i class="fas fa-users-shield text-lg"></i>
-                                        </div>
-                                        <p class="text-sm font-medium text-gray-700 text-center">Administrator</p>
-                                    </div>
-                                </label>
-                                
-                                <!-- Guru -->
-                                <label class="relative cursor-pointer">
-                                    <input type="radio" name="role" value="guru" {{ old('role', $users->role) === 'guru' ? 'checked' : '' }} required onchange="showAdditionalFields(this.value)">
-                                    <div class="p-4 border-2 border-gray-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-all group {{ old('role', $users->role) === 'guru' ? 'border-primary-500 bg-primary-50' : '' }}">
-                                        <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center mb-2 group-hover:bg-blue-500 group-hover:text-white transition-colors {{ old('role', $users->role) === 'guru' ? 'bg-blue-500 text-white' : 'text-blue-600' }}">
-                                            <i class="fas fa-chalkboard-teacher text-lg"></i>
-                                        </div>
-                                        <p class="text-sm font-medium text-gray-700 text-center">Guru</p>
-                                    </div>
-                                </label>
-                                
-                                <!-- Siswa -->
-                                <label class="relative cursor-pointer">
-                                    <input type="radio" name="role" value="siswa" {{ old('role', $users->role) === 'siswa' ? 'checked' : '' }} required onchange="showAdditionalFields(this.value)">
-                                    <div class="p-4 border-2 border-gray-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-all group {{ old('role', $users->role) === 'siswa' ? 'border-primary-500 bg-primary-50' : '' }}">
-                                        <div class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center mb-2 group-hover:bg-green-500 group-hover:text-white transition-colors {{ old('role', $users->role) === 'siswa' ? 'bg-green-500 text-white' : 'text-green-600' }}">
-                                            <i class="fas fa-users-graduate text-lg"></i>
-                                        </div>
-                                        <p class="text-sm font-medium text-gray-700 text-center">Siswa</p>
-                                    </div>
-                                </label>
-                                
-                                <!-- Staff -->
-                                <label class="relative cursor-pointer">
-                                    <input type="radio" name="role" value="staff" {{ old('role', $users->role) === 'staff' ? 'checked' : '' }} required onchange="showAdditionalFields(this.value)">
-                                    <div class="p-4 border-2 border-gray-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-all group {{ old('role', $users->role) === 'staff' ? 'border-primary-500 bg-primary-50' : '' }}">
-                                        <div class="w-10 h-10 rounded-lg bg-yellow-100 flex items-center justify-center mb-2 group-hover:bg-yellow-500 group-hover:text-white transition-colors {{ old('role', $users->role) === 'staff' ? 'bg-yellow-500 text-white' : 'text-yellow-600' }}">
-                                            <i class="fas fa-users-tag text-lg"></i>
-                                        </div>
-                                        <p class="text-sm font-medium text-gray-700 text-center">Staff</p>
-                                    </div>
-                                </label>
-                            </div>
-                            <p class="text-xs text-gray-500 mt-2">* Pilih role untuk menentukan hak akses users</p>
-                        </div>
                         
                         <!-- Status Akun -->
                         <div>
