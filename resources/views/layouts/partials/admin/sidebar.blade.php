@@ -1,7 +1,5 @@
-<!-- Sidebar -->
 <aside id="sidebar" 
-       class="fixed lg:static inset-y-0 left-0 z-50 w-72 bg-white border-r border-gray-200 transform -translate-x-full lg:translate-x-0 sidebar-transition flex flex-col">
-    <!-- Logo Section -->
+       class="fixed inset-y-0 left-0 z-50 w-72 h-screen bg-white border-r border-gray-200 transform -translate-x-full lg:translate-x-0 sidebar-transition flex flex-col">
     <div class="px-6 py-5 border-b border-gray-200">
         <div class="flex items-center gap-3">
             <div class="w-12 h-12 rounded-xl gradient-bg flex items-center justify-center shadow-lg">
@@ -14,10 +12,8 @@
         </div>
     </div>
     
-    <!-- Navigation Menu -->
     <nav class="flex-1 overflow-y-auto custom-scrollbar py-4">
         <ul class="space-y-1 px-3">
-            <!-- Dashboard -->
             <li>
                 <a href="{{ route('admin.dashboard.index') }}" 
                    class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl transition-all-300 {{ request()->routeIs('admin.dashboard.index') ? 'active' : 'text-gray-600 hover:bg-primary-50' }}">
@@ -25,8 +21,7 @@
                     <span class="font-medium">Dashboard</span>
                 </a>
             </li>
-            
-            <!-- Guru Dropdown -->
+
             <li>
                 <button onclick="toggleDropdown('guruDropdown')"
                         class="nav-item w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl transition-all-300 text-gray-600 hover:bg-primary-50 {{ request()->routeIs('guru.*') ? 'active' : '' }}">
@@ -131,7 +126,6 @@
             </li>
         </ul>
         
-        <!-- Quick Stats (Optional) -->
         <div class="mx-3 mt-6 p-4 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-xl text-white">
             <p class="text-xs text-white/80 mb-2">Progress Belajar</p>
             <div class="flex items-center justify-between mb-2">
@@ -144,7 +138,6 @@
         </div>
     </nav>
     
-    <!-- Sidebar Footer -->
     <div class="p-4 border-t border-gray-200">
         <div class="flex items-center gap-3 p-3 rounded-xl bg-gray-50">
             <img src="{{ asset('images/avatar.jpg') }}" 
@@ -156,7 +149,6 @@
             </div>
         </div>
         
-        <!-- Logout Button (Sidebar) -->
         <form action="" method="POST" class="mt-3">
             @csrf
             <button type="submit" 
