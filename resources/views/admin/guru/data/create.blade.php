@@ -26,7 +26,7 @@
                 <h1 class="text-2xl lg:text-3xl font-bold text-gray-800">Tambah Data Guru</h1>
                 <p class="text-gray-500 mt-1 text-sm">Isi formulir di bawah ini untuk menambahkan guru baru</p>
             </div>
-            <a href="" class="inline-flex items-center gap-2 text-gray-600 hover:text-primary-600 transition-colors">
+            <a href="{{ route('admin.guru.data.index') }}" class="inline-flex items-center gap-2 text-gray-600 hover:text-primary-600 transition-colors">
                 <i class="fas fa-arrow-left"></i> Kembali
             </a>
         </div>

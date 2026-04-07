@@ -178,141 +178,70 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 bg-white">
-                            
-                            <!-- Row 1 -->
+                            @forelse ($siswa as $student)
                             <tr class="hover:bg-gray-50 transition-colors">
                                 <td class="px-6 py-4">
-                                    <input type="checkbox" class="rounded">
+                                    <input type="checkbox" class="rounded" value="{{ $student->id }}">
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="flex items-center gap-3">
-                                        <img src="{{ asset('images/avatar.jpg') }}" alt="" class="w-10 h-10 rounded-full object-cover border-2">
+                                        <img src="{{ $student->avatar ? asset('storage/' . $student->avatar) : asset('images/avatar.jpg') }}" alt="Avatar" class="w-10 h-10 rounded-full object-cover border-2">
                                         <div>
-                                            <p class="font-medium text-gray-800">Ahmad Rizky Pratama</p>
-                                            <p class="text-xs text-gray-500 hidden sm:block">Ahmadrizky@gmail.com</p>
+                                            <p class="font-medium text-gray-800">{{ $student->nama }}</p>
+                                            <p class="text-xs text-gray-500 hidden sm:block">{{ $student->email }}</p>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="px-6 py-4 text-gray-700 font-mono text-xs">2024001 | 0012345678</td>
+                                <td class="px-6 py-4 text-gray-700 font-mono text-xs">{{ $student->nis }} | {{ $student->nisn }}</td>
+                                
                                 <td class="px-6 py-4">
+
                                     <span class="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-blue-50 text-blue-700 text-xs font-medium">
-                                        <i class="fas fa-users"></i> VII A
+                                        <i class="fas fa-users"></i> {{ $student->kelas }}
                                     </span>
                                 </td>
+                                
                                 <td class="px-6 py-4 hidden md:table-cell">
                                     <span class="inline-flex items-center gap-1">
-                                        <i class="fas fa-mars text-blue-600"></i> Laki-laki
+                                        @if($student->jenis_kelamin == 'L')
+                                            <i class="fas fa-mars text-blue-600"></i> Laki-laki
+                                        @else
+                                            <i class="fas fa-venus text-pink-600"></i> Perempuan
+                                        @endif
                                     </span>
                                 </td>
-                                <td class="px-6 py-4 text-gray-700 hidden md:table-cell">ahmad.rizky@gmail.com</td>
-                                <td class="px-6 py-4 text-gray-700">+62 812-3456-7890</td>
+                                
+                                <td class="px-6 py-4 text-gray-700 hidden md:table-cell">{{ $student->email }}</td>
+                                <td class="px-6 py-4 text-gray-700">{{ $student->no_telp }}</td>
                                 <td class="px-6 py-4 text-gray-600 text-xs hidden lg:table-cell truncate max-w-[150px]">
-                                    Jl. Merdeka No. 123, Bandung
+                                    {{ $student->alamat }}
                                 </td>
+                                
                                 <td class="px-6 py-4">
-                                    <span class="inline-flex items-center gap-1 px-2 py-1 rounded-lg badge badge-active">
-                                        <span class="status-dot status-active"></span> Aktif
-                                    </span>
+                                    @if($student->status == 'Aktif')
+                                        <span class="inline-flex items-center gap-1 px-2 py-1 rounded-lg badge badge-active">
+                                            <span class="status-dot status-active"></span> Aktif
+                                        </span>
+                                    @else
+                                        <span class="inline-flex items-center gap-1 px-2 py-1 rounded-lg badge badge-lulus">
+                                            <span class="status-dot"></span> Lulus
+                                        </span>
+                                    @endif
                                 </td>
+                                
                                 <td class="px-6 py-4 text-right hidden lg:table-cell">
                                     <div class="flex items-center justify-end gap-2">
-                                        <button class="icon-btn icon-view" onclick="openModal('modalView1')" title="Lihat Detail"><i class="fas fa-eye"></i></button>
-                                        <button class="icon-btn icon-edit" onclick="openModal('modalEdit1')" title="Edit"><i class="fas fa-pen"></i></button>
-                                        <button class="icon-btn icon-delete" onclick="confirmDelete(1)" title="Hapus"><i class="fas fa-trash"></i></button>
+                                        <button class="icon-btn icon-view" onclick="openModal('modalView{{ $student->id }}')" title="Lihat Detail"><i class="fas fa-eye"></i></button>
+                                        <button class="icon-btn icon-edit" onclick="openModal('modalEdit{{ $student->id }}')" title="Edit"><i class="fas fa-pen"></i></button>
+                                        <button class="icon-btn icon-delete" onclick="confirmDelete({{ $student->id }})" title="Hapus"><i class="fas fa-trash"></i></button>
                                     </div>
                                 </td>
                             </tr>
-                            
-                            <!-- Row 2 -->
-                            <tr class="hover:bg-gray-50 transition-colors">
-                                <td class="px-6 py-4">
-                                    <input type="checkbox" class="rounded">
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="flex items-center gap-3">
-                                        <img src="{{ asset('images/avatar.jpg') }}" alt="" class="w-10 h-10 rounded-full object-cover border-2">
-                                        <div>
-                                            <p class="font-medium text-gray-800">Siti Nurhaliza</p>
-                                            <p class="text-xs text-gray-500 hidden sm:block">sitinurhaliza@gmail.com</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 text-gray-700 font-mono text-xs">2024002 | 0012345679</td>
-                                <td class="px-6 py-4">
-                                    <span class="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-purple-50 text-purple-700 text-xs font-medium">
-                                        <i class="fas fa-users"></i> VIII A
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4 hidden md:table-cell">
-                                    <span class="inline-flex items-center gap-1">
-                                        <i class="fas fa-venus text-pink-600"></i> Perempuan
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4 text-gray-700 hidden md:table-cell">siti.nurhaliza@gmail.com</td>
-                                <td class="px-6 py-4 text-gray-700">+62 813-4567-8901</td>
-                                <td class="px-6 py-4 text-gray-600 text-xs hidden lg:table-cell truncate max-w-[150px]">
-                                    Jl. Sudirman No. 45, Bandung
-                                </td>
-                                <td class="px-6 py-4">
-                                    <span class="inline-flex items-center gap-1 px-2 py-1 rounded-lg badge badge-active">
-                                        <span class="status-dot status-active"></span> Aktif
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4 text-right hidden lg:table-cell">
-                                    <div class="flex items-center justify-end gap-2">
-                                        <button class="icon-btn icon-view" onclick="openModal('modalView2')" title="Lihat Detail"><i class="fas fa-eye"></i></button>
-                                        <button class="icon-btn icon-edit" onclick="openModal('modalEdit2')" title="Edit"><i class="fas fa-pen"></i></button>
-                                        <button class="icon-btn icon-delete" onclick="confirmDelete(2)" title="Hapus"><i class="fas fa-trash"></i></button>
-                                    </div>
-                                </td>
+                            @empty
+                            <tr>
+                                <td colspan="10" class="px-6 py-4 text-center text-gray-500">Belum ada data siswa.</td>
                             </tr>
-                            
-                            <!-- Row 3 -->
-                            <tr class="hover:bg-gray-50 transition-colors">
-                                <td class="px-6 py-4">
-                                    <input type="checkbox" class="rounded">
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="flex items-center gap-3">
-                                        <img src="{{ asset('images/avatar.jpg') }}" alt="" class="w-10 h-10 rounded-full object-cover border-2">
-                                        <div>
-                                            <p class="font-medium text-gray-800">Muhammad Fikri</p>
-                                            <p class="text-xs text-gray-500 hidden sm:block">muhammad.fikri@gmail.com</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 text-gray-700 font-mono text-xs">2024003 | 0012345680</td>
-                                <td class="px-6 py-4">
-                                    <span class="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-orange-50 text-orange-700 text-xs font-medium">
-                                        <i class="fas fa-users"></i> IX A
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4 hidden md:table-cell">
-                                    <span class="inline-flex items-center gap-1">
-                                        <i class="fas fa-mars text-blue-600"></i> Laki-laki
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4 text-gray-700 hidden md:table-cell">muhammad.fikri@gmail.com</td>
-                                <td class="px-6 py-4 text-gray-700">+62 814-5678-9012</td>
-                                <td class="px-6 py-4 text-gray-600 text-xs hidden lg:table-cell truncate max-w-[150px]">
-                                    Jl. Asia Afrika No. 78, Bandung
-                                </td>
-                                <td class="px-6 py-4">
-                                    <span class="inline-flex items-center gap-1 px-2 py-1 rounded-lg badge badge-lulus">
-                                        <span class="status-dot status-active"></span> Lulus
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4 text-right hidden lg:table-cell">
-                                    <div class="flex items-center justify-end gap-2">
-                                        <button class="icon-btn icon-view" onclick="openModal('modalView3')" title="Lihat Detail"><i class="fas fa-eye"></i></button>
-                                        <button class="icon-btn icon-edit" onclick="openModal('modalEdit3')" title="Edit"><i class="fas fa-pen"></i></button>
-                                        <button class="icon-btn icon-delete" onclick="confirmDelete(3)" title="Hapus"><i class="fas fa-trash"></i></button>
-                                    </div>
-                                </td>
-                            </tr>
-                            
-                            <!-- More rows... -->
-                            
+                            @endforelse
                         </tbody>
                     </table>
                 </div>

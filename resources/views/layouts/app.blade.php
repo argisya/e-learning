@@ -168,12 +168,12 @@
     @stack('styles')
 </head>
 <body class="font-sans antialiased bg-gray-50">
-    <div class="min-h-screen flex">
+    <div class="min-h-screen">
         <!-- Sidebar -->
         @include('layouts.partials.admin.sidebar')
         
         <!-- Main Content -->
-        <div class="flex-1 flex flex-col content-transition" id="mainContent">
+        <div class="lg:ml flex flex-col content-transition" id="mainContent">
             <!-- Navbar -->
             @include('layouts.partials.admin.navbar')
             

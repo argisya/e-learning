@@ -83,8 +83,8 @@
             
             <!-- Kelas -->
             <li>
-                <a href="" 
-                   class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl transition-all-300 {{ request()->routeIs('kelas') ? 'active' : 'text-gray-600 hover:bg-primary-50' }}">
+                <a href="{{ route('admin.kelas.index') }}" 
+                   class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl transition-all-300 {{ request()->routeIs('admin.kelas.index') ? 'active' : 'text-gray-600 hover:bg-primary-50' }}">
                     <i class="fas fa-school w-5 text-center"></i>
                     <span class="font-medium">Kelas</span>
                     @if($kelasCount ?? 0 > 0)
