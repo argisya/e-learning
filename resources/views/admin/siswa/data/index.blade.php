@@ -68,20 +68,6 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- Aktif -->
-            <div class="bg-white rounded-xl p-6 border shadow-sm hover:shadow-md transition-shadow">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm text-gray-500">Siswa Aktif</p>
-                        <p class="text-2xl font-bold text-gray-800 mt-1">432</p>
-                        <p class="text-xs text-green-600 mt-2">96% aktif</p>
-                    </div>
-                    <div class="w-12 h-12 rounded-lg bg-green-100 flex items-center justify-center">
-                        <i class="fas fa-check-circle text-green-600 text-xl"></i>
-                    </div>
-                </div>
-            </div>
         </div>
         
         <!-- Filter Section -->
