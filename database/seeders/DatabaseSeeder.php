@@ -124,7 +124,8 @@ class DatabaseSeeder extends Seeder
             'agama' => 'Kristen',
             'status_keluarga' => 'Anak Kandung',
             'no_hp' => '081234567890',
-            'alamat' => 'Jl. Sudirman No. 456, Bandung'
+            'alamat' => 'Jl. Sudirman No. 456, Bandung',
+            'foto' => 'default.png'
         ]);
 
         // Create Jadwal (using nip and jam)

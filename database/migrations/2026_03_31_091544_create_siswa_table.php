@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('status_keluarga', 50);
             $table->string('no_hp', 15);
             $table->text('alamat');
+            $table->string('foto')->nullable();
             $table->timestamps();
         });
     }
