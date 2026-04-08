@@ -102,7 +102,9 @@ class DatabaseSeeder extends Seeder
             'tingkat' => 'X',
             'jurusan' => 'IPA',
             'ruangan' => 'R.101',
-            'status' => 'Aktif'
+            'status' => 'Aktif',
+            'tahun_ajaran' => '2026/2027',
+            'keterangan' => 'Kelas 10A IPA'
         ]);
 
         // Create Mapel

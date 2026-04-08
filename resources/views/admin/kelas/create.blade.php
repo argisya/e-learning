@@ -69,13 +69,13 @@
                         
                         <!-- Program Keahlian -->
                         <div>
-                            <label for="program_keahlian" class="block text-sm font-medium text-gray-700 mb-1">Jurusan</label>
-                            <select id="program_keahlian" name="program_keahlian" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
+                            <label for="jurusan" class="block text-sm font-medium text-gray-700 mb-1">Jurusan</label>
+                            <select id="jurusan" name="jurusan" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
                                 <option value="">-- Pilih Jurusan --</option>
-                                <option value="IPA" {{ old('program_keahlian') === 'IPA' ? 'selected' : '' }}>IPA</option>
-                                <option value="IPS" {{ old('program_keahlian') === 'IPS' ? 'selected' : '' }}>IPS</option>
-                                <option value="Bahasa" {{ old('program_keahlian') === 'Bahasa' ? 'selected' : '' }}>Bahasa</option>
-                                <option value="Teknik" {{ old('program_keahlian') === 'Teknik' ? 'selected' : '' }}>Teknik</option>
+                                <option value="IPA" {{ old('jurusan') === 'IPA' ? 'selected' : '' }}>IPA</option>
+                                <option value="IPS" {{ old('jurusan') === 'IPS' ? 'selected' : '' }}>IPS</option>
+                                <option value="Bahasa" {{ old('jurusan') === 'Bahasa' ? 'selected' : '' }}>Bahasa</option>
+                                <option value="Teknik" {{ old('jurusan') === 'Teknik' ? 'selected' : '' }}>Teknik</option>
                             </select>
                         </div>
                     </div>
@@ -94,17 +94,15 @@
                         
                         <!-- Pilih Wali Kelas -->
                         <div>
-                            <label for="wali_kelas" class="block text-sm font-medium text-gray-700 mb-1">Pilih Wali Kelas <span class="text-red-500">*</span></label>
-                            <select id="wali_kelas" name="wali_kelas" required onchange="loadWaliInfo(this.value)" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
+                            <label for="nip_wali" class="block text-sm font-medium text-gray-700 mb-1">Pilih Wali Kelas <span class="text-red-500">*</span></label>
+                            <select id="nip_wali" name="nip_wali" required onchange="loadWaliInfo(this.value)" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
                                 <option value="">-- Pilih Guru Wali Kelas --</option>
-                                <option value="{{ old('wali_kelas') }}" disabled selected>Pilih Guru</option>
-                                @foreach(range(1, 20) as $teacherId)
-                                    <option value="{{ $teacherId }}">{{ old('wali_kelas') }} Dr. Ahmad Fauzi, M.Pd. | NIP: 198501012008011001</option>
-                                    <option value="{{ $teacherId + 1 }}">Bu Siti Aminah, S.Pd. | NIP: 198906022013012002</option>
-                                    <option value="{{ $teacherId + 2 }}">Pak Budi Santoso, M.Si. | NIP: 199201022014011003</option>
+                                <option value="{{ old('nip_wali') }}" disabled selected>Pilih Guru</option>
+                                @foreach($guru as $teacher)
+                                    <option value="{{ $teacher->nip }}">{{ $teacher->nama_lengkap }} | NIP: {{ $teacher->nip }}</option>
                                 @endforeach
                             </select>
-                            @error('wali_kelas')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
+                            @error('nip_wali')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                         </div>
                         
                         <!-- Info Wali Kelas Preview -->
@@ -138,12 +136,12 @@
                         <!-- Status Kelas -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Status Kelas <span class="text-red-500">*</span></label>
-                            <select id="status_kelas" name="status_kelas" required class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
-                                <option value="aktif" {{ old('status_kelas', 'aktif') === 'aktif' ? 'selected' : '' }}>Aktif</option>
-                                <option value="tidak_aktif" {{ old('status_kelas') === 'tidak_aktif' ? 'selected' : '' }}>Tidak Aktif</option>
-                                <option value="lulus" {{ old('status_kelas') === 'lulus' ? 'selected' : '' }}>Lulus</option>
+                            <select id="status" name="status" required class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
+                                <option value="aktif" {{ old('status', 'aktif') === 'aktif' ? 'selected' : '' }}>Aktif</option>
+                                <option value="tidak_aktif" {{ old('status') === 'tidak_aktif' ? 'selected' : '' }}>Tidak Aktif</option>
+                                <option value="lulus" {{ old('status') === 'lulus' ? 'selected' : '' }}>Lulus</option>
                             </select>
-                            @error('status_kelas')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
+                            @error('status')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                         </div>
                         
                         <!-- Tahun Ajaran -->

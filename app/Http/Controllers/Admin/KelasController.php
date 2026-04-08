@@ -33,7 +33,9 @@ class KelasController extends Controller
             'tingkat' => 'required',
             'nip_wali' => 'required|exists:guru,nip',
             'ruangan' => 'required',
-            'status' => 'required|in:Aktif,Tidak Aktif'
+            'status' => 'required|in:Aktif,Tidak Aktif',
+            'tahun_ajaran' => 'required',
+            'keterangan' => 'nullable'
         ]);
 
         Kelas::create([
@@ -43,7 +45,9 @@ class KelasController extends Controller
             'tingkat' => $request->tingkat,
             'nip_wali' => $request->nip_wali,
             'ruangan' => $request->ruangan,
-            'status' => $request->status
+            'status' => $request->status,
+            'tahun_ajaran' => $request->tahun_ajaran,
+            'keterangan' => $request->keterangan
         ]);
 
         return redirect('admin.kelas.index')->with('success', 'Data kelas berhasil ditambahkan!');
@@ -66,7 +70,9 @@ class KelasController extends Controller
             'tingkat' => 'required',
             'nip_wali' => 'required|exists:guru,nip',
             'ruangan' => 'required',
-            'status' => 'required|in:Aktif,Tidak Aktif'
+            'status' => 'required|in:Aktif,Tidak Aktif',
+            'tahun_ajaran' => 'required',
+            'keterangan' => 'nullable'
         ]);
 
         $kelas = Kelas::findOrFail($request->id_kelas);
@@ -78,7 +84,9 @@ class KelasController extends Controller
             'tingkat' => $request->tingkat,
             'nip_wali' => $request->nip_wali,
             'ruangan' => $request->ruangan,
-            'status' => $request->status
+            'status' => $request->status,
+            'tahun_ajaran' => $request->tahun_ajaran,
+            'keterangan' => $request->keterangan
         ]);
 
         return redirect()->route('admin.kelas.index')->with('success', 'Data kelas berhasil diperbarui!');

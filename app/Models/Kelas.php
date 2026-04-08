@@ -20,7 +20,9 @@ class Kelas extends Model
         'tingkat',
         'nip_wali',
         'ruangan',
-        'status'
+        'status',
+        'tahun_ajaran',
+        'keterangan'
     ];
 
     public function siswa()
