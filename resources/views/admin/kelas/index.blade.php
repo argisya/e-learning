@@ -26,7 +26,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm text-gray-500">Total Kelas</p>
-                        <p class="text-2xl font-bold text-gray-800 mt-1">12</p>
+                        <p class="text-2xl font-bold text-gray-800 mt-1">{{ $total_kelas }}</p>
                         <p class="text-xs text-green-600 mt-2"><i class="fas fa-check-circle"></i> Semua Aktif</p>
                     </div>
                     <div class="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center">
@@ -39,7 +39,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm text-gray-500">Kelas Aktif</p>
-                        <p class="text-2xl font-bold text-gray-800 mt-1">12</p>
+                        <p class="text-2xl font-bold text-gray-800 mt-1">{{ $kelas_aktif }}</p>
                         <p class="text-xs text-green-600 mt-2">Semua aktif tahun ajaran</p>
                     </div>
                     <div class="w-12 h-12 rounded-lg bg-green-100 flex items-center justify-center">
@@ -143,7 +143,7 @@
                         </span>
                         Daftar Kelas
                     </h2>
-                    <span class="text-sm text-gray-500">Total: 12 Kelas</span>
+                    <span class="text-sm text-gray-500">Total: {{ $total_kelas }} Kelas</span>
                 </div>
                 
                 <div class="w-full overflow-x-auto">
@@ -194,7 +194,7 @@
                                     </td>
 
                                     <td class="px-6 py-4 text-gray-800 font-medium whitespace-nowrap">
-                                        {{ $class->nip}} 
+                                        {{ $class->nama_lengkap}} 
                                     </td>
 
                                     <td class="px-6 py-4 whitespace-nowrap">

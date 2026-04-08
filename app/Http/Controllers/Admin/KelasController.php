@@ -13,7 +13,9 @@ class KelasController extends Controller
     public function index()
     {
         return view('admin.kelas.index', [
-            'kelas' => DB::table('kelas')->join('guru', 'kelas.nip_wali', '=', 'guru.nip')->join('users', 'guru.id_user', '=', 'users.id_user')->get()
+            'kelas' => DB::table('kelas')->join('guru', 'kelas.nip_wali', '=', 'guru.nip')->join('users', 'guru.id_user', '=', 'users.id_user')->get(),
+            'total_kelas' => Kelas::count(),
+            'kelas_aktif' => Kelas::where('status', 'Aktif')->count()
         ]);
     }
 
@@ -55,7 +57,7 @@ class KelasController extends Controller
     {
         return view('admin.kelas.edit', [
             'kelas' => Kelas::findOrFail($request->id_kelas),
-            'guru' => Guru::all()
+            'guru' => DB::table('guru')->join('users', 'guru.id_user', '=', 'users.id_user')->get()
         ]);
     }
 

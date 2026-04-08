@@ -72,14 +72,14 @@
 
                         <!-- Jenjang Pendidikan -->
                         <div>
-                            <label for="jenjang" class="block text-sm font-medium text-gray-700 mb-1">Jenjang Pendidikan <span class="text-red-500">*</span></label>
-                            <select id="jenjang" name="jenjang" required onchange="generateCodePreview()" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
-                                <option value="">-- Pilih Jenjang --</option>
-                                <option value="SMP" {{ old('jenjang', $kelas->jenjang) === 'SMP' ? 'selected' : '' }}>SMP</option>
-                                <option value="SMA" {{ old('jenjang', $kelas->jenjang) === 'SMA' ? 'selected' : '' }}>SMA</option>
-                                <option value="SMK" {{ old('jenjang', $kelas->jenjang) === 'SMK' ? 'selected' : '' }}>SMK</option>
+                            <label for="jenjang_pendidikan" class="block text-sm font-medium text-gray-700 mb-1">Jenjang_pendidikan Pendidikan <span class="text-red-500">*</span></label>
+                            <select id="jenjang_pendidikan" name="jenjang_pendidikan" required onchange="generateCodePreview()" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
+                                <option value="">-- Pilih Jenjang_pendidikan --</option>
+                                <option value="SMP" {{ old('jenjang_pendidikan', $kelas->jenjang_pendidikan) === 'SMP' ? 'selected' : '' }}>SMP</option>
+                                <option value="SMA" {{ old('jenjang_pendidikan', $kelas->jenjang_pendidikan) === 'SMA' ? 'selected' : '' }}>SMA</option>
+                                <option value="SMK" {{ old('jenjang_pendidikan', $kelas->jenjang_pendidikan) === 'SMK' ? 'selected' : '' }}>SMK</option>
                             </select>
-                            @error('jenjang')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
+                            @error('jenjang_pendidikan')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                         </div>
                         
                         <!-- Tingkat/Kelas -->
@@ -138,8 +138,8 @@
                         
                         <!-- Pilih Wali Kelas -->
                         <div>
-                            <label for="nip_wali" class="block text-sm font-medium text-gray-700 mb-1">Pilih Wali Kelas <span class="text-red-500">*</span></label>
-                            <select id="nip_wali" name="nip_wali" required onchange="loadWaliInfo(this.value)" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
+                            <label for="nip" class="block text-sm font-medium text-gray-700 mb-1">Pilih Wali Kelas <span class="text-red-500">*</span></label>
+                            <select id="nip" name="nip_wali" required onchange="loadWaliInfo(this.value)" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
                                 <option value="">-- Pilih Guru Wali Kelas --</option>
                                 <option value="{{ old('nip_wali') }}" disabled selected>Pilih Guru</option>
                                 @foreach($guru as $teacher)
@@ -185,7 +185,7 @@
                             <label class="block text-sm font-medium text-gray-700 mb-2">Status Kelas <span class="text-red-500">*</span></label>
                             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                                 <label class="relative cursor-pointer group">
-                                    <input type="radio" name="status" value="aktif" {{ old('status', $kelas->status) === 'aktif' ? 'checked' : '' }} required class="peer sr-only">
+                                    <input type="radio" name="status" value="Aktif" {{ old('status', $kelas->status) === 'Aktif' ? 'checked' : '' }} required class="peer sr-only">
                                     <div class="p-4 border-2 border-gray-200 rounded-lg group-hover:border-primary-500 peer-checked:border-primary-500 peer-checked:bg-primary-50 transition-all">
                                         <div class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center mb-2 peer-checked:bg-green-500 peer-checked:text-white transition-colors">
                                             <i class="fas fa-check-circle text-green-600 text-lg peer-checked:text-white"></i>
@@ -195,7 +195,7 @@
                                 </label>
                                 
                                 <label class="relative cursor-pointer group">
-                                    <input type="radio" name="status" value="tidak_aktif" {{ old('status', $kelas->status) === 'tidak_aktif' ? 'checked' : '' }} required class="peer sr-only">
+                                    <input type="radio" name="status" value="Tidak Aktif" {{ old('status', $kelas->status) === 'Tidak Aktif' ? 'checked' : '' }} required class="peer sr-only">
                                     <div class="p-4 border-2 border-gray-200 rounded-lg group-hover:border-gray-400 peer-checked:border-gray-400 peer-checked:bg-gray-50 transition-all">
                                         <div class="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center mb-2 peer-checked:bg-gray-400 peer-checked:text-white transition-colors">
                                             <i class="fas fa-times-circle text-gray-600 text-lg peer-checked:text-white"></i>
