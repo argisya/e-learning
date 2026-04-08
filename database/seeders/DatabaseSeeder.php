@@ -99,6 +99,7 @@ class DatabaseSeeder extends Seeder
             'nip_wali' => 'NIP001',
             'nama_kelas' => '10A',
             'jenjang_pendidikan' => 'SMA',
+            'tingkat' => 'X',
             'jurusan' => 'IPA',
             'ruangan' => 'R.101',
             'status' => 'Aktif'

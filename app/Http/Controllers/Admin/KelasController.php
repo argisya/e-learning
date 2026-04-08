@@ -30,6 +30,7 @@ class KelasController extends Controller
             'nama_kelas' => 'required',
             'jenjang_pendidikan' => 'required',
             'jurusan' => 'required',
+            'tingkat' => 'required',
             'nip_wali' => 'required|exists:guru,nip',
             'ruangan' => 'required',
             'status' => 'required|in:Aktif,Tidak Aktif'
@@ -39,6 +40,7 @@ class KelasController extends Controller
             'nama_kelas' => $request->nama_kelas,
             'jenjang_pendidikan' => $request->jenjang_pendidikan,
             'jurusan' => $request->jurusan,
+            'tingkat' => $request->tingkat,
             'nip_wali' => $request->nip_wali,
             'ruangan' => $request->ruangan,
             'status' => $request->status
@@ -61,6 +63,7 @@ class KelasController extends Controller
             'nama_kelas' => 'required',
             'jenjang_pendidikan' => 'required',
             'jurusan' => 'required',
+            'tingkat' => 'required',
             'nip_wali' => 'required|exists:guru,nip',
             'ruangan' => 'required',
             'status' => 'required|in:Aktif,Tidak Aktif'
@@ -72,6 +75,7 @@ class KelasController extends Controller
             'nama_kelas' => $request->nama_kelas,
             'jenjang_pendidikan' => $request->jenjang_pendidikan,
             'jurusan' => $request->jurusan,
+            'tingkat' => $request->tingkat,
             'nip_wali' => $request->nip_wali,
             'ruangan' => $request->ruangan,
             'status' => $request->status

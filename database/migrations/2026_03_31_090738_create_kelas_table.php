@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nama_kelas', 50);
             $table->string('jenjang_pendidikan', 20);
             $table->string('jurusan', 50);
+            $table->string('tingkat', 20);
             $table->string('nip_wali', 20);
             $table->foreign('nip_wali')->references('nip')->on('guru')->onDelete('cascade');
             $table->string('ruangan', 20);

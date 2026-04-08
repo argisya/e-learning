@@ -17,6 +17,7 @@ class Kelas extends Model
         'nama_kelas',
         'jenjang_pendidikan',
         'jurusan',
+        'tingkat',
         'nip_wali',
         'ruangan',
         'status'
