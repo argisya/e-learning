@@ -92,7 +92,7 @@
                             <th scope="col" class="px-6 py-3 text-left">Agama</th>
                             <th scope="col" class="px-6 py-3 text-left">Status Pernikahan</th>
                             <th scope="col" class="px-6 py-3 text-left">No HP</th>
-                            <th scope="col" class="px-6 py-3 text-right hidden lg:table-cell">Aksi</th>
+                            <th scope="col" class="px-6 py-3 text-center hidden lg:table-cell">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 bg-white">
@@ -129,21 +129,25 @@
                                 </span>
                             </td>
                             <td class="px-6 py-4 text-gray-700">{{ $item->no_hp }}</td>
-                            <td class="px-6 py-4 text-right hidden lg:table-cell">
+                            <td class="px-6 py-4 text-right whitespace-nowrap">
                                 <div class="flex items-center justify-end gap-2">
-                                    <button class="icon-btn icon-view" onclick="openModal('modalView{{ $item->nip }}')" title="Lihat Detail">
+                                    
+                                    <a href="" class="inline-flex items-center justify-center w-9 h-9 text-blue-500 hover:text-blue-700 rounded hover:bg-blue-50 transition-colors" title="Lihat Detail">
                                         <i class="fas fa-eye"></i>
-                                    </button>
-                                    <button 
-                                        type="button"
-                                        class="icon-btn icon-edit" 
-                                        onclick="window.location.href=`{{ route('admin.guru.data.edit', $item->nip) }}`"
-                                        title="Edit">
+                                    </a>
+
+                                    <a href="{{ route('admin.guru.data.edit', $item->nip) }}" class="inline-flex items-center justify-center w-9 h-9 text-yellow-500 hover:text-yellow-700 rounded hover:bg-yellow-50 transition-colors" title="Edit">
                                         <i class="fas fa-pen"></i>
-                                    </button>
-                                    <button class="icon-btn icon-delete" onclick="confirmDelete({{ $item->nip }})" title="Hapus">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
+                                    </a>
+
+                                    <form action="{{ route('admin.guru.data.destroy', $item->nip) }}" method="POST" class="inline-flex items-center m-0" onsubmit="return confirm('Apakah Anda yakin?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="inline-flex items-center justify-center w-9 h-9 text-red-500 hover:text-red-700 rounded hover:bg-red-50 transition-colors" title="Hapus">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+
                                 </div>
                             </td>
                         </tr>

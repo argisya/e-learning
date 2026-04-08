@@ -148,7 +148,7 @@
                 
                 <div class="w-full overflow-x-auto">
                     <table class="w-full text-sm min-w-max">
-                        <thead class="bg-gray-800 text-white">
+                        <thead class="bg-gradient-to-r from-primary-500 to-secondary-500 text-white">
                             <tr>
                                 <th scope="col" class="px-6 py-4 text-left whitespace-nowrap">No</th>
                                 <th scope="col" class="px-6 py-4 text-left whitespace-nowrap">Nama Kelas</th>
@@ -215,21 +215,23 @@
 
                                     <td class="px-6 py-4 text-right whitespace-nowrap">
                                         <div class="flex items-center justify-end gap-2">
-                                            <a href="" class="inline-flex items-center justify-center text-blue-500 hover:text-blue-700 p-2 rounded hover:bg-blue-50 transition-colors" title="Lihat Detail">
+                                            
+                                            <a href="" class="inline-flex items-center justify-center w-9 h-9 text-blue-500 hover:text-blue-700 rounded hover:bg-blue-50 transition-colors" title="Lihat Detail">
                                                 <i class="fas fa-eye"></i>
                                             </a>
 
-                                            <a href="" class="inline-flex items-center justify-center text-yellow-500 hover:text-yellow-700 p-2 rounded hover:bg-yellow-50 transition-colors" title="Edit">
+                                            <a href="{{ route('admin.kelas.edit', ['id_kelas' => $class->id_kelas]) }}" class="inline-flex items-center justify-center w-9 h-9 text-yellow-500 hover:text-yellow-700 rounded hover:bg-yellow-50 transition-colors" title="Edit">
                                                 <i class="fas fa-pen"></i>
                                             </a>
 
-                                            <form action="" method="POST" class="flex items-center" onsubmit="return confirm('Apakah Anda yakin?')">
+                                            <form action="{{ route('admin.kelas.destroy', ['id_kelas' => $class->id_kelas]) }}" method="POST" class="inline-flex items-center m-0" onsubmit="return confirm('Apakah Anda yakin?')">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="inline-flex items-center justify-center text-red-500 hover:text-red-700 p-2 rounded hover:bg-red-50 transition-colors" title="Hapus">
+                                                <button type="submit" class="inline-flex items-center justify-center w-9 h-9 text-red-500 hover:text-red-700 rounded hover:bg-red-50 transition-colors" title="Hapus">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </form>
+
                                         </div>
                                     </td>
                                 </tr>
