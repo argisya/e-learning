@@ -98,6 +98,8 @@ class DatabaseSeeder extends Seeder
             'id_kelas' => 1,
             'nip_wali' => 'NIP001',
             'nama_kelas' => '10A',
+            'jenjang_pendidikan' => 'SMA',
+            'jurusan' => 'IPA',
             'ruangan' => 'R.101',
             'status' => 'Aktif'
         ]);
