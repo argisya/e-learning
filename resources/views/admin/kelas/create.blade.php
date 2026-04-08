@@ -106,7 +106,7 @@
                         </div>
                         
                         <!-- Info Wali Kelas Preview -->
-                        <div id="waliInfoPreview" class="hidden p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                        <!-- <div id="waliInfoPreview" class="hidden p-4 bg-blue-50 border border-blue-200 rounded-lg">
                             <div class="flex items-start gap-3">
                                 <i class="fas fa-info-circle text-blue-600 text-xl mt-1"></i>
                                 <div class="flex-1">
@@ -118,7 +118,7 @@
                                     </ul>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 

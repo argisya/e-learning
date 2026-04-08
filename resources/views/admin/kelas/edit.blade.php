@@ -138,26 +138,19 @@
                         
                         <!-- Pilih Wali Kelas -->
                         <div>
-                            <label for="wali_kelas" class="block text-sm font-medium text-gray-700 mb-1">Pilih Wali Kelas <span class="text-red-500">*</span></label>
-                            <select id="wali_kelas" name="wali_kelas" required onchange="loadWaliInfo(this.value)" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
+                            <label for="nip_wali" class="block text-sm font-medium text-gray-700 mb-1">Pilih Wali Kelas <span class="text-red-500">*</span></label>
+                            <select id="nip_wali" name="nip_wali" required onchange="loadWaliInfo(this.value)" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
                                 <option value="">-- Pilih Guru Wali Kelas --</option>
-                                <option value="{{ old('wali_kelas', $class->wali_kelas_id ?? '') }}" disabled selected>Pilih Guru</option>
-                                @foreach(range(1, 20) as $teacherId)
-                                    @php
-                                        $teacherName = ['Dr. Ahmad Fauzi, M.Pd.', 'Bu Siti Aminah, S.Pd.', 'Pak Budi Santoso, M.Si.', 'Ibu Ratna Sari, S.Hist.'][$teacherId % 4];
-                                        $nip = '198' . str_pad(($teacherId * 5 + 1) % 89, 4, '0', STR_PAD_LEFT) . date('Y');
-                                    @endphp
-                                    <option value="{{ $teacherId }}" {{ old('wali_kelas', $class->wali_kelas_id ?? '') == $teacherId ? 'selected' : '' }}>
-                                        {{ $teacherName }} | NIP: {{ $nip }}
-                                    </option>
+                                <option value="{{ old('nip_wali') }}" disabled selected>Pilih Guru</option>
+                                @foreach($guru as $teacher)
+                                    <option value="{{ $teacher->nip }}">{{ $teacher->nama_lengkap }} | NIP: {{ $teacher->nip }}</option>
                                 @endforeach
                             </select>
-                            @error('wali_kelas')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
-                            <p class="text-xs text-gray-500 mt-1">Pilih guru yang akan menjadi wali kelas untuk kelas ini</p>
+                            @error('nip_wali')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                         </div>
                         
                         <!-- Info Wali Kelas Preview -->
-                        <div id="waliInfoPreview" class="hidden p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                        <!-- <div id="waliInfoPreview" class="hidden p-4 bg-blue-50 border border-blue-200 rounded-lg">
                             <div class="flex items-start gap-3">
                                 <i class="fas fa-info-circle text-blue-600 text-xl mt-1"></i>
                                 <div class="flex-1">
@@ -172,7 +165,7 @@
                                     </ul>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 
@@ -208,16 +201,6 @@
                                             <i class="fas fa-times-circle text-gray-600 text-lg peer-checked:text-white"></i>
                                         </div>
                                         <p class="text-sm font-medium text-gray-700 text-center">Tidak Aktif</p>
-                                    </div>
-                                </label>
-                                
-                                <label class="relative cursor-pointer group">
-                                    <input type="radio" name="status" value="lulus" {{ old('status', $kelas->status) === 'lulus' ? 'checked' : '' }} required class="peer sr-only">
-                                    <div class="p-4 border-2 border-gray-200 rounded-lg group-hover:border-blue-500 peer-checked:border-blue-500 peer-checked:bg-blue-50 transition-all">
-                                        <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center mb-2 peer-checked:bg-blue-500 peer-checked:text-white transition-colors">
-                                            <i class="fas fa-graduation-cap text-blue-600 text-lg peer-checked:text-white"></i>
-                                        </div>
-                                        <p class="text-sm font-medium text-gray-700 text-center">Lulus</p>
                                     </div>
                                 </label>
                             </div>
@@ -346,16 +329,6 @@
         // Open Modal
         function openModal(modalId) {
             document.getElementById(modalId).classList.remove('hidden');
-        }
-        
-        // Generate Code Preview on Input Change
-        function generateCodePreview() {
-            const jenjang = document.getElementById('jenjang').value || '{{ strtolower(old('jenjang', $kelas->jenjang ?? 'SMP')) }}';
-            const tingkat = document.getElementById('tingkat').value || '{{ strtolower(old('tingkat', $kelas->tingkat ?? 'VII')) }}';
-            const tahunAjaran = document.getElementById('tahun_ajaran').value || '2024';
-            
-            const previewText = `IT-AF-${jenjang.toUpperCase()}-${tingkat.toUpperCase()}-${tahunAjaran}`;
-            alert(`Kode kelas otomatis: ${previewText}\n(Kode bersifat permanen)`);
         }
         
         // Load Wali Kelas Info
