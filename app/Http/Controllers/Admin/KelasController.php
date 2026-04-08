@@ -13,7 +13,7 @@ class KelasController extends Controller
     public function index()
     {
         return view('admin.kelas.index', [
-            'kelas' => DB::table('kelas')->join('guru', 'kelas.nip_wali', '=', 'guru.nip')->get()
+            'kelas' => DB::table('kelas')->join('guru', 'kelas.nip_wali', '=', 'guru.nip')->join('users', 'guru.id_user', '=', 'users.id_user')->get()
         ]);
     }
 
@@ -28,6 +28,8 @@ class KelasController extends Controller
     {
         $request->validate([
             'nama_kelas' => 'required',
+            'jenjang_pendidikan' => 'required',
+            'jurusan' => 'required',
             'nip_wali' => 'required|exists:guru,nip',
             'ruangan' => 'required',
             'status' => 'required|in:Aktif,Tidak Aktif'
@@ -35,6 +37,8 @@ class KelasController extends Controller
 
         Kelas::create([
             'nama_kelas' => $request->nama_kelas,
+            'jenjang_pendidikan' => $request->jenjang_pendidikan,
+            'jurusan' => $request->jurusan,
             'nip_wali' => $request->nip_wali,
             'ruangan' => $request->ruangan,
             'status' => $request->status
@@ -55,6 +59,8 @@ class KelasController extends Controller
     {
         $request->validate([
             'nama_kelas' => 'required',
+            'jenjang_pendidikan' => 'required',
+            'jurusan' => 'required',
             'nip_wali' => 'required|exists:guru,nip',
             'ruangan' => 'required',
             'status' => 'required|in:Aktif,Tidak Aktif'
@@ -64,6 +70,8 @@ class KelasController extends Controller
 
         $kelas->update([
             'nama_kelas' => $request->nama_kelas,
+            'jenjang_pendidikan' => $request->jenjang_pendidikan,
+            'jurusan' => $request->jurusan,
             'nip_wali' => $request->nip_wali,
             'ruangan' => $request->ruangan,
             'status' => $request->status
