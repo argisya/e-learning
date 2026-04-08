@@ -174,6 +174,7 @@
                                 <th scope="col" class="px-6 py-4 text-left">Nomor HP</th>
                                 <th scope="col" class="px-6 py-4 text-left hidden lg:table-cell">Alamat</th>
                                 <th scope="col" class="px-6 py-4 text-left">Status</th>
+                                <th scope="col" class="px-6 py-4 text-left">Keterangan</th>
                                 <th scope="col" class="px-6 py-4 text-right hidden lg:table-cell">Aksi</th>
                             </tr>
                         </thead>
@@ -181,14 +182,12 @@
                             @forelse ($siswa as $student)
                             <tr class="hover:bg-gray-50 transition-colors">
                                 <td class="px-6 py-4">
-                                    <input type="checkbox" class="rounded" value="{{ $student->id }}">
+                                    <input type="checkbox" class="rounded" value="{{ $student->nis }}">
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="flex items-center gap-3">
-                                        <img src="{{ $student->avatar ? asset('storage/' . $student->avatar) : asset('images/avatar.jpg') }}" alt="Avatar" class="w-10 h-10 rounded-full object-cover border-2">
                                         <div>
-                                            <p class="font-medium text-gray-800">{{ $student->nama }}</p>
-                                            <p class="text-xs text-gray-500 hidden sm:block">{{ $student->email }}</p>
+                                            <p class="font-medium text-gray-800">{{ $student->nama_lengkap }}</p>
                                         </div>
                                     </div>
                                 </td>
@@ -197,7 +196,7 @@
                                 <td class="px-6 py-4">
 
                                     <span class="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-blue-50 text-blue-700 text-xs font-medium">
-                                        <i class="fas fa-users"></i> {{ $student->kelas }}
+                                        <i class="fas fa-users"></i> {{ $student->id_kelas }}
                                     </span>
                                 </td>
                                 
@@ -212,7 +211,7 @@
                                 </td>
                                 
                                 <td class="px-6 py-4 text-gray-700 hidden md:table-cell">{{ $student->email }}</td>
-                                <td class="px-6 py-4 text-gray-700">{{ $student->no_telp }}</td>
+                                <td class="px-6 py-4 text-gray-700">{{ $student->no_hp }}</td>
                                 <td class="px-6 py-4 text-gray-600 text-xs hidden lg:table-cell truncate max-w-[150px]">
                                     {{ $student->alamat }}
                                 </td>
@@ -224,16 +223,16 @@
                                         </span>
                                     @else
                                         <span class="inline-flex items-center gap-1 px-2 py-1 rounded-lg badge badge-lulus">
-                                            <span class="status-dot"></span> Lulus
+                                            <span class="status-dot"></span> Tidak Aktif
                                         </span>
                                     @endif
                                 </td>
                                 
                                 <td class="px-6 py-4 text-right hidden lg:table-cell">
                                     <div class="flex items-center justify-end gap-2">
-                                        <button class="icon-btn icon-view" onclick="openModal('modalView{{ $student->id }}')" title="Lihat Detail"><i class="fas fa-eye"></i></button>
-                                        <button class="icon-btn icon-edit" onclick="openModal('modalEdit{{ $student->id }}')" title="Edit"><i class="fas fa-pen"></i></button>
-                                        <button class="icon-btn icon-delete" onclick="confirmDelete({{ $student->id }})" title="Hapus"><i class="fas fa-trash"></i></button>
+                                        <button class="icon-btn icon-view" onclick="openModal('modalView{{ $student->nis }}')" title="Lihat Detail"><i class="fas fa-eye"></i></button>
+                                        <button class="icon-btn icon-edit" onclick="openModal('modalEdit{{ $student->nis }}')" title="Edit"><i class="fas fa-pen"></i></button>
+                                        <button class="icon-btn icon-delete" onclick="confirmDelete({{ $student->nis }})" title="Hapus"><i class="fas fa-trash"></i></button>
                                     </div>
                                 </td>
                             </tr>

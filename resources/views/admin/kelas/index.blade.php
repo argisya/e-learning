@@ -129,7 +129,6 @@
                     <span class="text-sm text-gray-600">Legenda:</span>
                     <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs bg-green-100 text-green-700"><i class="fas fa-check-circle"></i> Aktif</span>
                     <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs bg-gray-100 text-gray-700"><i class="fas fa-times-circle"></i> Tidak Aktif</span>
-                    <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs bg-yellow-100 text-yellow-700"><i class="fas fa-clock"></i> Pending</span>
                 </div>
             </div>
         </div>
@@ -153,12 +152,13 @@
                             <tr>
                                 <th scope="col" class="px-6 py-4 text-left whitespace-nowrap">No</th>
                                 <th scope="col" class="px-6 py-4 text-left whitespace-nowrap">Nama Kelas</th>
-                                <th scope="col" class="px-6 py-4 text-left whitespace-nowrap">Kode Kelas</th>
+                                <th scope="col" class="px-6 py-4 text-left whitespace-nowrap">Jenjang Pendidikan</th>
+                                <th scope="col" class="px-6 py-4 text-left whitespace-nowrap">Tingkat/Kelas</th>
+                                <th scope="col" class="px-6 py-4 text-left whitespace-nowrap">Jurusan</th>
                                 <th scope="col" class="px-6 py-4 text-left whitespace-nowrap">Wali Kelas</th>
-                                <th scope="col" class="px-6 py-4 text-left whitespace-nowrap">Ruang Kelas</th>
-                                <th scope="col" class="px-6 py-4 text-left whitespace-nowrap">Jumlah Siswa</th>
                                 <th scope="col" class="px-6 py-4 text-left whitespace-nowrap">Status</th>
-                                <th scope="col" class="px-6 py-4 text-right whitespace-nowrap">Aksi</th>
+                                <th scope="col" class="px-6 py-4 text-left whitespace-nowrap">keterangan</th>
+                                <th scope="col" class="px-6 py-4 text-center whitespace-nowrap">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 bg-white">
@@ -173,30 +173,28 @@
                                                 
                                             <div>
                                                 <p class="font-medium text-gray-800">{{ $class->nama_kelas }}</p>
-                                                <p class="text-xs text-gray-500">{{ $class->sekolah ?? 'SMP IT Al-Fath' }}</p>
                                             </div>
                                         </div>
                                     </td>
 
-                                    <td class="px-6 py-4 text-gray-700 font-mono text-xs whitespace-nowrap">
-                                        {{ $class->ruangan }}
+                                    <td class="px-6 py-4 text-gray-900 font-mono text-xs whitespace-nowrap">
+                                        {{ $class->jenjang_pendidikan }}
                                     </td>
 
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex items-center gap-2">
                                             <div>
-                                                <p class="font-medium text-gray-800 text-xs">{{ $class->nama_lengkap ?? 'Tidak ada guru' }}</p>
-                                                <p class="text-xs text-gray-500">NIP: {{ $class->nip }}</p>
+                                                <p class="font-medium text-gray-800 text-xs">{{ $class->tingkat }} / {{ $class->jurusan }}</p>
                                             </div>
                                         </div>
                                     </td>
 
                                     <td class="px-6 py-4 text-gray-700 whitespace-nowrap">
-                                        {{ $class->ruangan }}
+                                        {{ $class->jurusan }}
                                     </td>
 
                                     <td class="px-6 py-4 text-gray-800 font-medium whitespace-nowrap">
-                                        {{ $class->students_count ?? 0 }} siswa
+                                        {{ $class->nip}} 
                                     </td>
 
                                     <td class="px-6 py-4 whitespace-nowrap">
@@ -211,18 +209,24 @@
                                         @endif
                                     </td>
 
+                                    <td class="px-6 py-4 text-gray-800 font-medium whitespace-nowrap">
+                                        {{ $class->keterangan}} 
+                                    </td>
+
                                     <td class="px-6 py-4 text-right whitespace-nowrap">
                                         <div class="flex items-center justify-end gap-2">
-                                            <a href="" class="text-blue-500 hover:text-blue-700 p-2 rounded hover:bg-blue-50" title="Lihat Detail">
+                                            <a href="" class="inline-flex items-center justify-center text-blue-500 hover:text-blue-700 p-2 rounded hover:bg-blue-50 transition-colors" title="Lihat Detail">
                                                 <i class="fas fa-eye"></i>
                                             </a>
-                                            <a href="" class="text-yellow-500 hover:text-yellow-700 p-2 rounded hover:bg-yellow-50" title="Edit">
+
+                                            <a href="" class="inline-flex items-center justify-center text-yellow-500 hover:text-yellow-700 p-2 rounded hover:bg-yellow-50 transition-colors" title="Edit">
                                                 <i class="fas fa-pen"></i>
                                             </a>
-                                            <form action="" method="POST" class="inline" onsubmit="return confirm('Apakah Anda yakin?')">
+
+                                            <form action="" method="POST" class="flex items-center" onsubmit="return confirm('Apakah Anda yakin?')">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="text-red-500 hover:text-red-700 p-2 rounded hover:bg-red-50" title="Hapus">
+                                                <button type="submit" class="inline-flex items-center justify-center text-red-500 hover:text-red-700 p-2 rounded hover:bg-red-50 transition-colors" title="Hapus">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </form>
