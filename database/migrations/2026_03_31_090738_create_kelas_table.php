@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('tingkat', 20);
             $table->string('nip_wali', 20);
             $table->foreign('nip_wali')->references('nip')->on('guru')->onDelete('cascade');
-            $table->string('ruangan', 20);
             $table->enum('status', ['Aktif', 'Tidak Aktif']);
             $table->string('tahun_ajaran', 20);
             $table->text('keterangan')->nullable();

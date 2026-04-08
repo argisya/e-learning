@@ -19,7 +19,6 @@ class Kelas extends Model
         'jurusan',
         'tingkat',
         'nip_wali',
-        'ruangan',
         'status',
         'tahun_ajaran',
         'keterangan'

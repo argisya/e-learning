@@ -20,7 +20,7 @@ class KelasController extends Controller
     public function create()
     {
         return view('admin.kelas.create', [
-            'guru' => Guru::all()
+            'guru' => DB::table('guru')->join('users', 'guru.id_user', '=', 'users.id_user')->get()
         ]);
     }
 
@@ -32,7 +32,6 @@ class KelasController extends Controller
             'jurusan' => 'required',
             'tingkat' => 'required',
             'nip_wali' => 'required|exists:guru,nip',
-            'ruangan' => 'required',
             'status' => 'required|in:Aktif,Tidak Aktif',
             'tahun_ajaran' => 'required',
             'keterangan' => 'nullable'
@@ -44,13 +43,12 @@ class KelasController extends Controller
             'jurusan' => $request->jurusan,
             'tingkat' => $request->tingkat,
             'nip_wali' => $request->nip_wali,
-            'ruangan' => $request->ruangan,
             'status' => $request->status,
             'tahun_ajaran' => $request->tahun_ajaran,
             'keterangan' => $request->keterangan
         ]);
 
-        return redirect('admin.kelas.index')->with('success', 'Data kelas berhasil ditambahkan!');
+        return redirect()->route('admin.kelas.index')->with('success', 'Data kelas berhasil ditambahkan!');
     }
 
     public function edit(Request $request)
@@ -69,7 +67,6 @@ class KelasController extends Controller
             'jurusan' => 'required',
             'tingkat' => 'required',
             'nip_wali' => 'required|exists:guru,nip',
-            'ruangan' => 'required',
             'status' => 'required|in:Aktif,Tidak Aktif',
             'tahun_ajaran' => 'required',
             'keterangan' => 'nullable'
@@ -83,7 +80,6 @@ class KelasController extends Controller
             'jurusan' => $request->jurusan,
             'tingkat' => $request->tingkat,
             'nip_wali' => $request->nip_wali,
-            'ruangan' => $request->ruangan,
             'status' => $request->status,
             'tahun_ajaran' => $request->tahun_ajaran,
             'keterangan' => $request->keterangan
