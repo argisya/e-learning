@@ -87,6 +87,7 @@ class DatabaseSeeder extends Seeder
             'no_hp' => '081234567890',
             'alamat' => 'Jl. Merdeka No. 123, Jakarta',
             'foto' => 'default.png',
+            'bidang_studi' => 'Matematika',
             'golongan' => 'IV/a',
             'masa_kerja' => '10',
             'jabatan' => 'Guru Matematika',

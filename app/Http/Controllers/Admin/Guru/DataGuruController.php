@@ -26,9 +26,18 @@ class DataGuruController extends Controller
 
     public function store(Request $request)
     {
+        dd(Request::all());
+        $user = DB::table('users')
+        ->where('nama_lengkap', $request->nama_lengkap)
+        ->first();
+
+        if (!$user) {
+            return back()->withErrors(['nama_lengkap' => 'Nama lengkap tidak ditemukan'])->withInput();
+        }
+
         $validatedData = $request->validate([
-            'id_user' => 'required',
             'nip' => 'required|unique:guru',
+            'id_user' => 'required',
             'tempat_lahir' => 'required',
             'tanggal_lahir' => 'required',
             'jenis_kelamin' => 'required',
@@ -37,6 +46,7 @@ class DataGuruController extends Controller
             'no_hp' => 'required|unique:guru|min:10|max:15',
             'alamat' => 'required',
             'foto' => 'image|mimes:jpeg,png,jpg|file|max:2048',
+            'bidang_studi' => 'required',
         ], $messages = [
             'id_user.required' => 'Nama lengkap harus diisi',
             'nip.required' => 'NIP harus diisi',
@@ -54,6 +64,8 @@ class DataGuruController extends Controller
             'foto.max' => 'Ukuran gambar maksimal 2MB',
         ]);
 
+        $validatedData['id_user'] = $user->id_user;
+        
         if($request->file('foto')){
             $file = $request->file('foto');
             $extension = $file->getClientOriginalExtension();
@@ -89,6 +101,7 @@ class DataGuruController extends Controller
             'no_hp' => 'required',
             'alamat' => 'required',
             'foto' => 'image|mimes:jpeg,png,jpg|file|max:2048',
+            'bidang_studi' => 'required',
         ];
         $messages = [
             'id_user.required' => 'Nama lengkap harus diisi',
@@ -102,6 +115,7 @@ class DataGuruController extends Controller
             'foto.image' => 'File yang diunggah harus berupa gambar',
             'foto.mimes' => 'Format gambar yang diperbolehkan: jpeg, png, jpg',
             'foto.max' => 'Ukuran gambar maksimal 2MB',
+            'bidang_studi.required' => 'Bidang studi harus diisi',
         ];
         $validatedData = $request->validate($rules, $messages);
 

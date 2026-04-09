@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('no_hp', 15);
             $table->text('alamat');
             $table->string('foto', 255)->nullable();
+            $table->string('bidang_studi', 50);
             $table->string('golongan', 10);
             $table->string('masa_kerja', 20);
             $table->string('jabatan', 50);

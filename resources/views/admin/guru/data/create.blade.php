@@ -33,7 +33,7 @@
         
         <!-- Content Card -->
         <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-sm border overflow-hidden">
-            <form action="" method="POST" enctype="multipart/form-data" novalidate id="createForm" class="p-6 lg:p-8">
+            <form action="{{ route('admin.guru.data.store') }}" method="POST" enctype="multipart/form-data" novalidate id="createForm" class="p-6 lg:p-8">
                 
                 @csrf
                 
@@ -50,6 +50,7 @@
                         <!-- Nama Lengkap -->
                         <div>
                             <label for="nama_lengkap" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap <span class="text-red-500">*</span></label>
+                            <input type="hidden" id="id_user" name="id_user" value="{{ old('id_user') }}">
                             <input type="text" id="nama_lengkap" name="nama_lengkap" value="{{ old('nama_lengkap') }}" placeholder="Masukkan nama lengkap sesuai ijazah" required class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
                             @error('nama_lengkap')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                         </div>
@@ -165,7 +166,7 @@
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Status Kepegawaian -->
-                        <div>
+                        {{-- <div>
                             <label for="status_kepagawaian" class="block text-sm font-medium text-gray-700 mb-1">Status Kepegawaian <span class="text-red-500">*</span></label>
                             <select id="status_kepagawaian" name="status_kepagawaian" required class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
                                 <option value="">-- Pilih Status --</option>
@@ -175,7 +176,7 @@
                                 <option value="Honorer" {{ old('status_kepagawaian') === 'Honorer' ? 'selected' : '' }}>Honorer Daerah</option>
                             </select>
                             @error('status_kepagawaian')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
-                        </div>
+                        </div> --}}
                         
                         <!-- Bidang Studi -->
                         <div>
@@ -185,20 +186,20 @@
                         
                         <!-- Jabatan Struktural -->
                         <div>
-                            <label for="jabatan_struktural" class="block text-sm font-medium text-gray-700 mb-1">Jabatan Struktural</label>
-                            <select id="jabatan_struktural" name="jabatan_struktural" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
+                            <label for="jabatan" class="block text-sm font-medium text-gray-700 mb-1">Jabatan Struktural</label>
+                            <select id="jabatan" name="jabatan" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
                                 <option value="">Tidak ada</option>
-                                <option value="Kepala Sekolah" {{ old('jabatan_struktural') === 'Kepala Sekolah' ? 'selected' : '' }}>Kepala Sekolah</option>
-                                <option value="Wakil Kepala Sekolah" {{ old('jabatan_struktural') === 'Wakil Kepala Sekolah' ? 'selected' : '' }}>Wakil Kepala Sekolah</option>
-                                <option value="Guru BK" {{ old('jabatan_struktural') === 'Guru BK' ? 'selected' : '' }}>Guru BK</option>
-                                <option value="Koordinator" {{ old('jabatan_struktural') === 'Koordinator' ? 'selected' : '' }}>Koordinator</option>
+                                <option value="Kepala Sekolah" {{ old('jabatan') === 'Kepala Sekolah' ? 'selected' : '' }}>Kepala Sekolah</option>
+                                <option value="Wakil Kepala Sekolah" {{ old('jabatan') === 'Wakil Kepala Sekolah' ? 'selected' : '' }}>Wakil Kepala Sekolah</option>
+                                <option value="Guru BK" {{ old('jabatan') === 'Guru BK' ? 'selected' : '' }}>Guru BK</option>
+                                <option value="Koordinator" {{ old('jabatan') === 'Koordinator' ? 'selected' : '' }}>Koordinator</option>
                             </select>
                         </div>
                         
                         <!-- Nomor SK Jabatan -->
                         <div>
-                            <label for="nomor_sk_jabatan" class="block text-sm font-medium text-gray-700 mb-1">Nomor SK Jabatan</label>
-                            <input type="text" id="nomor_sk_jabatan" name="nomor_sk_jabatan" value="{{ old('nomor_sk_jabatan') }}" placeholder="012/SKB/XXX/2024" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
+                            <label for="no_sk" class="block text-sm font-medium text-gray-700 mb-1">Nomor SK Jabatan</label>
+                            <input type="text" id="no_sk" name="no_sk" value="{{ old('no_sk') }}" placeholder="012/SKB/XXX/2024" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
                         </div>
                         
                         <!-- Masa Kerja -->
@@ -209,14 +210,14 @@
                         
                         <!-- Pangkat / Golongan -->
                         <div>
-                            <label for="pangkat_golongan" class="block text-sm font-medium text-gray-700 mb-1">Pangkat / Golongan</label>
-                            <select id="pangkat_golongan" name="pangkat_golongan" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
+                            <label for="golongan" class="block text-sm font-medium text-gray-700 mb-1">Pangkat / Golongan</label>
+                            <select id="golongan" name="golongan" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
                                 <option value="">-- Pilih Pangkat --</option>
-                                <option value="Penata Muda III/a" {{ old('pangkat_golongan') === 'Penata Muda III/a' ? 'selected' : '' }}>Penata Muda III/a</option>
-                                <option value="Penata Muda II/3b" {{ old('pangkat_golongan') === 'Penata Muda II/3b' ? 'selected' : '' }}>Penata Muda II/3b</option>
-                                <option value="Penata Muda Tingkat I III/c" {{ old('pangkat_golongan') === 'Penata Muda Tingkat I III/c' ? 'selected' : '' }}>Penata Muda Tingkat I III/c</option>
-                                <option value="Penata III/d" {{ old('pangkat_golongan') === 'Penata III/d' ? 'selected' : '' }}>Penata III/d</option>
-                                <option value="Penata Tk I IV/a" {{ old('pangkat_golongan') === 'Penata Tk I IV/a' ? 'selected' : '' }}>Penata Tk I IV/a</option>
+                                <option value="Penata Muda III/a" {{ old('golongan') === 'Penata Muda III/a' ? 'selected' : '' }}>Penata Muda III/a</option>
+                                <option value="Penata Muda II/3b" {{ old('golongan') === 'Penata Muda II/3b' ? 'selected' : '' }}>Penata Muda II/3b</option>
+                                <option value="Penata Muda Tingkat I III/c" {{ old('golongan') === 'Penata Muda Tingkat I III/c' ? 'selected' : '' }}>Penata Muda Tingkat I III/c</option>
+                                <option value="Penata III/d" {{ old('golongan') === 'Penata III/d' ? 'selected' : '' }}>Penata III/d</option>
+                                <option value="Penata Tk I IV/a" {{ old('golongan') === 'Penata Tk I IV/a' ? 'selected' : '' }}>Penata Tk I IV/a</option>
                             </select>
                         </div>
                     </div>
@@ -303,6 +304,7 @@
         // Autocomplete untuk Nama Lengkap
         const namaLengkapInput = document.getElementById('nama_lengkap');
         const usernameInput = document.getElementById('username');
+        const idUserInput = document.getElementById('id_user');
         let debounceTimer;
         let dropdown = null;
 

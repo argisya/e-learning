@@ -26,6 +26,7 @@ class Guru extends Model
         'no_hp',
         'alamat',
         'foto',
+        'bidang_studi',
         'golongan',
         'masa_kerja', 
         'jabatan',
