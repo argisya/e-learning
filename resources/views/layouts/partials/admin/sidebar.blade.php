@@ -74,7 +74,7 @@
                        class="block px-4 py-2 rounded-lg text-sm {{ request()->routeIs('siswa.jadwal') ? 'bg-primary-100 text-primary-700' : 'text-gray-500 hover:bg-gray-50' }}">
                         Jadwal Siswa
                     </a>
-                    <a href="" 
+                    <a href="{{ route('admin.siswa.absensi.index') }}" 
                        class="block px-4 py-2 rounded-lg text-sm {{ request()->routeIs('siswa.absensi') ? 'bg-primary-100 text-primary-700' : 'text-gray-500 hover:bg-gray-50' }}">
                         Absensi Siswa
                     </a>

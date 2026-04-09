@@ -18,7 +18,7 @@
                 <button onclick="openModal('modalExportStudent')" class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
                     <i class="fas fa-download mr-2"></i>Export
                 </button>
-                <a href="" class="inline-flex items-center gap-2 gradient-bg text-white px-4 py-2 rounded-lg hover:opacity-90 transition-all shadow-md">
+                <a href="{{ route('admin.siswa.data.create') }}" class="inline-flex items-center gap-2 gradient-bg text-white px-4 py-2 rounded-lg hover:opacity-90 transition-all shadow-md">
                     <i class="fas fa-plus mr-2"></i>Tambah Siswa
                 </a>
             </div>
