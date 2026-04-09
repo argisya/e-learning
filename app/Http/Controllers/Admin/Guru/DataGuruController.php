@@ -140,7 +140,12 @@ class DataGuruController extends Controller
     }
 
     public function autofill(Request $request){
-        $autofill =  DB::table('users')->join('roles', 'roles.id_role', '=', 'users.id_role')->where("users.id_role", 2)->where("nama_lengkap", $request->nama_lengkap)->get();
-        echo json_encode($autofill);
+        $query = $request->get('q', '');
+        $guru = DB::table('guru')
+            ->join('users', 'guru.id_user', '=', 'users.id_user')
+            ->where('users.nama_lengkap', 'like', '%' . $query . '%')
+            ->select('users.nama_lengkap', 'guru.nip')
+            ->get();
+        return response()->json($guru);
     }
 }

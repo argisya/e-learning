@@ -299,6 +299,80 @@
             
             if (!isValid) e.preventDefault();
         });
+
+        // Autocomplete untuk Nama Lengkap
+        const namaLengkapInput = document.getElementById('nama_lengkap');
+        const nipInput = document.getElementById('nip');
+        let debounceTimer;
+        let dropdown = null;
+
+        // Buat dropdown element
+        function createDropdown() {
+            if (dropdown) return;
+            dropdown = document.createElement('div');
+            dropdown.className = 'absolute z-10 w-full bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto mt-1';
+            dropdown.style.display = 'none';
+            namaLengkapInput.parentNode.style.position = 'relative';
+            namaLengkapInput.parentNode.appendChild(dropdown);
+        }
+
+        // Tampilkan dropdown dengan data
+        function showDropdown(data) {
+            if (!dropdown) createDropdown();
+            dropdown.innerHTML = '';
+            if (data.length === 0) {
+                dropdown.style.display = 'none';
+                return;
+            }
+            data.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'px-4 py-2 hover:bg-gray-100 cursor-pointer';
+                div.textContent = item.nama_lengkap;
+                div.addEventListener('click', () => {
+                    namaLengkapInput.value = item.nama_lengkap;
+                    nipInput.value = item.nip;
+                    dropdown.style.display = 'none';
+                });
+                dropdown.appendChild(div);
+            });
+            dropdown.style.display = 'block';
+        }
+
+        // Sembunyikan dropdown
+        function hideDropdown() {
+            if (dropdown) dropdown.style.display = 'none';
+        }
+
+        // Fetch data dari server
+        async function fetchAutocomplete(query) {
+            try {
+                const response = await fetch(`{{ route('admin.guru.data.autofill') }}?q=${encodeURIComponent(query)}`);
+                const data = await response.json();
+                showDropdown(data);
+            } catch (error) {
+                console.error('Error fetching autocomplete data:', error);
+            }
+        }
+
+        // Event listener untuk input
+        namaLengkapInput.addEventListener('input', function() {
+            const query = this.value.trim();
+            clearTimeout(debounceTimer);
+            if (query.length < 2) {
+                hideDropdown();
+                return;
+            }
+            debounceTimer = setTimeout(() => {
+                fetchAutocomplete(query);
+            }, 300);
+        });
+
+        // Sembunyikan dropdown saat klik di luar
+        document.addEventListener('click', function(e) {
+            if (!namaLengkapInput.contains(e.target) && (!dropdown || !dropdown.contains(e.target))) {
+                hideDropdown();
+            }
+        });
     </script>
 </body>
 </html>
