@@ -56,9 +56,9 @@
                         
                         <!-- NIP -->
                         <div>
-                            <label for="nip" class="block text-sm font-medium text-gray-700 mb-1">NIP / NKK <span class="text-red-500">*</span></label>
-                            <input type="text" id="nip" name="nip" value="{{ old('nip') }}" placeholder="18 digit angka" required pattern="\d{18}" maxlength="18" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all font-mono">
-                            @error('nip')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
+                            <label for="username" class="block text-sm font-medium text-gray-700 mb-1">NIP / NKK <span class="text-red-500">*</span></label>
+                            <input type="text" id="username" name="nip" value="{{ old('username') }}" placeholder="18 digit angka" required pattern="\d{18}" maxlength="18" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all font-mono">
+                            @error('username')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                         </div>
                         
                         <!-- Tempat Lahir -->
@@ -302,7 +302,7 @@
 
         // Autocomplete untuk Nama Lengkap
         const namaLengkapInput = document.getElementById('nama_lengkap');
-        const nipInput = document.getElementById('nip');
+        const usernameInput = document.getElementById('username');
         let debounceTimer;
         let dropdown = null;
 
@@ -330,7 +330,7 @@
                 div.textContent = item.nama_lengkap;
                 div.addEventListener('click', () => {
                     namaLengkapInput.value = item.nama_lengkap;
-                    nipInput.value = item.nip;
+                    usernameInput.value = item.username;
                     dropdown.style.display = 'none';
                 });
                 dropdown.appendChild(div);

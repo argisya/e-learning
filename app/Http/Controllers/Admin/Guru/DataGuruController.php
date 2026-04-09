@@ -141,10 +141,10 @@ class DataGuruController extends Controller
 
     public function autofill(Request $request){
         $query = $request->get('q', '');
-        $guru = DB::table('guru')
-            ->join('users', 'guru.id_user', '=', 'users.id_user')
+        $guru = DB::table('users')
+            ->join('roles', 'users.id_role', '=', 'roles.id_role')
             ->where('users.nama_lengkap', 'like', '%' . $query . '%')
-            ->select('users.nama_lengkap', 'guru.nip')
+            ->select('users.nama_lengkap', 'users.id_user', 'users.username')
             ->get();
         return response()->json($guru);
     }
