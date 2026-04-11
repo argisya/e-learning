@@ -45,8 +45,8 @@ Route::get('admin/guru/data/autofill', [DataGuruController::class, 'autofill'])-
 Route::get('admin/guru/data/create', [DataGuruController::class, 'create'])->name('admin.guru.data.create');
 Route::get('admin/guru/data/edit/{nip}', [DataGuruController::class, 'edit'])->name('admin.guru.data.edit');
 Route::post('admin/guru/data/store', [DataGuruController::class, 'store'])->name('admin.guru.data.store');
-Route::get('admin/guru/data/update/{nip}', [DataGuruController::class, 'update'])->name('admin.guru.data.update');
-Route::get('admin/guru/data/{nip}', [DataGuruController::class, 'destroy'])->name('admin.guru.data.destroy');
+Route::put('admin/guru/data/update/{nip}', [DataGuruController::class, 'update'])->name('admin.guru.data.update');
+Route::delete('admin/guru/data/{nip}', [DataGuruController::class, 'destroy'])->name('admin.guru.data.destroy');
 Route::get('admin/guru/jadwal', [JadwalGuruController::class, 'index'])->name('admin.guru.jadwal.index');
 Route::get('admin/guru/absensi', [AbsensiGuruController::class, 'index'])->name('admin.guru.absensi.index');
 
@@ -57,8 +57,8 @@ Route::get('admin/siswa/data/autofill', [DataSiswaController::class, 'autofill']
 Route::get('admin/siswa/data/create', [DataSiswaController::class, 'create'])->name('admin.siswa.data.create');
 Route::get('admin/siswa/data/edit/{nis}', [DataSiswaController::class, 'edit'])->name('admin.siswa.data.edit');
 Route::post('admin/siswa/data/store', [DataSiswaController::class, 'store'])->name('admin.siswa.data.store');
-Route::get('admin/siswa/data/update/{nis}', [DataSiswaController::class, 'update'])->name('admin.siswa.data.update');
-Route::get('admin/siswa/data/{nis}', [DataSiswaController::class, 'destroy'])->name('admin.siswa.data.destroy');
+Route::put('admin/siswa/data/update/{nis}', [DataSiswaController::class, 'update'])->name('admin.siswa.data.update');
+Route::delete('admin/siswa/data/{nis}', [DataSiswaController::class, 'destroy'])->name('admin.siswa.data.destroy');
 Route::get('admin/siswa/jadwal', [JadwalSiswaController::class, 'index'])->name('admin.siswa.jadwal.index');
 Route::get('admin/siswa/absensi', [AbsensiSiswaController::class, 'index'])->name('admin.siswa.absensi.index');
 

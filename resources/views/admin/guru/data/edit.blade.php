@@ -41,7 +41,7 @@
                 <div class="absolute left-0 top-0 h-full gradient-bg" style="width: 70%"></div>
             </div>
             
-            <form action="" method="POST" enctype="multipart/form-data" novalidate id="editForm" class="p-6 lg:p-8">
+            <form action="{{ route('admin.guru.data.update', $guru->nip) }}" method="POST" enctype="multipart/form-data" novalidate id="editForm" class="p-6 lg:p-8">
                 
                 @csrf
                 @method('PUT')
@@ -79,29 +79,30 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label for="nama_lengkap" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
-                            <input type="text" id="nama_lengkap" name="nama_lengkap" value="" required class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
+                            <input type="hidden" id="id_user" name="id_user" value="{{ $guru->id_user }}" required>
+                            <input type="text" id="nama_lengkap" name="nama_lengkap" value="{{ $guru->nama_lengkap }}" required class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
                         </div>
                         <div>
                             <label for="nip" class="block text-sm font-medium text-gray-700 mb-1">NIP / NKK</label>
-                            <input type="text" id="nip" name="nip" value="" readonly class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg bg-gray-100 cursor-not-allowed text-gray-500">
+                            <input type="text" id="nip" name="nip" value="{{ $guru->nip }}" readonly class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg bg-gray-100 cursor-not-allowed text-gray-500">
                         </div>
                         <div>
                             <label for="tempat_lahir" class="block text-sm font-medium text-gray-700 mb-1">Tempat Lahir</label>
-                            <input type="text" id="tempat_lahir" name="tempat_lahir" value="" required class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
+                            <input type="text" id="tempat_lahir" name="tempat_lahir" value="{{ $guru->tempat_lahir }}" required class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
                         </div>
                         <div>
                             <label for="tanggal_lahir" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Lahir</label>
-                            <input type="date" id="tanggal_lahir" name="tanggal_lahir" value="" required class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
+                            <input type="date" id="tanggal_lahir" name="tanggal_lahir" value="{{ $guru->tanggal_lahir }}" required class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Jenis Kelamin</label>
                             <div class="flex items-center gap-6">
                                 <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="jenis_kelamin" value="Laki-laki" >
+                                    <input type="radio" name="jenis_kelamin" value="L" {{ $guru->jenis_kelamin === 'L' ? 'checked' : '' }}>
                                     <span class="text-gray-700">Laki-laki</span>
                                 </label>
                                 <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="jenis_kelamin" value="Perempuan" >
+                                    <input type="radio" name="jenis_kelamin" value="P" {{ $guru->jenis_kelamin === 'P' ? 'checked' : '' }}>
                                     <span class="text-gray-700">Perempuan</span>
                                 </label>
                             </div>
@@ -110,7 +111,7 @@
                             <label for="agama" class="block text-sm font-medium text-gray-700 mb-1">Agama</label>
                             <select id="agama" name="agama" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
                                 @foreach(['Islam', 'Kristen Protestan', 'Kristen Katolik', 'Hindu', 'Buddha', 'Konghucu'] as $religion)
-                                    <option value="{{ $religion }}" > tst</option>
+                                    <option value="{{ $religion }}" {{ $guru->agama === $religion ? 'selected' : '' }}> {{ $religion }} </option>
                                 @endforeach
                             </select>
                         </div>
@@ -125,11 +126,11 @@
                         </div>
                         <div>
                             <label for="no_hp" class="block text-sm font-medium text-gray-700 mb-1">Nomor Handphone</label>
-                            <input type="tel" id="no_hp" name="no_hp" value="" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
+                            <input type="tel" id="no_hp" name="no_hp" value="{{ $guru->no_hp }}" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
                         </div>
                         <div class="md:col-span-2">
                             <label for="alamat" class="block text-sm font-medium text-gray-700 mb-1">Alamat Lengkap</label>
-                            <textarea id="alamat" name="alamat" rows="3" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all resize-none"></textarea>
+                            <textarea id="alamat" name="alamat" value="{{ $guru->alamat }}" rows="3" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all resize-none"></textarea>
                         </div>
                     </div>
                 </div>
@@ -142,7 +143,7 @@
                     </h2>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
+                        {{-- <div>
                             <label for="status_kepagawaian" class="block text-sm font-medium text-gray-700 mb-1">Status Kepegawaian</label>
                             <select id="status_kepagawaian" name="status_kepagawaian" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
                                 <option value="PNS">Pegawai Negeri Sipil</option>
@@ -150,14 +151,15 @@
                                 <option value="TKS">Tenaga Kontrak Sekolah</option>
                                 <option value="Honorer">Honorer Daerah</option>
                             </select>
+                        </div> --}}
+                        <!-- Bidang Studi -->
+                        <div>
+                            <label for="bidang_studi" class="block text-sm font-medium text-gray-700 mb-1">Bidang Studi</label>
+                            <input type="text" id="bidang_studi" name="bidang_studi" value="{{ old('bidang_studi') ?? $guru->bidang_studi }}" placeholder="Contoh: Guru Matematika" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
                         </div>
                         <div>
-                            <label for="nomenklatur" class="block text-sm font-medium text-gray-700 mb-1">Nomenklatur</label>
-                            <input type="text" id="nomenklatur" name="nomenklatur" value="" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
-                        </div>
-                        <div>
-                            <label for="jabatan_struktural" class="block text-sm font-medium text-gray-700 mb-1">Jabatan Struktural</label>
-                            <select id="jabatan_struktural" name="jabatan_struktural" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
+                            <label for="jabatan" class="block text-sm font-medium text-gray-700 mb-1">Jabatan</label>
+                            <select id="jabatan" name="jabatan" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
                                 <option value="">Tidak ada</option>
                                 <option value="Kepala Sekolah" >Kepala Sekolah</option>
                                 <option value="Wakil Kepala Sekolah" >Wakil Kepala Sekolah</option>
@@ -166,20 +168,20 @@
                             </select>
                         </div>
                         <div>
-                            <label for="nomor_sk_jabatan" class="block text-sm font-medium text-gray-700 mb-1">Nomor SK Jabatan</label>
-                            <input type="text" id="nomor_sk_jabatan" name="nomor_sk_jabatan" value="" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
+                            <label for="no_sk" class="block text-sm font-medium text-gray-700 mb-1">Nomor SK Jabatan</label>
+                            <input type="text" id="no_sk" name="no_sk" value="{{ old('no_sk') ?? $guru->no_sk }}" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
                         </div>
-                        <div>
+                        {{-- <div>
                             <label for="tanggal_sk_jabatan" class="block text-sm font-medium text-gray-700 mb-1">Tanggal SK Jabatan</label>
                             <input type="date" id="tanggal_sk_jabatan" name="tanggal_sk_jabatan" value="" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
-                        </div>
+                        </div> --}}
                         <div>
                             <label for="masa_kerja" class="block text-sm font-medium text-gray-700 mb-1">Masa Kerja (Tahun)</label>
                             <input type="number" id="masa_kerja" name="masa_kerja" value="" min="0" max="50" step="0.5" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
                         </div>
                         <div>
-                            <label for="pangkat_golongan" class="block text-sm font-medium text-gray-700 mb-1">Pangkat / Golongan</label>
-                            <select id="pangkat_golongan" name="pangkat_golongan" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
+                            <label for="golongan" class="block text-sm font-medium text-gray-700 mb-1">Pangkat / Golongan</label>
+                            <select id="golongan" name="golongan" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
                                 <option value="Penata Muda III/a" >Penata Muda III/a</option>
                                 <option value="Penata Muda II/3b" >Penata Muda II/3b</option>
                                 <option value="Penata Muda Tingkat I III/c" >Penata Muda Tingkat I III/c</option>

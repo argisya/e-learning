@@ -91,7 +91,11 @@ class DataGuruController extends Controller
     public function edit(Request $request)
     {
         return view('admin.guru.data.edit', [
-            'guru' => Guru::findOrFail($request->nip) 
+            'guru' =>  DB::table('guru')
+            ->join('users', 'guru.id_user', '=', 'users.id_user')
+            ->select('guru.*', 'users.nama_lengkap')
+            ->where('guru.nip', $request->nip)
+            ->first()
         ]);
     }
 
@@ -109,6 +113,10 @@ class DataGuruController extends Controller
             'alamat' => 'required',
             'foto' => 'image|mimes:jpeg,png,jpg|file|max:2048',
             'bidang_studi' => 'required',
+            'golongan' => 'required',
+            'masa_kerja' => 'required',
+            'jabatan' => 'required',
+            'no_sk' => 'required',
         ];
         $messages = [
             'id_user.required' => 'Nama lengkap harus diisi',
@@ -123,6 +131,10 @@ class DataGuruController extends Controller
             'foto.mimes' => 'Format gambar yang diperbolehkan: jpeg, png, jpg',
             'foto.max' => 'Ukuran gambar maksimal 2MB',
             'bidang_studi.required' => 'Bidang studi harus diisi',
+            'golongan.required' => 'Golongan harus diisi',
+            'masa_kerja.required' => 'Masa kerja harus diisi',
+            'jabatan.required' => 'Jabatan harus diisi',
+            'no_sk.required' => 'No SK harus diisi',
         ];
         $validatedData = $request->validate($rules, $messages);
 

@@ -430,7 +430,7 @@
                 </div>
                 <h3 class="text-xl font-bold text-gray-800 mb-2">Konfirmasi Hapus Data</h3>
                 <p class="text-gray-600 mb-6">Apakah Anda yakin ingin menghapus data guru ini? Data tidak dapat dikembalikan setelah dihapus.</p>
-                <form action="" method="POST">
+                <form action="{{ route('admin.guru.data.destroy', $item->nip) }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <div class="flex justify-center gap-3">
