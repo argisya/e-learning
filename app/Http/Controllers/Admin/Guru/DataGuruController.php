@@ -26,7 +26,6 @@ class DataGuruController extends Controller
 
     public function store(Request $request)
     {
-        dd(Request::all());
         $user = DB::table('users')
         ->where('nama_lengkap', $request->nama_lengkap)
         ->first();
@@ -36,7 +35,7 @@ class DataGuruController extends Controller
         }
 
         $validatedData = $request->validate([
-            'nip' => 'required|unique:guru',
+            'nip' => 'required',
             'id_user' => 'required',
             'tempat_lahir' => 'required',
             'tanggal_lahir' => 'required',
@@ -47,10 +46,13 @@ class DataGuruController extends Controller
             'alamat' => 'required',
             'foto' => 'image|mimes:jpeg,png,jpg|file|max:2048',
             'bidang_studi' => 'required',
+            'golongan' => 'required',
+            'masa_kerja' => 'required',
+            'jabatan' => 'required',
+            'no_sk' => 'required',
         ], $messages = [
             'id_user.required' => 'Nama lengkap harus diisi',
             'nip.required' => 'NIP harus diisi',
-            'nip.unique' => 'NIP sudah digunakan',
             'tempat_lahir.required' => 'Tempat lahir harus diisi',
             'tanggal_lahir.required' => 'Tanggal lahir harus diisi',
             'jenis_kelamin.required' => 'Jenis kelamin harus dipilih',
@@ -62,6 +64,11 @@ class DataGuruController extends Controller
             'foto.image' => 'File yang diunggah harus berupa gambar',
             'foto.mimes' => 'Format gambar yang diperbolehkan: jpeg, png, jpg',
             'foto.max' => 'Ukuran gambar maksimal 2MB',
+            'golongan.required' => 'Golongan harus diisi',
+            'masa_kerja.required' => 'Masa kerja harus diisi',
+            'jabatan.required' => 'Jabatan harus diisi',
+            'no_sk.required' => 'No SK harus diisi',
+
         ]);
 
         $validatedData['id_user'] = $user->id_user;
@@ -158,6 +165,7 @@ class DataGuruController extends Controller
         $guru = DB::table('users')
             ->join('roles', 'users.id_role', '=', 'roles.id_role')
             ->where('users.nama_lengkap', 'like', '%' . $query . '%')
+            ->where('users.id_role', 2)
             ->select('users.nama_lengkap', 'users.id_user', 'users.username')
             ->get();
         return response()->json($guru);

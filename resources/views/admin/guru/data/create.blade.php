@@ -50,7 +50,7 @@
                         <!-- Nama Lengkap -->
                         <div>
                             <label for="nama_lengkap" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap <span class="text-red-500">*</span></label>
-                            <input type="hidden" id="id_user" name="id_user" value="{{ old('id_user') }}">
+                            <input type="hidden" id="id_user" name="id_user" value="{{ old('id_user') }}" required>
                             <input type="text" id="nama_lengkap" name="nama_lengkap" value="{{ old('nama_lengkap') }}" placeholder="Masukkan nama lengkap sesuai ijazah" required class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
                             @error('nama_lengkap')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                         </div>
@@ -81,11 +81,11 @@
                             <label class="block text-sm font-medium text-gray-700 mb-2">Jenis Kelamin <span class="text-red-500">*</span></label>
                             <div class="flex items-center gap-6">
                                 <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="jenis_kelamin" value="Laki-laki" checked {{ old('jenis_kelamin', 'Laki-laki') === 'Laki-laki' ? 'checked' : '' }}>
+                                    <input type="radio" name="jenis_kelamin" value="L" checked {{ old('jenis_kelamin', 'L') === 'L' ? 'checked' : '' }}>
                                     <span class="text-gray-700">Laki-laki</span>
                                 </label>
                                 <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="jenis_kelamin" value="Perempuan" {{ old('jenis_kelamin') === 'Perempuan' ? 'checked' : '' }}>
+                                    <input type="radio" name="jenis_kelamin" value="P" {{ old('jenis_kelamin', 'P') === 'P' ? 'checked' : '' }}>
                                     <span class="text-gray-700">Perempuan</span>
                                 </label>
                             </div>
@@ -174,8 +174,8 @@
                         
                         <!-- Bidang Studi -->
                         <div>
-                            <label for="Bidang_studi" class="block text-sm font-medium text-gray-700 mb-1">Bidang Studi</label>
-                            <input type="text" id="Bidang_studi" name="Bidang_studi" value="{{ old('Bidang_studi') }}" placeholder="Contoh: Guru Matematika" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
+                            <label for="bidang_studi" class="block text-sm font-medium text-gray-700 mb-1">Bidang Studi</label>
+                            <input type="text" id="bidang_studi" name="bidang_studi" value="{{ old('bidang_studi') }}" placeholder="Contoh: Guru Matematika" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
                         </div>
                         
                         <!-- Jabatan Struktural -->
@@ -327,6 +327,7 @@
                 div.addEventListener('click', () => {
                     namaLengkapInput.value = item.nama_lengkap;
                     usernameInput.value = item.username;
+                    idUserInput.value = item.id_user;
                     dropdown.style.display = 'none';
                 });
                 dropdown.appendChild(div);

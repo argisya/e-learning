@@ -14,19 +14,19 @@ return new class extends Migration
         Schema::create('guru', function (Blueprint $table) {
             $table->string('nip', 20)->primary();
             $table->foreignId('id_user')->constrained('users', 'id_user')->onDelete('cascade');
-            $table->string('tempat_lahir', 50);
+            $table->string('tempat_lahir', 255);
             $table->date('tanggal_lahir');
             $table->enum('jenis_kelamin', ['L', 'P']);
-            $table->string('agama', 20);
-            $table->string('status_pernikahan', 20);
+            $table->string('agama', 255);
+            $table->string('status_pernikahan', 255);
             $table->string('no_hp', 15);
             $table->text('alamat');
             $table->string('foto', 255)->nullable();
-            $table->string('bidang_studi', 50);
-            $table->string('golongan', 10);
-            $table->string('masa_kerja', 20);
-            $table->string('jabatan', 50);
-            $table->string('no_sk', 50);
+            $table->string('bidang_studi', 255);
+            $table->string('golongan', 255);
+            $table->string('masa_kerja', 255);
+            $table->string('jabatan', 255);
+            $table->string('no_sk', 255);
             $table->timestamps();
         });
     }
