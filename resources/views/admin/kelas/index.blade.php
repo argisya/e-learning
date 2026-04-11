@@ -224,14 +224,13 @@
                                                 <i class="fas fa-pen"></i>
                                             </a>
 
-                                            <form action="{{ route('admin.kelas.destroy', ['id_kelas' => $class->id_kelas]) }}" method="POST" class="inline-flex items-center m-0" onsubmit="return confirm('Apakah Anda yakin?')">
+                                            <form action="{{ route('admin.kelas.destroy', ['id_kelas' => $class->id_kelas]) }}" method="POST" class="inline-flex items-center m-0" onclick="confirmDelete(1)"">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="inline-flex items-center justify-center w-9 h-9 text-red-500 hover:text-red-700 rounded hover:bg-red-50 transition-colors" title="Hapus">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </form>
-
                                         </div>
                                     </td>
                                 </tr>

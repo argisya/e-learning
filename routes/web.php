@@ -35,7 +35,6 @@ Route::post('/loginProcess', [LoginController::class, 'loginProcess'])->name('lo
 // Admin Routes
 // Admin Dashboard Routes
 Route::get('admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard.index');
-Route::get('admin/pengumuman', [PengumumanController::class, 'index'])->name('admin.pengumuman.index');
 Route::get('admin/rapor', [RaporController::class, 'index'])->name('admin.rapor.index');
 
 // Admin Guru Routes
@@ -69,6 +68,11 @@ Route::get('admin/kelas/edit/{id_kelas}', [KelasController::class, 'edit'])->nam
 Route::post('admin/kelas/store', [KelasController::class, 'store'])->name('admin.kelas.store');
 Route::put('admin/kelas/update/{id_kelas}', [KelasController::class, 'update'])->name('admin.kelas.update');
 Route::delete('admin/kelas/{id_kelas}', [KelasController::class, 'destroy'])->name('admin.kelas.destroy');
+
+//Admin Pengumuman Routes
+Route::get('admin/pengumuman', [PengumumanController::class, 'index'])->name('admin.pengumuman.index');
+Route::get('admin/pengumuman/create', [PengumumanController::class, 'create'])->name('admin.pengumuman.create');
+Route::get('admin/pengumuman/edit/{id_pengumuman}', [PengumumanController::class, 'edit'])->name('admin.pengumuman.edit');
 
 // Admin Users Routes
 Route::get('admin/users', [UserController::class, 'index'])->name('admin.users.index');
