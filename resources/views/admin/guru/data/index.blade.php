@@ -140,10 +140,10 @@
                                         <i class="fas fa-pen"></i>
                                     </a>
 
-                                    <form action="{{ route('admin.guru.data.destroy', $item->nip) }}" method="POST" class="inline-flex items-center m-0" onsubmit="return confirm('Apakah Anda yakin?')">
+                                    <form action="{{ route('admin.guru.data.destroy', $item->nip) }}" method="POST" class="inline-flex items-center m-0">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="inline-flex items-center justify-center w-9 h-9 text-red-500 hover:text-red-700 rounded hover:bg-red-50 transition-colors" title="Hapus">
+                                        <button type="button" onclick="confirmDelete('{{ route('admin.guru.data.destroy', $item->nip) }}')" class="inline-flex items-center justify-center w-9 h-9 text-red-500 hover:text-red-700 rounded hover:bg-red-50 transition-colors" title="Hapus">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </form>
@@ -314,7 +314,7 @@
                                     <button class="icon-btn icon-edit" onclick="openModal('modalEditPeg{{ $item->nip }}')" title="Edit">
                                         <i class="fas fa-pen"></i>
                                     </button>
-                                    <button class="icon-btn icon-delete" onclick="confirmDelete({{ $item->nip }})" title="Hapus">
+                                    <button type="button" class="icon-btn icon-delete" onclick="confirmDelete('{{ route('admin.guru.data.destroy', $item->nip) }}')" title="Hapus">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </div>
@@ -357,68 +357,6 @@
 @endsection
 
 <!-- ================= MODALS ================= -->
-
-<!-- Modal View Detail (Identitas) -->
-<div id="modalView1" class="modal fixed inset-0 z-[100] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-    <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true" onclick="closeModal('modalView1')"></div>
-        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-        <div class="inline-block align-bottom bg-white rounded-xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-            <div class="bg-gradient-to-r from-primary-500 to-secondary-500 px-4 py-4">
-                <div class="flex items-center justify-between">
-                    <h3 class="text-lg leading-6 font-medium text-white" id="modal-title">Detail Data Guru</h3>
-                    <button onclick="closeModal('modalView1')" class="text-white hover:text-gray-200 focus:outline-none">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="px-4 py-5">
-                <!-- User Info -->
-                <div class="flex items-center gap-4 mb-6 pb-6 border-b">
-                    <img src="{{ asset('images/avatar.jpg') }}" alt="Profile" class="w-20 h-20 rounded-full object-cover border-4 border-primary-100">
-                    <div>
-                        <h4 class="text-xl font-bold text-gray-800">Dr. Ahmad Fauzi, M.Pd.</h4>
-                        <p class="text-sm text-gray-500">Guru Matematika</p>
-                        <p class="text-xs text-gray-400">NIP: 198501012008011001</p>
-                    </div>
-                </div>
-                
-                <!-- Data Table -->
-                <dl class="space-y-4">
-                    <div class="grid grid-cols-2 gap-4">
-                        <dt class="text-sm font-medium text-gray-500">Jenis Kelamin</dt>
-                        <dd class="text-sm text-gray-800">Laki-laki</dd>
-                        
-                        <dt class="text-sm font-medium text-gray-500">Tanggal Lahir</dt>
-                        <dd class="text-sm text-gray-800">15 Januari 1985</dd>
-                        
-                        <dt class="text-sm font-medium text-gray-500">Tempat Lahir</dt>
-                        <dd class="text-sm text-gray-800">Bandung</dd>
-                        
-                        <dt class="text-sm font-medium text-gray-500">Agama</dt>
-                        <dd class="text-sm text-gray-800">Islam</dd>
-                        
-                        <dt class="text-sm font-medium text-gray-500">Status Pernikahan</dt>
-                        <dd class="text-sm text-gray-800">Menikah</dd>
-                        
-                        <dt class="text-sm font-medium text-gray-500">No HP</dt>
-                        <dd class="text-sm text-gray-800">+62 812-3456-7890</dd>
-                    </div>
-                    
-                    <div>
-                        <dt class="text-sm font-medium text-gray-500 mb-1">Alamat</dt>
-                        <dd class="text-sm text-gray-800">Jl. Merdeka No. 123, Kota Bandung, Jawa Barat 40111</dd>
-                    </div>
-                </dl>
-            </div>
-            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                <button onclick="closeModal('modalView1')" class="btn-primary w-full sm:w-auto">Tutup</button>
-                <button class="mt-3 w-full inline-flex justify-center rounded-md border border-transparent px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Edit Data</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- Modal Confirmation Delete -->
 <div id="modalDelete" class="modal fixed inset-0 z-[100] hidden overflow-y-auto">
     <div class="flex items-center justify-center min-h-screen px-4">
@@ -430,7 +368,7 @@
                 </div>
                 <h3 class="text-xl font-bold text-gray-800 mb-2">Konfirmasi Hapus Data</h3>
                 <p class="text-gray-600 mb-6">Apakah Anda yakin ingin menghapus data guru ini? Data tidak dapat dikembalikan setelah dihapus.</p>
-                <form action="{{ route('admin.guru.data.destroy', $item->nip) }}" method="POST">
+                <form id="deleteForm" action="" method="POST">
                     @csrf
                     @method('DELETE')
                     <div class="flex justify-center gap-3">
@@ -443,7 +381,6 @@
     </div>
 </div>
 
-@push('scripts')
 <script>
 // Switch Tab
 function switchTab(tabName) {
@@ -471,14 +408,19 @@ function openModal(modalId) {
 }
 
 // Confirm Delete
-function confirmDelete(id) {
+function confirmDelete(actionUrl) {
+    if (!actionUrl) return;
+    const deleteForm = document.getElementById('deleteForm');
+    if (deleteForm) {
+        deleteForm.action = actionUrl;
+    }
     openModal('modalDelete');
 }
 
 // Close modal on Escape key
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
-        document.querySelectorAll('.modal.open').forEach(modal => {
+        document.querySelectorAll('.modal').forEach(modal => {
             modal.classList.add('hidden');
         });
     }
@@ -489,7 +431,7 @@ document.querySelector('[onclick="openModal(\'modalFilter\')"]').addEventListene
     alert('Filter dialog akan dibuka di sini');
 });
 </script>
-@endpush
+
 
 @stack('styles')
 <style>

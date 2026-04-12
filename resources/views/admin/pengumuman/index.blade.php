@@ -163,7 +163,7 @@
                                             <i class="fas fa-pen"></i>
                                         </a>
 
-                                        <form action="" method="POST" class="inline-flex items-center m-0" onclick="confirmDelete(1)"">
+                                        <form action="" method="POST" class="inline-flex items-center m-0" onclick="confirmDelete(1)">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="inline-flex items-center justify-center w-9 h-9 text-red-500 hover:text-red-700 rounded hover:bg-red-50 transition-colors" title="Hapus">
@@ -311,7 +311,7 @@
 
                     <div class="flex justify-center gap-3 w-full">
                         
-                        <a href="{{ route('pengumuman.index') }}" class="flex-1 px-4 py-2.5 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors font-medium text-gray-800 text-center block">
+                        <a href="{{ route('admin.pengumuman.index') }}" class="flex-1 px-4 py-2.5 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors font-medium text-gray-800 text-center block">
                             Batal
                         </a>
 
