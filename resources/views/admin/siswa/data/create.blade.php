@@ -36,19 +36,18 @@
                         <!-- Nama Lengkap -->
                         <div class="md:col-span-2">
                             <label for="nama_lengkap" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap <span class="text-red-500">*</span></label>
-                            <input type="text" id="nama_lengkap" name="nama_lengkap" value="{{ old('nama_lengkap') }}" placeholder="Masukkan nama lengkap sesuai ijazah" required autocomplete="off" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
+                            <input type="text" id="id_user" name="id_user" value="{{ old('id_user') }}" placeholder="Masukkan nama lengkap sesuai ijazah" required class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
                             @error('nama_lengkap')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                         </div>
                         
                         <!-- NIS -->
                         <div>
-                            <label for="nis" class="block text-sm font-medium text-gray-700 mb-1">NIS <span class="text-red-500">*</span></label>
+                            <label for="username" class="block text-sm font-medium text-gray-700 mb-1">NIS <span class="text-red-500">*</span></label>
                             <div class="relative">
-                                <i class="fas fa-hashtag absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                                <input type="text" id="nis" name="nis" value="{{ old('nis', '2024'. rand(100, 999)) }}" readonly class="w-full pl-10 pr-4 py-2.5 bg-gray-100 border-2 border-gray-200 rounded-lg text-gray-500 cursor-not-allowed font-mono text-xs">
+                                <input type="text" id="username" name="nis" value="{{ old('username') }}" placeholder="08 digit angka" required maxlength="18" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all font-mono">
                             </div>
                             <p class="text-xs text-gray-500 mt-1">NIS akan di-generate otomatis berdasarkan tahun ajaran</p>
-                            @error('nis')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
+                            @error('username')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                         </div>
                         
                         <!-- NISN -->
@@ -428,6 +427,82 @@ Tim E-Learning</textarea>
                 nisInput.value = `${year}${random}`;
             }
         }
+
+        // Autocomplete untuk Nama Lengkap
+        const namaLengkapInput = document.getElementById('nama_lengkap');
+        const usernameInput = document.getElementById('username');
+        const idUserInput = document.getElementById('id_user');
+        let debounceTimer;
+        let dropdown = null;
+
+        // Buat dropdown element
+        function createDropdown() {
+            if (dropdown) return;
+            dropdown = document.createElement('div');
+            dropdown.className = 'absolute z-10 w-full bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto mt-1';
+            dropdown.style.display = 'none';
+            namaLengkapInput.parentNode.style.position = 'relative';
+            namaLengkapInput.parentNode.appendChild(dropdown);
+        }
+
+        // Tampilkan dropdown dengan data
+        function showDropdown(data) {
+            if (!dropdown) createDropdown();
+            dropdown.innerHTML = '';
+            if (data.length === 0) {
+                dropdown.style.display = 'none';
+                return;
+            }
+            data.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'px-4 py-2 hover:bg-gray-100 cursor-pointer';
+                div.textContent = item.nama_lengkap;
+                div.addEventListener('click', () => {
+                    namaLengkapInput.value = item.nama_lengkap;
+                    usernameInput.value = item.username;
+                    idUserInput.value = item.id_user;
+                    dropdown.style.display = 'none';
+                });
+                dropdown.appendChild(div);
+            });
+            dropdown.style.display = 'block';
+        }
+
+        // Sembunyikan dropdown
+        function hideDropdown() {
+            if (dropdown) dropdown.style.display = 'none';
+        }
+
+        // Fetch data dari server
+        async function fetchAutocomplete(query) {
+            try {
+                const response = await fetch(`{{ route('admin.guru.data.autofill') }}?q=${encodeURIComponent(query)}`);
+                const data = await response.json();
+                showDropdown(data);
+            } catch (error) {
+                console.error('Error fetching autocomplete data:', error);
+            }
+        }
+
+        // Event listener untuk input
+        namaLengkapInput.addEventListener('input', function() {
+            const query = this.value.trim();
+            clearTimeout(debounceTimer);
+            if (query.length < 2) {
+                hideDropdown();
+                return;
+            }
+            debounceTimer = setTimeout(() => {
+                fetchAutocomplete(query);
+            }, 300);
+        });
+
+        // Sembunyikan dropdown saat klik di luar
+        document.addEventListener('click', function(e) {
+            if (!namaLengkapInput.contains(e.target) && (!dropdown || !dropdown.contains(e.target))) {
+                hideDropdown();
+            }
+        });
         
         // Password Strength Checker
         function checkStrength(password) {
