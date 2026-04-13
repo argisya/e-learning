@@ -73,6 +73,9 @@ Route::delete('admin/kelas/{id_kelas}', [KelasController::class, 'destroy'])->na
 Route::get('admin/pengumuman', [PengumumanController::class, 'index'])->name('admin.pengumuman.index');
 Route::get('admin/pengumuman/create', [PengumumanController::class, 'create'])->name('admin.pengumuman.create');
 Route::get('admin/pengumuman/edit/{id_pengumuman}', [PengumumanController::class, 'edit'])->name('admin.pengumuman.edit');
+Route::post('admin/pengumuman/store', [PengumumanController::class, 'store'])->name('admin.pengumuman.store');
+Route::put('admin/pengumuman/update/{id_pengumuman}', [PengumumanController::class, 'update'])->name('admin.pengumuman.update');
+Route::delete('admin/pengumuman/{id_pengumuman}', [PengumumanController::class, 'destroy'])->name('admin.pengumuman.destroy');
 
 // Admin Users Routes
 Route::get('admin/users', [UserController::class, 'index'])->name('admin.users.index');
