@@ -415,35 +415,8 @@
         }
     </style>
     
-    <script>
-        // Close Modal
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.add('hidden');
-        }
-        
-        // Open Modal
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.remove('hidden');
-        }
-        
-        // Confirm Delete
-        function confirmDelete(id) {
-            const form = document.querySelector('#modalDeleteConfirmation form');
-            form.action = `/admin/users/${id}`;
-            openModal('modalDeleteConfirmation');
-        }
-        
-        // Apply Filters
-        function applyFilters() {
-            console.log('Filters applied');
-        }
-        
-        // Keyboard Navigation
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                document.querySelectorAll('.modal.open').forEach(modal => {
-                    modal.classList.add('hidden');
-                });
-            }
-        });
-    </script>
+    @push('scripts')
+        @vite([
+            'resources/js/modal.js',
+        ])
+    @endpush

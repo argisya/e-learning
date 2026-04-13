@@ -650,90 +650,9 @@
         </div>
     </div>
     
-    <script>
-        // Close Modal
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.add('hidden');
-        }
-        
-        // Open Modal
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.remove('hidden');
-        }
-        
-        // Confirm Delete
-        function confirmDelete(id) {
-            openModal('modalDeleteConfirmation');
-        }
-        
-        // Apply Filters
-        function applyFilters() {
-            const searchInput = document.getElementById('student_search').value.toLowerCase();
-            const classFilter = document.getElementById('class_filter').value;
-            const genderFilter = document.getElementById('gender_filter').value;
-            const statusFilter = document.getElementById('status_filter').value;
-            
-            console.log('Filters:', { searchInput, classFilter, genderFilter, statusFilter });
-            
-            if (searchInput.length > 0 || classFilter !== '' || statusFilter !== '') {
-                showEmptyState(true);
-            } else {
-                showEmptyState(false);
-            }
-        }
-        
-        // Reset Filters
-        function resetFilters() {
-            document.getElementById('student_search').value = '';
-            document.getElementById('class_filter').value = '';
-            document.getElementById('gender_filter').value = '';
-            document.getElementById('status_filter').value = '';
-            showEmptyState(false);
-        }
-        
-        // Show/Hide Empty State
-        function showEmptyState(show) {
-            const emptyState = document.getElementById('emptyState');
-            const tableBody = document.querySelector('#studentContent tbody');
-            
-            if (show) {
-                emptyState.classList.remove('hidden');
-                if (tableBody) tableBody.classList.add('hidden');
-            } else {
-                emptyState.classList.add('hidden');
-                if (tableBody) tableBody.classList.remove('hidden');
-            }
-        }
-        
-        // Enable Disable Fields in Export Modal
-        function enableDisableFields() {
-            const checkbox = event.target;
-            const nextElement = checkbox.nextElementSibling;
-            
-            if (checkbox.checked) {
-                nextElement.style.opacity = '1';
-            } else {
-                nextElement.style.opacity = '0.5';
-            }
-        }
-        
-        // Keyboard Navigation
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                document.querySelectorAll('.modal').forEach(modal => modal.classList.add('hidden'));
-            }
-            
-            if (e.key === 'Enter' && e.target.tagName === 'INPUT') {
-                applyFilters();
-            }
-        });
-        
-        // Print Handler
-        window.addEventListener('beforeprint', function() {
-            document.body.classList.add('print-mode');
-        });
-        
-        window.addEventListener('afterprint', function() {
-            document.body.classList.remove('print-mode');
-        });
-    </script>
+    @push('scripts')
+        @vite(['resources/js/modal.js',
+                'resources/js/validation.js',
+                'resources/js/filter.js',
+        ])
+    @endpush

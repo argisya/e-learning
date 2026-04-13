@@ -320,55 +320,9 @@
         </div>
     </div>
     
-    <script>
-        // Close Modal
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.add('hidden');
-        }
-        
-        // Open Modal
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.remove('hidden');
-        }
-        
-        // Load Wali Kelas Info
-        function loadWaliInfo(value) {
-            const previewDiv = document.getElementById('waliInfoPreview');
-            
-            if (value && value !== '') {
-                previewDiv.classList.remove('hidden');
-            } else {
-                previewDiv.classList.add('hidden');
-            }
-        }
-        
-        // Form Validation
-        document.getElementById('editForm').addEventListener('submit', function(e) {
-            const inputs = this.querySelectorAll('[required]');
-            let isValid = true;
-            let hasError = false;
-            
-            inputs.forEach(input => {
-                if (!input.checkValidity()) {
-                    isValid = false;
-                    input.classList.add('border-red-500');
-                    setTimeout(() => input.classList.remove('border-red-500'), 1000);
-                    hasError = true;
-                } else {
-                    input.classList.remove('border-red-500');
-                }
-            });
-            
-            if (!isValid) {
-                e.preventDefault();
-                alert('Harap lengkapi semua field yang wajib diisi!');
-            }
-        });
-        
-        // Keyboard Navigation
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                document.querySelectorAll('.modal').forEach(modal => modal.classList.add('hidden'));
-            }
-        });
-    </script>
+    @push('scripts')
+        @vite(['resources/js/modal.js',
+                'resources/js/validation.js',
+                'resources/js/pass_verif.js',
+        ])
+    @endpush

@@ -177,44 +177,8 @@
     </div>
     @endsection
     
-    <script>
-        // Generate Code Preview on Input Change
-}
-        
-        // Load Wali Kelas Info
-        function loadWaliInfo(value) {
-            const previewDiv = document.getElementById('waliInfoPreview');
-            
-            if (value) {
-                previewDiv.classList.remove('hidden');
-            } else {
-                previewDiv.classList.add('hidden');
-            }
-        }
-        
-        // Form Validation
-        document.getElementById('createForm').addEventListener('submit', function(e) {
-            const inputs = this.querySelectorAll('[required]');
-            let isValid = true;
-            let hasError = false;
-            
-            inputs.forEach(input => {
-                if (!input.checkValidity()) {
-                    isValid = false;
-                    input.classList.add('border-red-500');
-                    setTimeout(() => input.classList.remove('border-red-500'), 1000);
-                    hasError = true;
-                } else {
-                    input.classList.remove('border-red-500');
-                }
-            });
-            
-            if (!isValid) {
-                e.preventDefault();
-                alert('Harap lengkapi semua field yang wajib diisi!');
-            }
-        });
-        
-        // Auto-generate code on page load
-        window.addEventListener('DOMContentLoaded', generateCodePreview);
-    </script>
+    @push('scripts')
+        @vite(['
+                'resources/js/validation.js',
+        ])
+    @endpush

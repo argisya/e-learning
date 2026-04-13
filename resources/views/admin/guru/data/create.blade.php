@@ -1,23 +1,8 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Data Guru - E-Learning</title>
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <script>
-        tailwind.config = {
-            theme: { extend: { colors: { primary: { 50: '#f0f4ff', 100: '#e0eaff', 200: '#c7d7fe', 300: '#a4bcfd', 400: '#8098f9', 500: '#667eea', 600: '#5a67d8', 700: '#4c51bf', 800: '#434190', 900: '#3c366b' } } } }
-        }
-    </script>
-</head>
-<body class="bg-gray-50 font-sans">
+@extends('layouts.app')
+
+@section('title', 'Tambah Kelas - Admin')
+
+@section('content')
     <div class="min-h-screen py-8 px-4">
         
         <!-- Header Simple -->
@@ -51,14 +36,14 @@
                         <div>
                             <label for="nama_lengkap" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap <span class="text-red-500">*</span></label>
                             <input type="hidden" id="id_user" name="id_user" value="{{ old('id_user') }}" required>
-                            <input type="text" id="nama_lengkap" name="nama_lengkap" value="{{ old('nama_lengkap') }}" placeholder="Masukkan nama lengkap sesuai ijazah" required class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
+                            <input type="text" id="nama_lengkap" data-url="{{ route('admin.guru.data.autofill') }}" placeholder="Masukkan nama lengkap sesuai ijazah" required class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
                             @error('nama_lengkap')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                         </div>
                         
                         <!-- NIP -->
                         <div>
                             <label for="username" class="block text-sm font-medium text-gray-700 mb-1">NIP / NKK <span class="text-red-500">*</span></label>
-                            <input type="text" id="username" name="nip" value="{{ old('username') }}" placeholder="06 digit angka" required maxlength="18" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all font-mono">
+                            <input type="text" id="username" name="nip"  value="{{ old('username') }}" placeholder="06 digit angka" required maxlength="18" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all font-mono">
                             @error('username')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                         </div>
                         
@@ -254,122 +239,15 @@
             </div>
         </div>
     </div>
+    @endsection
     
     <style>
         .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
     </style>
     
-    <script>
-        // Preview file upload
-        function previewFile() {
-            const preview = document.getElementById('previewContainer');
-            const file = document.querySelector('#foto').files[0];
-            const reader = new FileReader();
-            
-            reader.onloadend = function () {
-                preview.innerHTML = `<img src="${reader.result}" alt="Preview" class="w-full h-full object-cover rounded-lg">`;
-            }
-            
-            if (file) reader.readAsDataURL(file);
-            else preview.innerHTML = '<i class="fas fa-camera text-gray-400 text-2xl"></i>';
-        }
-        
-        // Close modal
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.add('hidden');
-        }
-        
-        // Form Validation
-        document.getElementById('createForm').addEventListener('submit', function(e) {
-            const inputs = this.querySelectorAll('[required]');
-            let isValid = true;
-            
-            inputs.forEach(input => {
-                if (!input.checkValidity()) {
-                    isValid = false;
-                    input.classList.add('border-red-500');
-                    setTimeout(() => input.classList.remove('border-red-500'), 1000);
-                }
-            });
-            
-            if (!isValid) e.preventDefault();
-        });
-
-        // Autocomplete untuk Nama Lengkap
-        const namaLengkapInput = document.getElementById('nama_lengkap');
-        const usernameInput = document.getElementById('username');
-        const idUserInput = document.getElementById('id_user');
-        let debounceTimer;
-        let dropdown = null;
-
-        // Buat dropdown element
-        function createDropdown() {
-            if (dropdown) return;
-            dropdown = document.createElement('div');
-            dropdown.className = 'absolute z-10 w-full bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto mt-1';
-            dropdown.style.display = 'none';
-            namaLengkapInput.parentNode.style.position = 'relative';
-            namaLengkapInput.parentNode.appendChild(dropdown);
-        }
-
-        // Tampilkan dropdown dengan data
-        function showDropdown(data) {
-            if (!dropdown) createDropdown();
-            dropdown.innerHTML = '';
-            if (data.length === 0) {
-                dropdown.style.display = 'none';
-                return;
-            }
-            data.forEach(item => {
-                const div = document.createElement('div');
-                div.className = 'px-4 py-2 hover:bg-gray-100 cursor-pointer';
-                div.textContent = item.nama_lengkap;
-                div.addEventListener('click', () => {
-                    namaLengkapInput.value = item.nama_lengkap;
-                    usernameInput.value = item.username;
-                    idUserInput.value = item.id_user;
-                    dropdown.style.display = 'none';
-                });
-                dropdown.appendChild(div);
-            });
-            dropdown.style.display = 'block';
-        }
-
-        // Sembunyikan dropdown
-        function hideDropdown() {
-            if (dropdown) dropdown.style.display = 'none';
-        }
-
-        // Fetch data dari server
-        async function fetchAutocomplete(query) {
-            try {
-                const response = await fetch(`{{ route('admin.guru.data.autofill') }}?q=${encodeURIComponent(query)}`);
-                const data = await response.json();
-                showDropdown(data);
-            } catch (error) {
-                console.error('Error fetching autocomplete data:', error);
-            }
-        }
-
-        // Event listener untuk input
-        namaLengkapInput.addEventListener('input', function() {
-            const query = this.value.trim();
-            clearTimeout(debounceTimer);
-            if (query.length < 2) {
-                hideDropdown();
-                return;
-            }
-            debounceTimer = setTimeout(() => {
-                fetchAutocomplete(query);
-            }, 300);
-        });
-
-        // Sembunyikan dropdown saat klik di luar
-        document.addEventListener('click', function(e) {
-            if (!namaLengkapInput.contains(e.target) && (!dropdown || !dropdown.contains(e.target))) {
-                hideDropdown();
-            }
-        });
-    </script>
-</body>
-</html>
+    @push('scripts')
+        @vite(['resources/js/modal.js',
+                'resources/js/autofill.js',
+                'resources/js/validation.js',
+        ])
+    @endpush
