@@ -13,8 +13,18 @@ class Pengumuman extends Model
     protected $keyType = 'int';
 
     protected $fillable = [
-        'judul',
-        'isi',
-        'tanggal',
+        'judul_pengumuman',
+        'isi_pengumuman',
+        'tanggal_mulai',
+        'tanggal_selesai',
+        'waktu_mulai',
+        'waktu_selesai',
+        'tanggal_publikasi',
+        'waktu_publikasi',
+        'status',
+        'prioritas',
+        'target',
+        'id_kategori',
+        'id_pembuat'
     ];
 }

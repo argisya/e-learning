@@ -60,7 +60,7 @@ class DatabaseSeeder extends Seeder
         $userGuru = User::create([
             'id_role' => $guruRole->id_role,
             'nama_lengkap' => 'Guru',
-            'username' => 'guru',
+            'username' => '001',
             'password' => bcrypt('password123'),
             'email' => 'guru@gmail.com',
             'status' => 'Aktif'
@@ -69,7 +69,7 @@ class DatabaseSeeder extends Seeder
         $userSiswa = User::create([
             'id_role' => $siswaRole->id_role,
             'nama_lengkap' => 'Siswa',
-            'username' => 'siswa',
+            'username' => '100',
             'password' => bcrypt('password123'),
             'email' => 'siswa@gmail.com',
             'status' => 'Aktif'
@@ -149,19 +149,27 @@ class DatabaseSeeder extends Seeder
             'status' => 'Terjadwal'
         ]);
 
-        // Create Pengumuman first
-        $pengumuman = Pengumuman::create([
-            'id_pembuat' => $userGuru->id_user,
-            'judul_pengumuman' => 'Libur Sekolah',
-            'isi_pengumuman' => 'Sekolah akan libur pada tanggal 25 Desember 2024 hingga 1 Januari 2025.',
-            'tanggal_pengumuman' => '2024-11-01',
-            'status' => 'Aktif'
+        // Create KategoriPengumuman before Pengumuman
+        $kategoriPengumuman = KategoriPengumuman::create([
+            'nama_kategori' => 'Pengumuman Umum',
+            'deskripsi' => 'Kategori untuk pengumuman umum yang ditujukan kepada seluruh siswa dan guru.'
         ]);
 
-        // Create KategoriPengumuman after Pengumuman
-        KategoriPengumuman::create([
-            'id_pengumuman' => $pengumuman->id_pengumuman,
-            'id_role' => $siswaRole->id_role
+        // Create Pengumuman
+        $pengumuman = Pengumuman::create([
+            'id_pembuat' => $userAdmin->id_user,
+            'judul_pengumuman' => 'Libur Sekolah',
+            'isi_pengumuman' => 'Sekolah akan libur pada tanggal 25 Desember 2024 hingga 1 Januari 2025.',
+            'prioritas' => 'Tinggi',
+            'target' => 'Semua Siswa',
+            'tanggal_mulai' => '2024-11-01',
+            'tanggal_selesai' => '2025-01-01',
+            'waktu_mulai' => '00:00:00',
+            'waktu_selesai' => '23:59:59',
+            'tanggal_publikasi' => now(),
+            'waktu_publikasi' => now(),
+            'status' => 'Draft',
+            'id_kategori' => $kategoriPengumuman->id_kategori
         ]);
 
         // Create KehadiranGuru (using nip instead of id_guru)

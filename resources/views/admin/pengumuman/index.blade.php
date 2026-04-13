@@ -120,6 +120,8 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 bg-white">
+                            @forelse ($pengumuman as $p => $pengumuman)
+                                
                             
                             <!-- Row 1 -->
                             <tr class="hover:bg-gray-50 transition-colors">
@@ -128,24 +130,24 @@
                                     <div class="flex items-center gap-3">
                                         <img src="{{ asset('images/banner.jpg') }}" alt="" class="w-12 h-8 rounded object-cover border">
                                         <div>
-                                            <p class="font-medium text-gray-800">Ujian Tengah Semester Ganjil 2024</p>
-                                            <p class="text-xs text-gray-500 truncate max-w-[300px]">Jadwal UTS semester ganjil tahun ajaran 2024/2025</p>
+                                            <p class="font-medium text-gray-800">{{ $pengumuman->judul_pengumuman }}</p>
+                                            <p class="text-xs text-gray-500 truncate max-w-[300px]">{{ $pengumuman->isi_pengumuman }}</p>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <span class="inline-flex items-center gap-1 px-2 py-1 rounded-lg badge-badge badge-info"><i class="fas fa-book"></i> Akademik</span>
+                                    <span class="inline-flex items-center gap-1 px-2 py-1 rounded-lg badge-badge badge-info"><i class="fas fa-book"></i> {{ $pengumuman->nama_kategori }}</span>
                                 </td>
                                 <td class="px-6 py-4 hidden md:table-cell">
                                     <div class="flex items-center gap-2">
                                         <img src="{{ asset('images/avatar.jpg') }}" alt="" class="w-6 h-6 rounded-full object-cover border-2">
-                                        <p class="font-medium text-gray-800 text-xs">Admin Sekolah</p>
+                                        <p class="font-medium text-gray-800 text-xs">{{ $pengumuman->nama_lengkap }}</p>
                                     </div>
                                 </td>
-                                <td class="px-6 py-4 text-gray-700">15 Jan 2025</td>
+                                <td class="px-6 py-4 text-gray-700">{{ \Carbon\Carbon::parse($pengumuman->created_at)->format('d M Y') }}</td>
                                 <td class="px-6 py-4">
                                     <span class="inline-flex items-center gap-1 px-2 py-1 rounded-lg badge badge-active">
-                                        <span class="status-dot status-active"></span> Publish
+                                        <span class="status-dot status-active"></span> {{ $pengumuman->status == 'publish' ? 'Dipublish' : ($pengumuman->status == 'draft' ? 'Draft' : 'Arsip') }}
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 text-gray-600 text-xs hidden lg:table-cell">
@@ -159,7 +161,7 @@
                                             <i class="fas fa-eye"></i>
                                         </a>
 
-                                        <a href="" class="inline-flex items-center justify-center w-9 h-9 text-yellow-500 hover:text-yellow-700 rounded hover:bg-yellow-50 transition-colors" title="Edit">
+                                        <a href="{{ route('admin.pengumuman.edit', $pengumuman->id_pengumuman) }}" class="inline-flex items-center justify-center w-9 h-9 text-yellow-500 hover:text-yellow-700 rounded hover:bg-yellow-50 transition-colors" title="Edit">
                                             <i class="fas fa-pen"></i>
                                         </a>
 
@@ -174,7 +176,13 @@
                                 </td>
                             </tr>
                             <!-- More rows... -->
-                            
+                            @empty
+                            <tr>
+                                <td colspan="6" class="px-6 py-4 text-center text-gray-500">
+                                    Tidak ada pengumuman ditemukan.
+                                </td>
+                            </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
