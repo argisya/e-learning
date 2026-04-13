@@ -158,7 +158,13 @@ class DataSiswaController extends Controller
     }
 
     public function autofill(Request $request){
-        $autofill =  DB::table('users')->join('roles', 'roles.id_role', '=', 'users.id_role')->where("users.id_role", 3)->where("nama_lengkap", $request->nama_lengkap)->get();
-        echo json_encode($autofill);
+        $query = $request->get('q', '');
+        $siswa = DB::table('users')
+            ->join('roles', 'users.id_role', '=', 'roles.id_role')
+            ->where('users.nama_lengkap', 'like', '%' . $query . '%')
+            ->where('users.id_role', 3)
+            ->select('users.nama_lengkap', 'users.id_user', 'users.username')
+            ->get();
+        return response()->json($siswa);
     }
 }
