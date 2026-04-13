@@ -167,7 +167,6 @@
                             <select id="status_pendaftaran" name="status_pendaftaran" required class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
                                 <option value="aktif" {{ old('status_pendaftaran', 'aktif') === 'aktif' ? 'selected' : '' }}>Aktif</option>
                                 <option value="non_aktif" {{ old('status_pendaftaran') === 'non_aktif' ? 'selected' : '' }}>Non-Aktif</option>
-                                <option value="lulus" {{ old('status_pendaftaran') === 'lulus' ? 'selected' : '' }}>Lulus</option>
                             </select>
                         </div>
                     </div>
@@ -320,24 +319,6 @@
                     </h2>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        
-                        <!-- Upload Foto -->
-                        <div>
-                            <label for="foto_siswa" class="block text-sm font-medium text-gray-700 mb-2">Upload Foto Profil <span class="text-gray-500 font-normal">(Opsional)</span></label>
-                            <div class="flex items-center gap-4">
-                                <div id="previewContainer" class="w-24 h-24 rounded-xl bg-gray-100 flex items-center justify-center border-2 border-dashed border-gray-300">
-                                    <i class="fas fa-camera text-gray-400 text-2xl"></i>
-                                </div>
-                                <div class="flex-1">
-                                    <label class="cursor-pointer btn-secondary px-4 py-2 w-full text-center">
-                                        <input type="file" id="foto_siswa" name="foto_siswa" accept="image/*" onchange="previewFile()" class="hidden">
-                                        <i class="fas fa-upload mr-2"></i>Pilih File
-                                    </label>
-                                    <p class="text-xs text-gray-500 mt-1">Format: JPG, PNG | Maksimal: 2MB</p>
-                                </div>
-                            </div>
-                        </div>
-                        
                         <!-- Username -->
                         <div>
                             <label for="username" class="block text-sm font-medium text-gray-700 mb-1">Username <span class="text-red-500">*</span></label>
