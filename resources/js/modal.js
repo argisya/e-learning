@@ -9,7 +9,11 @@
         }
         
         // Confirm Delete
-        window.confirmDelete = function(id) {
+        window.confirmDelete = function(url) {
+            const form = document.getElementById('deleteStudentForm');
+            if (form) {
+                form.action = url;
+            }
             window.openModal('modalDeleteConfirmation');
         }
 

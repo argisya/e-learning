@@ -239,13 +239,13 @@
                                         <a href="{{ route('admin.siswa.data.edit', $student->nis) }}" class="inline-flex items-center justify-center w-9 h-9 text-yellow-500 hover:text-yellow-700 rounded hover:bg-yellow-50 transition-colors" title="Edit">
                                             <i class="fas fa-pen"></i>
                                         </a>
-                                        <form action="{{ route('admin.siswa.data.destroy', $student->nis) }}" method="POST" class="inline-flex items-center m-0">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" onclick="confirmDelete('{{ route('admin.siswa.data.destroy', $student->nis) }}')" class="inline-flex items-center justify-center w-9 h-9 text-red-500 hover:text-red-700 rounded hover:bg-red-50 transition-colors" title="Hapus">
+                                        {{-- <form action="{{ route('admin.siswa.data.destroy', $student->nis) }}" method="POST" class="inline-flex items-center m-0"> --}}
+                                            {{-- @csrf --}}
+                                            {{-- @method('DELETE') --}}
+                                            <button onclick="confirmDelete('{{ route('admin.siswa.data.destroy', $student->nis) }}')" class="inline-flex items-center justify-center w-9 h-9 text-red-500 hover:text-red-700 rounded hover:bg-red-50 transition-colors" title="Hapus">
                                                 <i class="fas fa-trash"></i>
                                             </button>
-                                        </form>
+                                        {{-- </form> --}}
                                     </div>
                                 </td>
                             </tr>
@@ -303,7 +303,7 @@
                     </div>
                     <h3 class="text-lg font-bold text-gray-800 mb-2">Konfirmasi Hapus Data Siswa</h3>
                     <p class="text-gray-600 text-sm mb-6">Apakah Anda yakin ingin menghapus data siswa ini? Tindakan ini tidak dapat dibatalkan!</p>
-                    <form action="#" method="POST">
+                    <form action="" method="POST" id="deleteStudentForm">
                         @csrf
                         @method('DELETE')
                         <div class="flex justify-center gap-3">
