@@ -165,13 +165,10 @@
                                             <i class="fas fa-pen"></i>
                                         </a>
 
-                                        <form action="" method="POST" class="inline-flex items-center m-0" onclick="confirmDelete(1)">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="inline-flex items-center justify-center w-9 h-9 text-red-500 hover:text-red-700 rounded hover:bg-red-50 transition-colors" title="Hapus">
+                                            <button onclick="confirmDelete('{{ route('admin.pengumuman.destroy', $pengumuman->id_pengumuman) }}')" class="inline-flex items-center justify-center w-9 h-9 text-red-500 hover:text-red-700 rounded hover:bg-red-50 transition-colors" title="Hapus">
                                                 <i class="fas fa-trash"></i>
                                             </button>
-                                        </form>
+                                        
                                     </div>
                                 </td>
                             </tr>
@@ -218,124 +215,8 @@
         </div>
     </div>
     @endsection
-    
-    <!-- ================= MODALS ================= -->
-    
-    <!-- Modal View Detail -->
-    <div id="modalView1" class="fixed inset-0 z-[100] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-        <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true" onclick="closeModal('modalView1')"></div>
-            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-            <div class="inline-block align-bottom bg-white rounded-xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full modal-content">
-                <div class="sticky top-0 bg-gradient-to-r from-primary-500 to-secondary-500 px-6 py-4 text-white flex items-center justify-between">
-                    <h3 class="text-lg font-bold">Detail Pengumuman</h3>
-                    <button onclick="closeModal('modalView1')" class="hover:text-gray-200"><i class="fas fa-times"></i></button>
-                </div>
-                <div class="p-6">
-                    <!-- Banner Image -->
-                    <div class="mb-6">
-                        <img src="{{ asset('images/banner.jpg') }}" alt="Banner" class="w-full h-48 object-cover rounded-xl">
-                    </div>
-                    
-                    <!-- Title & Meta -->
-                    <div class="mb-6">
-                        <h4 class="text-2xl font-bold text-gray-800 mb-2">Ujian Tengah Semester Ganjil 2024</h4>
-                        <div class="flex flex-wrap items-center gap-4 text-sm text-gray-600">
-                            <div class="flex items-center gap-2">
-                                <i class="fas fa-tag text-primary-500"></i>
-                                <span>Kategori: <strong>Akademik</strong></span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <i class="fas fa-user text-primary-500"></i>
-                                <span>Penulis: <strong>Admin Sekolah</strong></span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <i class="fas fa-calendar-day text-primary-500"></i>
-                                <span>Ditulis pada: <strong>15 Januari 2025</strong></span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <i class="fas fa-check-circle text-primary-500"></i>
-                                <span>Status: <strong>Dipublish</strong></span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Content -->
-                    <hr class="border-gray-200 my-6">
-                    
-                    <h5 class="text-lg font-semibold text-gray-800 mb-4">Isi Pengumuman</h5>
-                    <div class="prose prose-sm max-w-none">
-                        <p>Selamat siang Bapak/Ibu Guru dan seluruh peserta didik SMP Islam Terpadu Al-Fath.</p>
-                        
-                        <p>Berikut ini kami sampaikan jadwal Ujian Tengah Semester (UTS) Ganjil untuk tahun ajaran 2024/2025:</p>
-                        
-                        <ul class="list-disc list-inside space-y-2 ml-4">
-                            <li><strong>Senin, 20 Januari 2025</strong>: Matematika, Bahasa Indonesia</li>
-                            <li><strong>Selasa, 21 Januari 2025</strong>: IPA, Bahasa Inggris</li>
-                            <li><strong>Rabu, 22 Januari 2025</strong>: IPS, Seni Budaya</li>
-                            <li><strong>Kamis, 23 Januari 2025</strong>: Pendidikan Jasmani, Prakarya</li>
-                            <li><strong>Jumat, 24 Januari 2025</strong>: Penilaian Sikap</li>
-                        </ul>
-                        
-                        <p class="mt-4">Harap mempersiapkan diri dengan baik dan membaca materi pembelajaran sebelum ujian. Semoga berhasil!</p>
-                        
-                        <p class="mt-4 italic">Demikian informasi ini kami sampaikan. Atas perhatian dan kerja sama Bapak/Ibu Guru serta peserta didik, kami ucapkan terima kasih.</p>
-                    </div>
-                    
-                    <!-- Statistics -->
-                    <hr class="border-gray-200 my-6">
-                    
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="p-4 bg-blue-50 rounded-lg">
-                            <p class="text-sm text-gray-600 mb-1">Total Pembaca</p>
-                            <p class="text-2xl font-bold text-blue-600">234 Siswa</p>
-                        </div>
-                        <div class="p-4 bg-green-50 rounded-lg">
-                            <p class="text-sm text-gray-600 mb-1">Persentase Baca</p>
-                            <p class="text-2xl font-bold text-green-600">52%</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="sticky bottom-0 bg-gray-50 px-6 py-4 border-t flex justify-end gap-3">
-                    <button onclick="closeModal('modalView1')" class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors font-medium">Tutup</button>
-                    <button onclick="closeModal('modalView1')" class="inline-flex items-center justify-center gap-2 px-4 py-2 gradient-bg text-white rounded-lg hover:opacity-90 transition-all font-medium shadow-md">Edit Pengumuman</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Modal Delete Confirmation -->
-    <div id="modalDeleteConfirmation" class="fixed inset-0 z-[100] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-        <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true" onclick="closeModal('modalDeleteConfirmation')"></div>
-            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-            <div class="inline-block align-bottom bg-white rounded-xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-md sm:w-full modal-content">
-                <div class="px-6 py-6 text-center">
-                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-exclamation-triangle text-red-600 text-3xl"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-800 mb-2">Konfirmasi Hapus Pengumuman</h3>
-                    <p class="text-gray-600 text-sm mb-6">Apakah Anda yakin ingin menghapus pengumuman ini? Tindakan ini tidak dapat dibatalkan!</p>
 
-                    <div class="flex justify-center gap-3 w-full">
-                        
-                        <a href="{{ route('admin.pengumuman.index') }}" class="flex-1 px-4 py-2.5 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors font-medium text-gray-800 text-center block">
-                            Batal
-                        </a>
-
-                        <form action="#" method="POST" id="formDelete" class="flex-1">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="w-full px-4 py-2.5 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors font-medium">
-                                Hapus Pengumuman
-                            </button>
-                        </form>
-                        
-                    </div>
-                </div>  
-            </div>
-        </div>
-    </div>
+    @include('layouts.partials.modal.delete')
     
     @push('scripts')
         @vite([

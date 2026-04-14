@@ -140,13 +140,9 @@
                                         <i class="fas fa-pen"></i>
                                     </a>
 
-                                    <form action="{{ route('admin.guru.data.destroy', $item->nip) }}" method="POST" class="inline-flex items-center m-0">
-                                        @csrf
-                                        @method('DELETE')
                                         <button type="button" onclick="confirmDelete('{{ route('admin.guru.data.destroy', $item->nip) }}')" class="inline-flex items-center justify-center w-9 h-9 text-red-500 hover:text-red-700 rounded hover:bg-red-50 transition-colors" title="Hapus">
                                             <i class="fas fa-trash"></i>
                                         </button>
-                                    </form>
 
                                 </div>
                             </td>
@@ -356,30 +352,7 @@
 </div>
 @endsection
 
-<!-- ================= MODALS ================= -->
-<!-- Modal Confirmation Delete -->
-<div id="modalDelete" class="modal fixed inset-0 z-[100] hidden overflow-y-auto">
-    <div class="flex items-center justify-center min-h-screen px-4">
-        <div class="fixed inset-0 bg-gray-500 bg-opacity-75" onclick="closeModal('modalDelete')"></div>
-        <div class="relative bg-white rounded-xl max-w-md w-full mx-4 p-6">
-            <div class="flex flex-col items-center text-center">
-                <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
-                    <i class="fas fa-exclamation-triangle text-red-600 text-3xl"></i>
-                </div>
-                <h3 class="text-xl font-bold text-gray-800 mb-2">Konfirmasi Hapus Data</h3>
-                <p class="text-gray-600 mb-6">Apakah Anda yakin ingin menghapus data guru ini? Data tidak dapat dikembalikan setelah dihapus.</p>
-                <form id="deleteForm" action="" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <div class="flex justify-center gap-3">
-                        <button type="button" onclick="closeModal('modalDelete')" class="btn-secondary">Batal</button>
-                        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-medium px-6 py-2.5 rounded-lg transition-colors">Ya, Hapus</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+@include('layouts.partials.modal.delete')
 
 @push('scripts')
         @vite(['resources/js/modal.js',
