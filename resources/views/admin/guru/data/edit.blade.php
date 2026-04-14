@@ -1,22 +1,9 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Data Guru - E-Learning</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <script>
-        tailwind.config = { theme: { extend: { colors: { primary: { 50: '#f0f4ff', 100: '#e0eaff', 200: '#c7d7fe', 300: '#a4bcfd', 400: '#8098f9', 500: '#667eea', 600: '#5a67d8', 700: '#4c51bf', 800: '#434190', 900: '#3c366b' } } } } }
-    </script>
-    
-    <style>
-        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-    </style>
-</head>
-<body class="bg-gray-50 font-sans">
+@extends('layouts.app')
+
+@section('title', 'Users')
+
+@section('content')
+
     <div class="min-h-screen py-8 px-4">
         
         <!-- Header Simple -->
@@ -202,6 +189,9 @@
                 </div>
             </form>
         </div>
+    </div>
+
+    @endsection
         
         <!-- Modal View Detail -->
         <div id="modalViewDetail" class="fixed inset-0 z-[100] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
@@ -283,16 +273,10 @@
                 </div>
             </div>
         </div>
-    </div>
     
-    <script>
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.add('hidden');
-        }
-        
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.remove('hidden');
-        }
-    </script>
-</body>
-</html>
+    @push('scripts')
+        @vite(['resources/js/modal.js',
+                'resources/js/pass_verif.js',
+                'resources/js/validation.js',
+        ])
+    @endpush

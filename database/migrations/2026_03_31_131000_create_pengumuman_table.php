@@ -25,9 +25,9 @@ return new class extends Migration
             $table->time('waktu_publikasi')->nullable();
             $table->enum('status', ['Publish', 'Draft', 'Arsip'])->default('Draft');
             $table->unsignedBigInteger('id_kategori');
-            $table->foreign('id_kategori')->references('id_kategori')->on('kategori_pengumuman')->onDelete('cascade');
+            $table->foreign('id_kategori')->references('id_kategori')->on('kategori_pengumuman')->onDelete('restrict');
             $table->unsignedBigInteger('id_pembuat');
-            $table->foreign('id_pembuat')->references('id_user')->on('users')->onDelete('cascade');
+            $table->foreign('id_pembuat')->references('id_user')->on('users')->onDelete('restrict');
             $table->timestamps();
         });
     }

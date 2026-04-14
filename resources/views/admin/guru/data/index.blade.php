@@ -381,56 +381,12 @@
     </div>
 </div>
 
-<script>
-// Switch Tab
-function switchTab(tabName) {
-    // Hide all panels
-    document.getElementById('panel-identitas').classList.add('hidden');
-    document.getElementById('panel-pegawai').classList.add('hidden');
-    
-    // Remove active state from buttons
-    document.getElementById('tab-identitas').classList.remove('active');
-    document.getElementById('tab-pegawai').classList.remove('active');
-    
-    // Show selected panel
-    document.getElementById('panel-' + tabName).classList.remove('hidden');
-    document.getElementById('tab-' + tabName).classList.add('active');
-}
-
-// Close Modal
-function closeModal(modalId) {
-    document.getElementById(modalId).classList.add('hidden');
-}
-
-// Open Modal
-function openModal(modalId) {
-    document.getElementById(modalId).classList.remove('hidden');
-}
-
-// Confirm Delete
-function confirmDelete(actionUrl) {
-    if (!actionUrl) return;
-    const deleteForm = document.getElementById('deleteForm');
-    if (deleteForm) {
-        deleteForm.action = actionUrl;
-    }
-    openModal('modalDelete');
-}
-
-// Close modal on Escape key
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        document.querySelectorAll('.modal').forEach(modal => {
-            modal.classList.add('hidden');
-        });
-    }
-});
-
-// Filter Form (Mock)
-document.querySelector('[onclick="openModal(\'modalFilter\')"]').addEventListener('click', () => {
-    alert('Filter dialog akan dibuka di sini');
-});
-</script>
+@push('scripts')
+        @vite(['resources/js/modal.js',
+                'resources/js/validation.js',
+                'resources/js/filter.js',
+        ])
+    @endpush
 
 
 @stack('styles')

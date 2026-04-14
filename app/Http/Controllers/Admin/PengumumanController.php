@@ -64,6 +64,7 @@ class PengumumanController extends Controller
 
     public function update(Request $request)
     {
+        // dd($request->all());
         $pengumuman = Pengumuman::findOrFail($request->id_pengumuman);
 
         $validatedData = $request->validate([
@@ -80,6 +81,8 @@ class PengumumanController extends Controller
             'status' => 'required|in:Publish,Draft,Arsip',
             'id_kategori' => 'required|exists:kategori_pengumuman,id_kategori'
         ]);
+
+        $validatedData['id_pembuat'] = session('id_user');
 
         $pengumuman->update($validatedData);
 

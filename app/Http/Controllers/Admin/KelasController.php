@@ -5,17 +5,19 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\Guru;
 use App\Models\Kelas;
+use App\Models\Siswa;
 
 class KelasController extends Controller
 {
     public function index()
     {
         return view('admin.kelas.index', [
-            'kelas' => DB::table('kelas')->join('guru', 'kelas.nip_wali', '=', 'guru.nip')->join('users', 'guru.id_user', '=', 'users.id_user')->get(),
+            'kelas' => DB::table('kelas')->leftJoin('guru', 'kelas.nip_wali', '=', 'guru.nip')->leftJoin('users', 'guru.id_user', '=', 'users.id_user')->get(),
             'total_kelas' => Kelas::count(),
-            'kelas_aktif' => Kelas::where('status', 'Aktif')->count()
+            'total_siswa' => Siswa::count(), 
+            'kelas_aktif' => Kelas::where('status', 'Aktif')->count(),
+            'total_wali_kelas' => DB::table('kelas')->join('guru', 'kelas.nip_wali', '=', 'guru.nip')->where('kelas.nip_wali', '!=', null)->count()
         ]);
     }
 

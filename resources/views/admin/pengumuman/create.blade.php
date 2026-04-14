@@ -1,22 +1,9 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Data Guru - E-Learning</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <script>
-        tailwind.config = { theme: { extend: { colors: { primary: { 50: '#f0f4ff', 100: '#e0eaff', 200: '#c7d7fe', 300: '#a4bcfd', 400: '#8098f9', 500: '#667eea', 600: '#5a67d8', 700: '#4c51bf', 800: '#434190', 900: '#3c366b' } } } } }
-    </script>
-    
-    <style>
-        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-    </style>
-</head>
-<body class="bg-gray-50 font-sans">
+@extends('layouts.app')
+
+@section('title', 'Tambah Pengumuman')
+
+@section('content')
+
     <div class="min-h-screen py-8 px-4">
         
         <!-- Header -->
@@ -337,74 +324,11 @@
             </form>
         </div>
     </div>
+    @endsection
     
-    
-    <script>
-        // Preview image upload
-        function previewImage() {
-            const preview = document.getElementById('previewContainer');
-            const file = document.querySelector('#banner_image').files[0];
-            const reader = new FileReader();
-            
-            reader.onloadend = function () {
-                preview.innerHTML = `<img src="${reader.result}" alt="Preview" class="w-full h-full object-cover rounded-lg">`;
-            }
-            
-            if (file) reader.readAsDataURL(file);
-            else preview.innerHTML = '<i class="fas fa-image text-gray-400 text-xl"></i>';
-        }
-        
-        // Format Text in Editor
-        function formatText(command, value) {
-            document.execCommand(command, false, value);
-            document.getElementById('editor_content').focus();
-        }
-        
-        // Update editor content on blur
-        document.getElementById('editor_content').addEventListener('blur', function() {
-            document.getElementById('konten_hidden').value = this.innerHTML;
-        });
-        
-        // Enable Disable Fields
-        function enableDisableFields() {
-            const emailChecked = document.getElementById('email_notification').checked;
-            const smsChecked = document.getElementById('sms_notification').checked;
-            
-            if (!emailChecked && !smsChecked) {
-                alert('Setidaknya salah satu metode notifikasi harus aktif!');
-                document.getElementById('email_notification').checked = true;
-            }
-        }
-        
-        // Toggle Schedule
-        function toggleSchedule() {
-            const scheduleDate = document.getElementById('tanggal_publikasi');
-            const scheduleTime = document.getElementById('waktu_publikasi');
-            const isDisabled = scheduleDate.disabled;
-            
-            scheduleDate.disabled = !isDisabled;
-            scheduleTime.disabled = !isDisabled;
-            scheduleDate.style.opacity = isDisabled ? '1' : '0.5';
-            scheduleTime.style.opacity = isDisabled ? '1' : '0.5';
-        }
-        
-        // Auto-fill hidden input on submit
-        document.getElementById('createForm').addEventListener('submit', function(e) {
-            document.getElementById('konten_hidden').value = document.getElementById('editor_content').innerHTML;
-        });
-        
-        // Keyboard Navigation
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                // Close any open modals
-                document.querySelectorAll('.modal').forEach(modal => modal.classList.add('hidden'));
-            }
-            
-            if (e.key === 'Enter' && e.target.tagName === 'INPUT' && e.target.id !== 'tags') {
-                e.preventDefault();
-                document.getElementById('createForm').dispatchEvent(new Event('submit'));
-            }
-        });
-    </script>
-</body>
-</html>
+    @push('scripts')
+        @vite([
+                'resources/js/pass_verif.js',
+                'resources/js/validation.js',
+        ])
+    @endpush

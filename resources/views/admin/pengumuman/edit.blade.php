@@ -1,22 +1,8 @@
-    <!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Data Guru - E-Learning</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <script>
-        tailwind.config = { theme: { extend: { colors: { primary: { 50: '#f0f4ff', 100: '#e0eaff', 200: '#c7d7fe', 300: '#a4bcfd', 400: '#8098f9', 500: '#667eea', 600: '#5a67d8', 700: '#4c51bf', 800: '#434190', 900: '#3c366b' } } } } }
-    </script>
-    
-    <style>
-        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-    </style>
-</head>
-<body class="bg-gray-50 font-sans">
+@extends('layouts.app')
+
+@section('title', 'Edit Pengumuman')
+
+@section('content')
     <div class="min-h-screen py-8 px-4">
         
         <!-- Header -->
@@ -285,11 +271,11 @@
                             <label for="target_waktu" class="block text-sm font-medium text-gray-700 mb-2">Waktu publikasi otomatis (Opsional)</label>
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label for="tanggal_publikasi" class="block text-xs text-gray-500 mb-1">Tanggal Mulai</label>
+                                    <label for="tanggal_publikasi" class="block text-xs text-gray-500 mb-1">Tanggal Publikasi</label>
                                     <input type="date" id="tanggal_publikasi" name="tanggal_publikasi" value="{{ $pengumuman->tanggal_publikasi ?? date('Y-m-d') }}" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
                                 </div>
                                 <div>
-                                    <label for="waktu_publikasi" class="block text-xs text-gray-500 mb-1">Waktu Mulai</label>
+                                    <label for="waktu_publikasi" class="block text-xs text-gray-500 mb-1">Waktu Publikasi</label>
                                     <input type="time" id="waktu_publikasi" name="waktu_publikasi" value="{{ $pengumuman->waktu_publikasi ?? '08:00' }}" step="900" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
                                 </div>
                             </div>
@@ -339,64 +325,11 @@
             </form>
         </div>
     </div>
+    @endsection
     
-    <script>
-        // Preview image upload
-        function previewImage() {
-            const file = document.querySelector('#banner_image').files[0];
-            const reader = new FileReader();
-            
-            if (file) {
-                reader.onload = function(e) {
-                    location.reload(); // Reload page to show new banner
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-        
-        // Format Text in Editor
-        function formatText(command, value) {
-            document.execCommand(command, false, value);
-            document.getElementById('editor_content').focus();
-        }
-        
-        // Update editor content on blur
-        document.getElementById('editor_content').addEventListener('blur', function() {
-            document.getElementById('konten_hidden').value = this.innerHTML;
-        });
-        
-        // Enable Disable Fields
-        function enableDisableFields() {
-            const emailChecked = document.getElementById('email_notification').checked;
-            const smsChecked = document.getElementById('sms_notification').checked;
-            
-            if (!emailChecked && !smsChecked) {
-                alert('Setidaknya salah satu metode notifikasi harus aktif!');
-                document.getElementById('email_notification').checked = true;
-            }
-        }
-        
-        // Auto-fill hidden input on submit
-        document.getElementById('editForm').addEventListener('submit', function(e) {
-            document.getElementById('konten_hidden').value = document.getElementById('editor_content').innerHTML;
-        });
-        
-        // Close Modal
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.add('hidden');
-        }
-        
-        // Open Modal
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.remove('hidden');
-        }
-        
-        // Keyboard Navigation
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                document.querySelectorAll('.modal').forEach(modal => modal.classList.add('hidden'));
-            }
-        });
-    </script>
-</body>
-</html>
+    @push('scripts')
+        @vite([
+                'resources/js/pass_verif.js',
+                'resources/js/validation.js',
+        ])
+    @endpush

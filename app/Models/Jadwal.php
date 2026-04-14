@@ -14,7 +14,8 @@ class Jadwal extends Model
 
     protected $fillable = [
         'id_mapel',
-        'id_guru',
+        'nip',
+        'id_kelas',
         'hari',
         'jam_mulai',
         'jam_selesai',

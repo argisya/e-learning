@@ -13,7 +13,7 @@ class DataSiswaController extends Controller
     public function index()
     {
         return view('admin.siswa.data.index', [
-            'siswa' => DB::table('siswa')->join('users', 'siswa.id_user', '=', 'users.id_user')->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')->get(),
+            'siswa' => DB::table('siswa')->leftJoin('users', 'siswa.id_user', '=', 'users.id_user')->leftJoin('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')->get(),
             'total_siswa' => Siswa::count(),
             'total_siswa_laki' => Siswa::where('jenis_kelamin', 'L')->count(),
             'total_siswa_perempuan' => Siswa::where('jenis_kelamin', 'P')->count()
@@ -146,7 +146,7 @@ class DataSiswaController extends Controller
 
     public function destroy(Request $request)
     {
-        $siswa = Siswa::findOrFail($request->nip);
+        $siswa = Siswa::findOrFail($request->nis);
         if($siswa->foto){
             $oldImagePath = public_path('storage/siswa/') . $siswa->foto;
             if(file_exists($oldImagePath)){

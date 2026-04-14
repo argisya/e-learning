@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Users')
+@section('title', 'Pengumuman')
 
 @section('content')
     <div class="min-h-screen py-8 px-4">
@@ -337,76 +337,8 @@
         </div>
     </div>
     
-    <script>
-        // Close Modal
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.add('hidden');
-        }
-        
-        // Open Modal
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.remove('hidden');
-        }
-        
-        // Confirm Delete
-        function confirmDelete(id) {
-            openModal('modalDeleteConfirmation');
-        }
-        
-        // Apply Filters
-        function applyFilters() {
-            const searchInput = document.getElementById('search_input').value.toLowerCase();
-            const categoryFilter = document.getElementById('category_filter').value;
-            const statusFilter = document.getElementById('status_filter').value;
-            
-            console.log('Filters:', { searchInput, categoryFilter, statusFilter });
-            
-            if (searchInput.length > 0 || categoryFilter !== '' || statusFilter !== '') {
-                showEmptyState(true);
-            } else {
-                showEmptyState(false);
-            }
-        }
-        
-        // Reset Filters
-        function resetFilters() {
-            document.getElementById('search_input').value = '';
-            document.getElementById('category_filter').value = '';
-            document.getElementById('status_filter').value = '';
-            showEmptyState(false);
-        }
-        
-        // Show/Hide Empty State
-        function showEmptyState(show) {
-            const emptyState = document.getElementById('emptyState');
-            const tableBody = document.querySelector('#announcementContent tbody');
-            
-            if (show) {
-                emptyState.classList.remove('hidden');
-                if (tableBody) tableBody.classList.add('hidden');
-            } else {
-                emptyState.classList.add('hidden');
-                if (tableBody) tableBody.classList.remove('hidden');
-            }
-        }
-        
-        // Keyboard Navigation
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                document.querySelectorAll('.modal').forEach(modal => modal.classList.add('hidden'));
-            }
-            
-            if (e.key === 'Enter' && e.target.tagName === 'INPUT') {
-                applyFilters();
-            }
-        });
-        
-        // Print Handler
-        window.addEventListener('beforeprint', function() {
-            document.body.classList.add('print-mode');
-        });
-        
-        window.addEventListener('afterprint', function() {
-            document.body.classList.remove('print-mode');
-        });
-    </script>
+    @push('scripts')
+        @vite([
+            'resources/js/modal.js',
+        ])
+    @endpush

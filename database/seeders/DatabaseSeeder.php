@@ -134,8 +134,9 @@ class DatabaseSeeder extends Seeder
             'nip' => 'NIP001',
             'id_kelas' => $kelas->id_kelas,
             'id_mapel' => $mapel->id_mapel,
+            'jam_mulai' => '08:00',
+            'jam_selesai' => '10:00',
             'hari' => 'Senin',
-            'jam' => '08:00:00'
         ]);
 
         // Create JadwalUjian

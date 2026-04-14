@@ -52,7 +52,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm text-gray-500">Total Siswa</p>
-                        <p class="text-2xl font-bold text-gray-800 mt-1">450</p>
+                        <p class="text-2xl font-bold text-gray-800 mt-1">{{ $total_siswa }}</p>
                         <p class="text-xs text-green-600 mt-2">Rata-rata 37 siswa/kelas</p>
                     </div>
                     <div class="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center">
@@ -65,7 +65,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm text-gray-500">Guru Wali Kelas</p>
-                        <p class="text-2xl font-bold text-gray-800 mt-1">12</p>
+                        <p class="text-2xl font-bold text-gray-800 mt-1">{{ $total_wali_kelas }}</p>
                         <p class="text-xs text-green-600 mt-2">Semua terisi</p>
                     </div>
                     <div class="w-12 h-12 rounded-lg bg-purple-100 flex items-center justify-center">
@@ -194,7 +194,11 @@
                                     </td>
 
                                     <td class="px-6 py-4 text-gray-800 font-medium whitespace-nowrap">
+                                        @if ($class->nama_lengkap == null)
+                                            Belum ada
+                                        @else
                                         {{ $class->nama_lengkap}} 
+                                        @endif
                                     </td>
 
                                     <td class="px-6 py-4 whitespace-nowrap">

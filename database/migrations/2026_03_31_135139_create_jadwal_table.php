@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('jadwal', function (Blueprint $table) {
             $table->id('id_jadwal');
-            $table->string('nip', 20);
-            $table->foreign('nip')->references('nip')->on('guru')->onDelete('cascade');
-            $table->foreignId('id_kelas')->constrained('kelas', 'id_kelas')->onDelete('cascade');
-            $table->foreignId('id_mapel')->constrained('mapel', 'id_mapel')->onDelete('cascade');
-            $table->string('hari', 15);
-            $table->time('jam');
+            $table->string('nip', 20)->nullable();
+            $table->foreign('nip')->references('nip')->on('guru')->onDelete('set null');
+            $table->foreignId('id_kelas')->nullable()->constrained('kelas', 'id_kelas')->onDelete('set null');
+            $table->foreignId('id_mapel')->nullable()->constrained('mapel', 'id_mapel')->onDelete('set null');
+            $table->time('jam_mulai');
+            $table->time('jam_selesai');
+            $table->enum('hari', ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu']);
             $table->timestamps();
         });
     }

@@ -32,7 +32,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm text-gray-500">Total Siswa</p>
-                        <p class="text-2xl font-bold text-gray-800 mt-1">450</p>
+                        <p class="text-2xl font-bold text-gray-800 mt-1">{{ $total_siswa }}</p>
                         <p class="text-xs text-green-600 mt-2"><i class="fas fa-arrow-up"></i> 25 dari bulan lalu</p>
                     </div>
                     <div class="w-12 h-12 rounded-lg bg-primary-100 flex items-center justify-center">
@@ -46,7 +46,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm text-gray-500">Laki-laki</p>
-                        <p class="text-2xl font-bold text-gray-800 mt-1">230</p>
+                        <p class="text-2xl font-bold text-gray-800 mt-1">{{ $total_siswa_laki }}</p>
                         <p class="text-xs text-green-600 mt-2">51%</p>
                     </div>
                     <div class="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center">
@@ -60,7 +60,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm text-gray-500">Perempuan</p>
-                        <p class="text-2xl font-bold text-gray-800 mt-1">220</p>
+                        <p class="text-2xl font-bold text-gray-800 mt-1">{{ $total_siswa_perempuan }}</p>
                         <p class="text-xs text-green-600 mt-2">49%</p>
                     </div>
                     <div class="w-12 h-12 rounded-lg bg-pink-100 flex items-center justify-center">
@@ -195,7 +195,11 @@
                                 <td class="px-6 py-4">
 
                                     <span class="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-blue-50 text-blue-700 text-xs font-medium">
-                                        <i class="fas fa-users"></i> {{ $student->id_kelas }}
+                                        @if ($student->nama_kelas == null)
+                                            Belum Terdaftar
+                                        @else
+                                            <i class="fas fa-users"></i> {{ $student->nama_kelas }}
+                                        @endif
                                     </span>
                                 </td>
                                 
