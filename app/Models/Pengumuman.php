@@ -24,7 +24,7 @@ class Pengumuman extends Model
         'status',
         'prioritas',
         'target',
-        'id_kategori',
+        'kategori',
         'id_pembuat'
     ];
 }

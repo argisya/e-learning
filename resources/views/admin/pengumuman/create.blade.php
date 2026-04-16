@@ -51,13 +51,13 @@
                         <!-- Kategori -->
                         <div>
                             <label for="kategori" class="block text-sm font-medium text-gray-700 mb-1">Kategori <span class="text-red-500">*</span></label>
-                            <select id="kategori" name="id_kategori" required onchange="updateCategoryDescription(this.value)" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
+                            <select id="kategori" name="kategori" required onchange="updateCategoryDescription(this.value)" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
                                 <option value="">-- Pilih Kategori --</option>
-                                    @foreach ($kategori_pengumuman as $kategori)
-                                        <option value="{{ $kategori->id_kategori }}" {{ old('id_kategori') == $kategori->id_kategori ? 'selected' : '' }}>
-                                            {{ $kategori->nama_kategori }}
-                                        </option>
-                                    @endforeach
+                                        <option value="Umumm" {{ old('id_kategori') === 'Umumm' ? 'selected' : '' }}>Umum</option>
+                                        <option value="Akademik" {{ old('id_kategori') === 'Akademik' ? 'selected' : '' }}>Akademik</option>
+                                        <option value="Kegiatan" {{ old('id_kategori') === 'Kegiatan' ? 'selected' : '' }}>Kegiatan</option>
+                                        <option value="Undangan" {{ old('id_kategori') === 'Undangan' ? 'selected' : '' }}>Undangan</option>
+                                        <option value="Penting" {{ old('id_kategori') === 'Penting' ? 'selected' : '' }}>Penting</option>
                                 </select>
                             <p id="category_description" class="text-xs text-gray-500 mt-1">Pilih kategori untuk menentukan jenis pengumuman</p>
                             @error('id_kategori')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror

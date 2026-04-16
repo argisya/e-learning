@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('pengumuman', function (Blueprint $table) {
             $table->id('id_pengumuman');
             $table->string('judul_pengumuman', 255);
+            $table->string('kategori', 255);
             $table->text('isi_pengumuman');
             $table->enum('prioritas', ['Normal', 'Tinggi', 'Sangat Tinggi'])->default('Normal');
             $table->string('target', 255);
@@ -24,8 +25,6 @@ return new class extends Migration
             $table->date('tanggal_publikasi')->nullable();
             $table->time('waktu_publikasi')->nullable();
             $table->enum('status', ['Publish', 'Draft', 'Arsip'])->default('Draft');
-            $table->unsignedBigInteger('id_kategori');
-            $table->foreign('id_kategori')->references('id_kategori')->on('kategori_pengumuman')->onDelete('restrict');
             $table->unsignedBigInteger('id_pembuat');
             $table->foreign('id_pembuat')->references('id_user')->on('users')->onDelete('restrict');
             $table->timestamps();
@@ -38,7 +37,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('pengumuman', function (Blueprint $table) {
-            $table->dropForeign(['id_kategori']);
             $table->dropForeign(['id_pembuat']);
         });
         

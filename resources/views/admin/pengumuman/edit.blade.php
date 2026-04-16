@@ -52,26 +52,26 @@
                         <!-- Kategori -->
                         <div>
                             <label for="kategori" class="block text-sm font-medium text-gray-700 mb-1">Kategori <span class="text-red-500">*</span></label>
-                            <select id="kategori" name="id_kategori" required onchange="updateCategoryDescription(this.value)" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
+                            <select id="kategori" name="kategori" required onchange="updateCategoryDescription(this.value)" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
                                 <option value="">-- Pilih Kategori --</option>
-                                    @foreach ($kategori_pengumuman as $kategori)
-                                        <option value="{{ $kategori->id_kategori }}" {{ $pengumuman->id_kategori == $kategori->id_kategori ? 'selected' : '' }}>
-                                            {{ $kategori->nama_kategori }}
-                                        </option>
-                                    @endforeach
+                                    <option value="Umum" {{ $pengumuman->kategori == 'Umum' ? 'selected' : '' }}>Umum</option>
+                                    <option value="Akademik" {{ $pengumuman->kategori == 'Akademik' ? 'selected' : '' }}>Akademik</option>
+                                    <option value="Kegiatan" {{ $pengumuman->kategori == 'Kegiatan' ? 'selected' : '' }}>Kegiatan</option>
+                                    <option value="Undangan" {{ $pengumuman->kategori == 'Undangan' ? 'selected' : '' }}>Undangan</option>
+                                    <option value="Penting" {{ $pengumuman->kategori == 'Penting' ? 'selected' : '' }}>Penting</option>
                                 </select>
                             <p id="category_description" class="text-xs text-gray-500 mt-1">Pilih kategori untuk menentukan jenis pengumuman</p>
-                            @error('id_kategori')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
+                            @error('kategori')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                         </div>
                         
                         <!-- Prioritas -->
                         <div>
                             <label for="prioritas" class="block text-sm font-medium text-gray-700 mb-1">Prioritas</label>
-                            <select id="prioritas" name="prioritas" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
-                                <option value="Normal" {{ old('prioritas', 'Normal') === 'Normal' ? 'selected' : '' }}>Normal</option>
-                                <option value="Tinggi" {{ old('prioritas') === 'Tinggi' ? 'selected' : '' }}>Tinggi</option>
-                                <option value="Sangat Tinggi" {{ old('prioritas') === 'Sangat Tinggi' ? 'selected' : '' }}>Sangat Tinggi</option>
-                            </select>
+                                <select name="prioritas">
+                                    <option value="Normal"       {{ $pengumuman->prioritas == 'Normal'       ? 'selected' : '' }}>Normal</option>
+                                    <option value="Tinggi"       {{ $pengumuman->prioritas == 'Tinggi'       ? 'selected' : '' }}>Tinggi</option>
+                                    <option value="Sangat Tinggi"{{ $pengumuman->prioritas == 'Sangat Tinggi'? 'selected' : '' }}>Sangat Tinggi</option>
+                                </select>
                         </div>
                         
                         <!-- Status -->
@@ -79,21 +79,21 @@
                             <label class="block text-sm font-medium text-gray-700 mb-2">Status Publikasi <span class="text-red-500">*</span></label>
                             <div class="flex items-center gap-4">
                                 <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="status" value="Publish" checked {{ old('status', 'Publish') === 'Publish' ? 'checked' : '' }}>
+                                    <input type="radio" name="status" value="Publish" {{ $pengumuman->status == 'Publish' ? 'checked' : '' }}>
                                     <div class="flex items-center gap-1">
                                         <span class="status-dot status-active"></span>
                                         <span class="text-gray-700">Publish</span>
                                     </div>
                                 </label>
                                 <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="status" value="Draft" {{ old('status') === 'Draft' ? 'checked' : '' }}>
+                                        <input type="radio" name="status" value="Draft" {{ $pengumuman->status == 'Draft'   ? 'checked' : '' }}>
                                     <div class="flex items-center gap-1">
                                         <span class="status-dot status-inactive"></span>
                                         <span class="text-gray-700">Draft</span>
                                     </div>
                                 </label>
                                 <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="status" value="Arsip" {{ old('status') === 'Arsip' ? 'checked' : '' }}>
+                                    <input type="radio" name="status" value="Arsip" {{ $pengumuman->status == 'Arsip'   ? 'checked' : '' }}>
                                     <div class="flex items-center gap-1">
                                         <span class="status-dot status-inactive"></span>
                                         <span class="text-gray-700">Arsip</span>
@@ -116,22 +116,7 @@
                     
                     <div class="space-y-6">
                         
-                        <!-- Banner Gambar -->
-                        <div>
-                            <label for="banner_image" class="block text-sm font-medium text-gray-700 mb-1">Gambar Banner (Opsional)</label>
-                            <div class="flex items-center gap-4">
-                                <div id="previewContainer" class="w-32 h-20 rounded-lg bg-gray-100 flex items-center justify-center border-2 border-dashed border-gray-300">
-                                    <i class="fas fa-image text-gray-400 text-xl"></i>
-                                </div>
-                                <div class="flex-1">
-                                    <label class="cursor-pointer btn-secondary px-4 py-2 w-full text-center">
-                                        <input type="file" id="banner_image" name="banner_image" accept="image/*" onchange="previewImage()" class="hidden">
-                                        <i class="fas fa-upload mr-2"></i>Pilih File
-                                    </label>
-                                    <p class="text-xs text-gray-500 mt-1">Format: JPG, PNG | Maksimal: 5MB</p>
-                                </div>
-                            </div>
-                        </div>
+                        
                         
                         <!-- Text Editor -->
                         <div>

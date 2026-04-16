@@ -110,9 +110,9 @@
                         <thead class="bg-gradient-to-r from-primary-500 to-secondary-500 text-white">
                             <tr>
                                 <th scope="col" class="px-6 py-4 text-left">No</th>
-                                <th scope="col" class="px-6 py-4 text-center">Judul Pengumuman</th>
-                                <th scope="col" class="px-6 py-4 text-left">Kategori</th>
-                                <th scope="col" class="px-6 py-4 text-center hidden md:table-cell">Penulis</th>
+                                <th scope="col" class="px-6 py-4 text-left">Judul Pengumuman</th>
+                                <th scope="col" class="px-6 py-4 text-center">Kategori</th>
+                                <th scope="col" class="px-6 py-4 text-left hidden md:table-cell">Penulis</th>
                                 <th scope="col" class="px-6 py-4 text-left">Tanggal</th>
                                 <th scope="col" class="px-6 py-4 text-center">Status</th>
                                 <th scope="col" class="px-6 py-4 text-left hidden lg:table-cell">Sudah Dibaca</th>
@@ -128,7 +128,6 @@
                                 <td class="px-6 py-4 text-gray-600 text-center">1</td>
                                 <td class="px-6 py-4">
                                     <div class="flex items-center gap-3">
-                                        <img src="{{ asset('images/banner.jpg') }}" alt="" class="w-12 h-8 rounded object-cover border">
                                         <div>
                                             <p class="font-medium text-gray-800">{{ $pengumuman->judul_pengumuman }}</p>
                                             <p class="text-xs text-gray-500 truncate max-w-[300px]">{{ $pengumuman->isi_pengumuman }}</p>
@@ -136,11 +135,21 @@
                                     </div>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <span class="inline-flex items-center gap-1 px-2 py-1 rounded-lg badge-badge badge-info"><i class="fas fa-book"></i> {{ $pengumuman->nama_kategori }}</span>
+                                    @if($pengumuman->kategori == 'Umum')
+                                        <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs bg-purple-100 text-purple-700"><i class="fas fa-book"></i> {{$pengumuman->kategori}}</span>
+                                    @elseif($pengumuman->kategori == 'Akademik')
+                                        <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-700"><i class="fas fa-graduation-cap"></i> {{$pengumuman->kategori}}</span>
+                                    @elseif($pengumuman->kategori == 'Kegiatan')
+                                        <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs bg-green-100 text-green-700"><i class="fas fa-calendar-alt"></i> {{$pengumuman->kategori}}</span>
+                                    @elseif($pengumuman->kategori == 'Undangan')
+                                        <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs bg-yellow-100 text-yellow-700"><i class="fas fa-envelope"></i> {{$pengumuman->kategori}}</span>
+                                    @elseif($pengumuman->kategori == 'Penting')
+                                        <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs bg-red-100 text-red-700"><i class="fas fa-exclamation-triangle"></i> {{$pengumuman->kategori}}</span>
+                                    @endif
                                 </td>
                                 <td class="px-6 py-4 hidden md:table-cell">
                                     <div class="flex items-center gap-2">
-                                        <img src="{{ asset('images/avatar.jpg') }}" alt="" class="w-6 h-6 rounded-full object-cover border-2">
+                                        
                                         <p class="font-medium text-gray-800 text-xs">{{ $pengumuman->nama_lengkap }}</p>
                                     </div>
                                 </td>

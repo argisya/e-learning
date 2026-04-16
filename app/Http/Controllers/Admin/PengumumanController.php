@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\KategoriPengumuman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Pengumuman;
@@ -12,9 +11,8 @@ class PengumumanController extends Controller
     public function index()
     {
         return view('admin.pengumuman.index', [
-            'pengumuman' => Pengumuman::select('pengumuman.*', 'users.nama_lengkap', 'kategori_pengumuman.nama_kategori')
+            'pengumuman' => Pengumuman::select('pengumuman.*', 'users.nama_lengkap')
                 ->join('users', 'pengumuman.id_pembuat', '=', 'users.id_user')
-                ->join('kategori_pengumuman', 'pengumuman.id_kategori', '=', 'kategori_pengumuman.id_kategori')
                 ->get()
         ]);
     }
@@ -40,7 +38,7 @@ class PengumumanController extends Controller
             'tanggal_publikasi' => 'nullable|date',
             'waktu_publikasi' => 'nullable|date_format:H:i',
             'status' => 'required|in:Publish,Draft,Arsip',
-            'id_kategori' => 'required|exists:kategori_pengumuman,id_kategori'
+            'kategori' => 'required|string|max:255'
         ]);
 
         $validatedData['id_pembuat'] = session('id_user');
@@ -53,12 +51,10 @@ class PengumumanController extends Controller
     public function edit(Request $request)
     {
         return view('admin.pengumuman.edit', [
-            'pengumuman' =>  Pengumuman::select('pengumuman.*', 'users.nama_lengkap', 'kategori_pengumuman.nama_kategori')
+            'pengumuman' =>  Pengumuman::select('pengumuman.*', 'users.nama_lengkap' )
                 ->join('users', 'pengumuman.id_pembuat', '=', 'users.id_user')
-                ->join('kategori_pengumuman', 'pengumuman.id_kategori', '=', 'kategori_pengumuman.id_kategori')
                 ->where('pengumuman.id_pengumuman', $request->id_pengumuman)
                 ->first(),
-            'kategori_pengumuman' => KategoriPengumuman::all()
         ]);
     }
 
@@ -74,12 +70,12 @@ class PengumumanController extends Controller
             'target' => 'required|string|max:255',
             'tanggal_mulai' => 'nullable|date',
             'tanggal_selesai' => 'nullable|date|after_or_equal:tanggal_mulai',
-            'waktu_mulai' => 'nullable|date_format:H:i',
-            'waktu_selesai' => 'nullable|date_format:H:i|after_or_equal:waktu_mulai',
+            'waktu_mulai' => 'nullable|date_format:H:i:s',
+            'waktu_selesai' => 'nullable|date_format:H:i:s|:waktu_mulai',
             'tanggal_publikasi' => 'nullable|date',
-            'waktu_publikasi' => 'nullable|date_format:H:i',
+            'waktu_publikasi' => 'nullable|date_format:H:i:s',
             'status' => 'required|in:Publish,Draft,Arsip',
-            'id_kategori' => 'required|exists:kategori_pengumuman,id_kategori'
+            'kategori' => 'required|string|max:255'
         ]);
 
         $validatedData['id_pembuat'] = session('id_user');
@@ -87,6 +83,7 @@ class PengumumanController extends Controller
         $pengumuman->update($validatedData);
 
         return redirect()->route('admin.pengumuman.index')->with('success', 'Pengumuman berhasil diperbarui!');
+
     }
 
         public function destroy(Request $request)

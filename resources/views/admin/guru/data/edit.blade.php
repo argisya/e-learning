@@ -28,33 +28,10 @@
                 <div class="absolute left-0 top-0 h-full gradient-bg" style="width: 70%"></div>
             </div>
             
-            <form action="{{ route('admin.guru.data.update', $guru->nip) }}" method="POST" enctype="multipart/form-data" novalidate id="editForm" class="p-6 lg:p-8">
+            <form action="{{ route('admin.guru.data.update', $guru->nip) }}" method="POST" enctype="multipart/form-data" id="editForm" class="p-6 lg:p-8">
                 
                 @csrf
                 @method('PUT')
-                
-                <!-- Profile Photo -->
-                <div class="flex flex-col sm:flex-row items-start gap-6 mb-8 pb-8 border-b">
-                    <div class="relative">
-                        <img src="{{ asset($teacher->foto ?? 'images/avatar.jpg') }}" alt="Profile" class="w-24 h-24 rounded-xl object-cover border-4 border-primary-100">
-                        <label class="absolute bottom-0 right-0 w-8 h-8 gradient-bg rounded-full flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity text-white" title="Ubah Foto">
-                            <i class="fas fa-camera text-sm"></i>
-                            <input type="file" name="foto_update" accept="image/*" class="hidden">
-                        </label>
-                    </div>
-                    <div class="flex-1">
-                        <h3 class="text-xl font-bold text-gray-800"></h3>
-                        <p class="text-gray-500 text-sm font-mono"></p>
-                        <div class="flex items-center gap-2 mt-2">
-                            <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs bg-blue-50 text-blue-700 font-medium">
-                                <i class="fas fa-check-circle"></i>
-                            </span>
-                            <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs bg-purple-50 text-purple-700 font-medium">
-                                <i class="fas fa-chalkboard-teacher"></i> 
-                            </span>
-                        </div>
-                    </div>
-                </div>
                 
                 <!-- Section 1: Identitas -->
                 <div class="mb-8 pb-8 border-b">
@@ -192,87 +169,6 @@
     </div>
 
     @endsection
-        
-        <!-- Modal View Detail -->
-        <div id="modalViewDetail" class="fixed inset-0 z-[100] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-            <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true" onclick="closeModal('modalViewDetail')"></div>
-                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-                <div class="inline-block align-bottom bg-white rounded-xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full max-h-[90vh] overflow-y-auto">
-                    <div class="sticky top-0 bg-gradient-to-r from-primary-500 to-secondary-500 px-6 py-4 text-white flex items-center justify-between">
-                        <h3 class="text-lg font-bold">Detail Data Guru</h3>
-                        <button onclick="closeModal('modalViewDetail')" class="hover:text-gray-200"><i class="fas fa-times"></i></button>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center gap-4 mb-6 pb-6 border-b">
-                            <img src="{{ asset($teacher->foto ?? 'images/avatar.jpg') }}" alt="Profile" class="w-20 h-20 rounded-full object-cover border-4 border-primary-100">
-                            <div>
-                                <h4 class="text-xl font-bold text-gray-800"></h4>
-                                <p class="text-sm text-gray-500"></p>
-                                <p class="text-xs text-gray-400">NIP: </p>
-                            </div>
-                        </div>
-                        <dl class="space-y-4 text-sm">
-                            <div class="grid grid-cols-2 gap-4">
-                                <dt class="font-medium text-gray-500">Tanggal Lahir</dt>
-                                <dd class="text-gray-800"></dd>
-                                
-                                <dt class="font-medium text-gray-500">Tempat Lahir</dt>
-                                <dd class="text-gray-800"></dd>
-                                
-                                <dt class="font-medium text-gray-500">Jenis Kelamin</dt>
-                                <dd class="text-gray-800"></dd>
-                                
-                                <dt class="font-medium text-gray-500">Agama</dt>
-                                <dd class="text-gray-800"></dd>
-                                
-                                <dt class="font-medium text-gray-500">Status Pernikahan</dt>
-                                <dd class="text-gray-800"></dd>
-                                
-                                <dt class="font-medium text-gray-500">No HP</dt>
-                                <dd class="text-gray-800"></dd>
-                            </div>
-                            
-                            <div class="pt-4 border-t">
-                                <dt class="font-medium text-gray-500">Status Kepegawaian</dt>
-                                <dd class="text-gray-800"></dd>
-                                
-                                <dt class="font-medium text-gray-500">Masa Kerja</dt>
-                                <dd class="text-gray-800"></dd>
-                            </div>
-                        </dl>
-                    </div>
-                    <div class="sticky bottom-0 bg-gray-50 px-6 py-4 border-t">
-                        <button onclick="closeModal('modalViewDetail')" class="gradient-bg text-white w-full px-4 py-2.5 rounded-lg hover:opacity-90 transition-all font-medium">Tutup</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Modal Delete Confirmation -->
-        <div id="modalDeleteConfirmation" class="fixed inset-0 z-[100] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-            <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true" onclick="closeModal('modalDeleteConfirmation')"></div>
-                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-                <div class="inline-block align-bottom bg-white rounded-xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-md sm:w-full">
-                    <div class="px-6 py-6 text-center">
-                        <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-exclamation-triangle text-red-600 text-3xl"></i>
-                        </div>
-                        <h3 class="text-lg font-bold text-gray-800 mb-2">Konfirmasi Hapus Data</h3>
-                        <p class="text-gray-600 text-sm mb-6">Data guru akan dihapus permanen. Tindakan ini tidak dapat dibatalkan!</p>
-                        <form action="" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <div class="flex justify-center gap-3">
-                                <button type="button" onclick="closeModal('modalDeleteConfirmation')" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors font-medium">Batal</button>
-                                <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors font-medium">Hapus Data</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
     
     @push('scripts')
         @vite(['resources/js/modal.js',
