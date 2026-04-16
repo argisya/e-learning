@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Siswa;
 use App\Models\Kelas;
+use App\Models\OrangTua;
+use App\Models\OrangTuaSiswa;
+use App\Helpers\ImageHelper;
 
 class DataSiswaController extends Controller
 {
@@ -30,9 +33,10 @@ class DataSiswaController extends Controller
 
     public function store(Request $request)
     {
-        $validateData = $request->validate([
+        // Store Siswa
+        $validateDataSiswa = $request->validate([
+            'nis' => 'required',
             'id_user' => 'required',
-            'nis' => 'required|unique:siswa',
             'id_kelas' => 'required',
             'nisn' => 'required|unique:siswa',
             'tempat_lahir' => 'required',
@@ -40,27 +44,11 @@ class DataSiswaController extends Controller
             'jenis_kelamin' => 'required',
             'agama' => 'required',
             'status_keluarga' => 'required',
+            'status_pendaftaran' => 'required',
             'no_hp' => 'required|unique:siswa|min:10|max:15',
             'alamat' => 'required',
-            'foto' => 'image|mimes:jpeg,png,jpg|file|max:2048',
-        ], $messages = [
-            'id_user.required' => 'Nama lengkap harus diisi',
-            'nis.required' => 'NIS harus diisi',
-            'nis.unique' => 'NIS sudah digunakan',
-            'id_kelas.required' => 'Kelas harus dipilih',
-            'nisn.required' => 'NISN harus diisi',
-            'nisn.unique' => 'NISN sudah digunakan',
-            'tempat_lahir.required' => 'Tempat lahir harus diisi',
-            'tanggal_lahir.required' => 'Tanggal lahir harus diisi',
-            'jenis_kelamin.required' => 'Jenis kelamin harus dipilih',
-            'agama.required' => 'Agama harus dipilih',
-            'status_keluarga.required' => 'Status keluarga harus dipilih',
-            'no_hp.required' => 'No HP harus diisi',
-            'no_hp.unique' => 'No HP sudah digunakan',
-            'alamat.required' => 'Alamat harus diisi',
-            'foto.image' => 'File yang diunggah harus berupa gambar',
-            'foto.mimes' => 'Format gambar yang diperbolehkan: jpeg, png, jpg',
-            'foto.max' => 'Ukuran gambar maksimal 2MB',
+            'tahun_masuk' => 'required|digits:4|integer|min:1900|max:' . (date('Y') + 1),
+            'foto' => 'image|mimes:jpeg,png,jpg|file|max:2048'
         ]);
 
         if($request->file('foto')){
@@ -69,12 +57,72 @@ class DataSiswaController extends Controller
             $originalFileName = date('YmdHis') . '_' . uniqid() . '.' . $extension;
             $directory = 'storage/siswa/';
             ImageHelper::uploadAndResize($file, $directory, $originalFileName, 385, 400);
-            $validateData['foto'] = $originalFileName;
+            $validateDataSiswa['foto'] = $originalFileName;
         }else{
-            $validateData['foto'] = 'default.png';
+            $validateDataSiswa['foto'] = 'default.png';
         }
 
-        Siswa::create($validateData, $messages);
+        DB::transaction(function () use ($request, $validateDataSiswa) {
+            $siswa = Siswa::create($validateDataSiswa);
+
+            $request->validate([
+                'nama_ayah' => 'required|max:100',
+                'no_hp_ayah' => 'required|min:10|max:15|unique:orangtua,no_hp_orangtua',
+                'pekerjaan_ayah' => 'required|max:50',
+                'nama_ibu' => 'required|max:100',
+                'no_hp_ibu' => 'required|min:10|max:15|unique:orangtua,no_hp_orangtua',
+                'pekerjaan_ibu' => 'required|max:50',
+                'alamat_orangtua' => 'required',
+                'nama_wali' => 'nullable|max:100',
+                'no_hp_wali' => 'nullable|min:10|max:15|unique:orangtua,no_hp_orangtua',
+                'pekerjaan_wali' => 'nullable|max:50',
+                'alamat_wali' => 'nullable'
+            ]);
+
+            $ayah = OrangTua::create([
+                'nama_orangtua' => $request->nama_ayah,
+                'no_hp_orangtua' => $request->no_hp_ayah,
+                'pekerjaan_orangtua' => $request->pekerjaan_ayah,
+                'alamat_orangtua' => $request->alamat_orangtua,
+            ]);
+
+            $ibu = OrangTua::create([
+                'nama_orangtua' => $request->nama_ibu,
+                'no_hp_orangtua' => $request->no_hp_ibu,
+                'pekerjaan_orangtua' => $request->pekerjaan_ibu,
+                'alamat_orangtua' => $request->alamat_orangtua,
+            ]);
+
+            $wali = null;
+            if ($request->filled('nama_wali') || $request->filled('no_hp_wali') || $request->filled('pekerjaan_wali') || $request->filled('alamat_wali')) {
+                $wali = OrangTua::create([
+                    'nama_orangtua' => $request->nama_wali,
+                    'no_hp_orangtua' => $request->no_hp_wali,
+                    'pekerjaan_orangtua' => $request->pekerjaan_wali,
+                    'alamat_orangtua' => $request->alamat_wali,
+                ]);
+            }
+
+            OrangTuaSiswa::create([
+                'nis' => $siswa->nis,
+                'id_orangtua' => $ayah->id_orangtua,
+                'status_hubungan' => 'Ayah'
+            ]);
+
+            OrangTuaSiswa::create([
+                'nis' => $siswa->nis,
+                'id_orangtua' => $ibu->id_orangtua,
+                'status_hubungan' => 'Ibu'
+            ]);
+
+            if ($wali) {
+                OrangTuaSiswa::create([
+                    'nis' => $siswa->nis,
+                    'id_orangtua' => $wali->id_orangtua,
+                    'status_hubungan' => 'Wali'
+                ]);
+            }
+        });
 
         return redirect()->route('admin.siswa.data.index')->with('success', 'Siswa created successfully.');
     }

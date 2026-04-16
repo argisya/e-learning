@@ -12,10 +12,11 @@ class Siswa extends Model
     protected $table = 'siswa';
     protected $primaryKey = 'nis';
 
-    public $incrementing = true;
+    public $incrementing = false;
     protected $keyType = 'string';
 
     protected $fillable = [
+        'nis',
         'id_user',
         'id_kelas',
         'nisn',
@@ -24,8 +25,10 @@ class Siswa extends Model
         'jenis_kelamin',
         'agama',
         'status_keluarga',
+        'status_pendaftaran',
         'no_hp',
         'alamat',
+        'tahun_masuk',
         'foto',
     ];
 }

@@ -21,8 +21,10 @@ return new class extends Migration
             $table->enum('jenis_kelamin', ['L', 'P']);
             $table->string('agama', 20);
             $table->string('status_keluarga', 50);
+            $table->string('status_pendaftaran', 50);
             $table->string('no_hp', 15);
             $table->text('alamat');
+            $table->year('tahun_masuk');
             $table->string('foto')->nullable();
             $table->timestamps();
         });

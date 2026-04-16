@@ -5,13 +5,13 @@ namespace Database\Seeders;
 use App\Models\Guru;
 use App\Models\Jadwal;
 use App\Models\JadwalUjian;
-use App\Models\KategoriPengumuman;
 use App\Models\KehadiranGuru;
 use App\Models\KehadiranSiswa;
 use App\Models\Kelas;
 use App\Models\Mapel;
 use App\Models\Nilai;
 use App\Models\OrangTuaSiswa;
+use App\Models\OrangTua;
 use App\Models\Pengumuman;
 use App\Models\Rapor;
 use App\Models\Role;
@@ -112,7 +112,7 @@ class DatabaseSeeder extends Seeder
             'id_mapel' => 1,
             'nama_mapel' => 'Matematika'
         ]);
-
+        
         // Create Siswa with string NIS as primary key
         $siswa = Siswa::create([
             'nis' => 'NIS001',
@@ -124,11 +124,28 @@ class DatabaseSeeder extends Seeder
             'jenis_kelamin' => 'P',
             'agama' => 'Kristen',
             'status_keluarga' => 'Anak Kandung',
+            'status_pendaftaran' => 'Aktif',
             'no_hp' => '081234567890',
             'alamat' => 'Jl. Sudirman No. 456, Bandung',
+            'tahun_masuk' => 2020,
             'foto' => 'default.png'
-        ]);
+            ]);
 
+            OrangTua::create([
+                'nama_orangtua' => 'Budi Santoso',
+                'no_hp_orangtua' => '081234567890',
+                'pekerjaan_orangtua' => 'Karyawan Swasta',
+                'alamat_orangtua' => 'Jl. Sudirman No. 456, Bandung'
+            ]);
+            
+            // Create OrangTuaSiswa (using nis instead of id_siswa)
+            OrangTuaSiswa::create([
+                'id_orangtua_siswa' => 1,
+                'nis' => 'NIS001',
+                'id_orangtua' => 1,
+                'status_hubungan' => 'Ayah'
+            ]);
+            
         // Create Jadwal (using nip and jam)
         Jadwal::create([
             'nip' => 'NIP001',
@@ -150,17 +167,12 @@ class DatabaseSeeder extends Seeder
             'status' => 'Terjadwal'
         ]);
 
-        // Create KategoriPengumuman before Pengumuman
-        $kategoriPengumuman = KategoriPengumuman::create([
-            'nama_kategori' => 'Pengumuman Umum',
-            'deskripsi' => 'Kategori untuk pengumuman umum yang ditujukan kepada seluruh siswa dan guru.'
-        ]);
-
         // Create Pengumuman
         $pengumuman = Pengumuman::create([
             'id_pembuat' => $userAdmin->id_user,
             'judul_pengumuman' => 'Libur Sekolah',
             'isi_pengumuman' => 'Sekolah akan libur pada tanggal 25 Desember 2024 hingga 1 Januari 2025.',
+            'kategori' => 'Umum',
             'prioritas' => 'Tinggi',
             'target' => 'Semua Siswa',
             'tanggal_mulai' => '2024-11-01',
@@ -170,7 +182,6 @@ class DatabaseSeeder extends Seeder
             'tanggal_publikasi' => now(),
             'waktu_publikasi' => now(),
             'status' => 'Draft',
-            'id_kategori' => $kategoriPengumuman->id_kategori
         ]);
 
         // Create KehadiranGuru (using nip instead of id_guru)
@@ -211,15 +222,6 @@ class DatabaseSeeder extends Seeder
             'catatan' => 'Bagus'
         ]);
 
-        // Create OrangTuaSiswa (using nis instead of id_siswa)
-        OrangTuaSiswa::create([
-            'nis' => 'NIS001',
-            'nama_wali' => 'Budi Santoso',
-            'status_hubungan' => 'Ayah',
-            'pekerjaan' => 'Karyawan Swasta',
-            'no_hp' => '081234567890',
-            'alamat_wali' => 'Jl. Sudirman No. 456, Bandung'
-        ]);
         
     }
 }

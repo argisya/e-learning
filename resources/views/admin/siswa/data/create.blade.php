@@ -18,9 +18,10 @@
         
         <!-- Content Card -->
         <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-sm border overflow-hidden">
-            <form action="{{ route('admin.siswa.data.store') }}" method="POST" enctype="multipart/form-data" novalidate id="createForm" class="p-6 lg:p-8">
+            <form action="{{ route('admin.siswa.data.store') }}" method="POST" enctype="multipart/form-data" id="createForm" class="p-6 lg:p-8">
                 
                 @csrf
+                @method('POST')
                 
                 <!-- Section 1: Identitas Pribadi -->
                 <div class="mb-8 pb-8 border-b">
@@ -53,10 +54,10 @@
                         
                         <!-- NISN -->
                         <div>
-                            <label for="nisn" class="block text-sm font-medium text-gray-700 mb-1">NISN</label>
+                            <label for="nisn" class="block text-sm font-medium text-gray-700 mb-1">NISN <span class="text-red-500">*</span></label>
                             <div class="relative">
                                 <i class="fas fa-id-card absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                                <input type="text" id="nisn" name="nisn" value="{{ old('nisn') }}" pattern="\d{10}" maxlength="10" placeholder="10 digit NISN" class="w-full pl-10 pr-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all font-mono">
+                                <input type="text" id="nisn" name="nisn" value="{{ old('nisn') }}" required pattern="\d{10}" maxlength="10" placeholder="10 digit NISN" class="w-full pl-10 pr-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all font-mono">
                             </div>
                             <p class="text-xs text-gray-500 mt-1">Min. 10 digit angka</p>
                         </div>
@@ -80,7 +81,7 @@
                             <label class="block text-sm font-medium text-gray-700 mb-2">Jenis Kelamin <span class="text-red-500">*</span></label>
                             <div class="grid grid-cols-2 gap-4">
                                 <label class="relative cursor-pointer group">
-                                    <input type="radio" name="gender" value="Laki-laki" {{ old('gender', 'Laki-laki') === 'Laki-laki' ? 'checked' : '' }} required class="peer sr-only">
+                                    <input type="radio" name="jenis_kelamin" value="L" {{ old('jenis_kelamin', 'L') === 'L' ? 'checked' : '' }} required class="peer sr-only">
                                     <div class="p-4 border-2 border-gray-200 rounded-lg group-hover:border-primary-500 peer-checked:border-primary-500 peer-checked:bg-primary-50 transition-all">
                                         <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center mb-2 peer-checked:bg-primary-500 peer-checked:text-white transition-colors">
                                             <i class="fas fa-mars text-blue-600 text-lg peer-checked:text-white"></i>
@@ -90,7 +91,7 @@
                                 </label>
                                 
                                 <label class="relative cursor-pointer group">
-                                    <input type="radio" name="gender" value="Perempuan" {{ old('gender') === 'Perempuan' ? 'checked' : '' }} required class="peer sr-only">
+                                    <input type="radio" name="jenis_kelamin" value="P" {{ old('jenis_kelamin') === 'P' ? 'checked' : '' }} required class="peer sr-only">
                                     <div class="p-4 border-2 border-gray-200 rounded-lg group-hover:border-primary-500 peer-checked:border-primary-500 peer-checked:bg-pink-50 transition-all">
                                         <div class="w-10 h-10 rounded-lg bg-pink-100 flex items-center justify-center mb-2 peer-checked:bg-pink-500 peer-checked:text-white transition-colors">
                                             <i class="fas fa-venus text-pink-600 text-lg peer-checked:text-white"></i>
@@ -99,7 +100,7 @@
                                     </div>
                                 </label>
                             </div>
-                            @error('gender')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
+                            @error('jenis_kelamin')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                         </div>
                         
                         <!-- Agama -->
@@ -132,26 +133,15 @@
                         
                         <!-- Kelas -->
                         <div>
-                            <label for="kelas_id" class="block text-sm font-medium text-gray-700 mb-1">Pilih Kelas <span class="text-red-500">*</span></label>
-                            <select id="kelas_id" name="kelas_id" required onchange="generateNIS(this.value)" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
+                            <label for="id_kelas" class="block text-sm font-medium text-gray-700 mb-1">Pilih Kelas <span class="text-red-500">*</span></label>
+                            <select id="id_kelas" name="id_kelas" required onchange="generateNIS(this.value)" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
                                 <option value="">-- Pilih Kelas --</option>
-                                @foreach(range(1, 12) as $classId)
-                                    <option value="{{ $classId }}">{{ old('kelas_id') === $classId ? 'Selected' : '' }} Kelas VII A</option>
+                                @foreach($kelas as $kelas)
+                                    <option value="{{ $kelas->id_kelas }}">{{ old('id_kelas') === $kelas->id_kelas ? 'Selected' : '' }} {{ $kelas->nama_kelas }}</option>
                                 @endforeach
                             </select>
-                            @error('kelas_id')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
+                            @error('id_kelas')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                             <p class="text-xs text-gray-500 mt-1">Kelas akan menentukan NIS dan program keahlian</p>
-                        </div>
-                        
-                        <!-- Program Keahlian -->
-                        <div>
-                            <label for="program_keahlian" class="block text-sm font-medium text-gray-700 mb-1">Program Keahlian</label>
-                            <select id="program_keahlian" name="program_keahlian" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
-                                <option value="">-- Auto Detect --</option>
-                                <option value="IPA" {{ old('program_keahlian') === 'IPA' ? 'selected' : '' }}>IPA</option>
-                                <option value="IPS" {{ old('program_keahlian') === 'IPS' ? 'selected' : '' }}>IPS</option>
-                                <option value="Bahasa" {{ old('program_keahlian') === 'Bahasa' ? 'selected' : '' }}>Bahasa</option>
-                            </select>
                         </div>
                         
                         <!-- Tahun Masuk -->
@@ -165,8 +155,8 @@
                         <div>
                             <label for="status_pendaftaran" class="block text-sm font-medium text-gray-700 mb-1">Status Pendaftaran <span class="text-red-500">*</span></label>
                             <select id="status_pendaftaran" name="status_pendaftaran" required class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
-                                <option value="aktif" {{ old('status_pendaftaran', 'aktif') === 'aktif' ? 'selected' : '' }}>Aktif</option>
-                                <option value="non_aktif" {{ old('status_pendaftaran') === 'non_aktif' ? 'selected' : '' }}>Non-Aktif</option>
+                                <option value="Aktif" {{ old('status_pendaftaran', 'Aktif') === 'Aktif' ? 'selected' : '' }}>Aktif</option>
+                                <option value="Tidak Aktif" {{ old('status_pendaftaran') === 'Tidak Aktif' ? 'selected' : '' }}>Tidak Aktif</option>
                             </select>
                         </div>
                     </div>
@@ -182,16 +172,6 @@
                     </h2>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        
-                        <!-- Email -->
-                        <div>
-                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email <span class="text-red-500">*</span></label>
-                            <div class="relative">
-                                <i class="fas fa-envelope absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                                <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="nama@email.com" required autocomplete="email" class="w-full pl-10 pr-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
-                            </div>
-                            @error('email')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
-                        </div>
                         
                         <!-- Nomor Handphone -->
                         <div>
@@ -209,46 +189,6 @@
                             <textarea id="alamat" name="alamat" rows="3" placeholder="Alamat lengkap sesuai KTP/KK" required class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all resize-none">{{ old('alamat') }}</textarea>
                             @error('alamat')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                         </div>
-                        
-                        <!-- RT/RW -->
-                        <div>
-                            <label for="rt_rw" class="block text-sm font-medium text-gray-700 mb-1">RT / RW</label>
-                            <div class="flex items-center gap-2">
-                                <input type="text" id="rt" name="rt" value="{{ old('rt') }}" placeholder="001" class="flex-1 px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all uppercase">
-                                <span class="text-gray-500">/</span>
-                                <input type="text" id="rw" name="rw" value="{{ old('rw') }}" placeholder="002" class="flex-1 px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all uppercase">
-                            </div>
-                        </div>
-                        
-                        <!-- Kelurahan/Desa -->
-                        <div>
-                            <label for="kelurahan" class="block text-sm font-medium text-gray-700 mb-1">Kelurahan/Desa</label>
-                            <input type="text" id="kelurahan" name="kelurahan" value="{{ old('kelurahan') }}" placeholder="Nama kelurahan/desa" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
-                        </div>
-                        
-                        <!-- Kecamatan -->
-                        <div>
-                            <label for="kecamatan" class="block text-sm font-medium text-gray-700 mb-1">Kecamatan</label>
-                            <input type="text" id="kecamatan" name="kecamatan" value="{{ old('kecamatan') }}" placeholder="Nama kecamatan" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
-                        </div>
-                        
-                        <!-- Kota/Kabupaten -->
-                        <div>
-                            <label for="kota_kabupaten" class="block text-sm font-medium text-gray-700 mb-1">Kota/Kabupaten</label>
-                            <input type="text" id="kota_kabupaten" name="kota_kabupaten" value="{{ old('kota_kabupaten', 'Bandung') }}" placeholder="Nama kota/kabupaten" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
-                        </div>
-                        
-                        <!-- Provinsi -->
-                        <div>
-                            <label for="provinsi" class="block text-sm font-medium text-gray-700 mb-1">Provinsi</label>
-                            <input type="text" id="provinsi" name="provinsi" value="{{ old('provinsi', 'Jawa Barat') }}" placeholder="Nama provinsi" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
-                        </div>
-                        
-                        <!-- Kode Pos -->
-                        <div>
-                            <label for="kode_pos" class="block text-sm font-medium text-gray-700 mb-1">Kode Pos</label>
-                            <input type="text" id="kode_pos" name="kode_pos" value="{{ old('kode_pos') }}" placeholder="12345" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all uppercase font-mono">
-                        </div>
                     </div>
                 </div>
                 
@@ -262,18 +202,24 @@
                     </h2>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                        <!-- Kelas -->
+                        <div class="md:col-span-2">
+                            <label for="status_keluarga" class="block text-sm font-medium text-gray-700 mb-1">Status Keluarga <span class="text-red-500">*</span></label>
+                            <select id="status_keluarga" name="status_keluarga" required onchange="generateNIS(this.value)" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all appearance-none bg-white">
+                                <option value="">-- Pilih --</option>
+                                    <option value="Anak Kandung"> Anak Kandung</option>
+                                    <option value="Anak Tiri"> Anak Tiri</option>
+                            </select>
+                            @error('status_keluarga')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
+                            {{-- <p class="text-xs text-gray-500 mt-1">Kelas akan menentukan NIS dan program keahlian</p> --}}
+                        </div>
                         
                         <!-- Nama Ayah -->
                         <div>
                             <label for="nama_ayah" class="block text-sm font-medium text-gray-700 mb-1">Nama Ayah <span class="text-red-500">*</span></label>
                             <input type="text" id="nama_ayah" name="nama_ayah" value="{{ old('nama_ayah') }}" required autocomplete="off" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
                             @error('nama_ayah')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
-                        </div>
-                        
-                        <!-- No HP Ayah -->
-                        <div>
-                            <label for="no_hp_ayah" class="block text-sm font-medium text-gray-700 mb-1">No HP Ayah</label>
-                            <input type="tel" id="no_hp_ayah" name="no_hp_ayah" value="{{ old('no_hp_ayah') }}" placeholder="0812-3456-7890" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
                         </div>
                         
                         <!-- Nama Ibu -->
@@ -283,104 +229,63 @@
                             @error('nama_ibu')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
                         </div>
                         
+                        <!-- No HP Ayah -->
+                        <div>
+                            <label for="no_hp_ayah" class="block text-sm font-medium text-gray-700 mb-1">No HP Ayah <span class="text-red-500">*</span></label>
+                            <input type="tel" id="no_hp_ayah" name="no_hp_ayah" value="{{ old('no_hp_ayah') }}" required placeholder="0812-3456-7890" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
+                        </div>
+                        
                         <!-- No HP Ibu -->
                         <div>
-                            <label for="no_hp_ibu" class="block text-sm font-medium text-gray-700 mb-1">No HP Ibu</label>
-                            <input type="tel" id="no_hp_ibu" name="no_hp_ibu" value="{{ old('no_hp_ibu') }}" placeholder="0812-3456-7890" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
+                            <label for="no_hp_ibu" class="block text-sm font-medium text-gray-700 mb-1">No HP Ibu <span class="text-red-500">*</span></label>
+                            <input type="tel" id="no_hp_ibu" name="no_hp_ibu" value="{{ old('no_hp_ibu') }}" required placeholder="0812-3456-7890" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
                         </div>
                         
                         <!-- Pekerjaan Ayah -->
                         <div>
-                            <label for="pekerjaan_ayah" class="block text-sm font-medium text-gray-700 mb-1">Pekerjaan Ayah</label>
-                            <input type="text" id="pekerjaan_ayah" name="pekerjaan_ayah" value="{{ old('pekerjaan_ayah') }}" placeholder="Contoh: PNS" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
+                            <label for="pekerjaan_ayah" class="block text-sm font-medium text-gray-700 mb-1">Pekerjaan Ayah <span class="text-red-500">*</span></label>
+                            <input type="text" id="pekerjaan_ayah" name="pekerjaan_ayah" value="{{ old('pekerjaan_ayah') }}" required placeholder="Contoh: PNS" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
                         </div>
                         
                         <!-- Pekerjaan Ibu -->
                         <div>
-                            <label for="pekerjaan_ibu" class="block text-sm font-medium text-gray-700 mb-1">Pekerjaan Ibu</label>
-                            <input type="text" id="pekerjaan_ibu" name="pekerjaan_ibu" value="{{ old('pekerjaan_ibu') }}" placeholder="Contoh: Ibu Rumah Tangga" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
+                            <label for="pekerjaan_ibu" class="block text-sm font-medium text-gray-700 mb-1">Pekerjaan Ibu <span class="text-red-500">*</span></label>
+                            <input type="text" id="pekerjaan_ibu" name="pekerjaan_ibu" value="{{ old('pekerjaan_ibu') }}" required placeholder="Contoh: Ibu Rumah Tangga" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
                         </div>
                         
                         <!-- Alamat Orang Tua -->
                         <div class="md:col-span-2">
-                            <label for="alamat_orang_tua" class="block text-sm font-medium text-gray-700 mb-1">Alamat Orang Tua</label>
-                            <textarea id="alamat_orang_tua" name="alamat_orang_tua" rows="2" placeholder="Alamat orang tua/wali jika berbeda dengan alamat siswa..." class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all resize-none">{{ old('alamat_orang_tua') }}</textarea>
+                            <label for="alamat_orangtua" class="block text-sm font-medium text-gray-700 mb-1">Alamat Orang Tua <span class="text-red-500">*</span></label>
+                            <textarea id="alamat_orangtua" name="alamat_orangtua" rows="2" required placeholder="Alamat orang tua/wali jika berbeda dengan alamat siswa..." class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all resize-none">{{ old('alamat_orang_tua') }}</textarea>
+                        </div>
+
+                        <!-- Nama Wali -->
+                        <div>
+                            <label for="nama_wali" class="block text-sm font-medium text-gray-700 mb-1">Nama Wali</label>
+                            <input type="text" id="nama_wali" name="nama_wali" value="{{ old('nama_wali') }}" autocomplete="off" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
+                            @error('nama_wali')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
+                        </div>
+                        
+                        <!-- No HP Wali -->
+                        <div>
+                            <label for="no_hp_wali" class="block text-sm font-medium text-gray-700 mb-1">No HP Wali</label>
+                            <input type="tel" id="no_hp_wali" name="no_hp_wali" value="{{ old('no_hp_wali') }}" placeholder="0812-3456-7890" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
+                        </div>
+
+                        <!-- Pekerjaan Wali -->
+                        <div>
+                            <label for="pekerjaan_wali" class="block text-sm font-medium text-gray-700 mb-1">Pekerjaan Wali</label>
+                            <input type="text" id="pekerjaan_wali" name="pekerjaan_wali" value="{{ old('pekerjaan_wali') }}" placeholder="Contoh: Ibu Rumah Tangga" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
+                        </div>
+
+                        <!-- Alamat Wali -->
+                        <div class="md:col-span-2">
+                            <label for="alamat_wali" class="block text-sm font-medium text-gray-700 mb-1">Alamat Wali</label>
+                            <textarea id="alamat_wali" name="alamat_wali" rows="2" placeholder="Alamat orang tua/wali jika berbeda dengan alamat siswa..." class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all resize-none">{{ old('alamat_wali') }}</textarea>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Section 5: Foto Profil & Password -->
-                <div class="mb-8 pb-8 border-b">
-                    <h2 class="text-lg font-semibold text-gray-800 mb-6 flex items-center gap-2">
-                        <span class="w-8 h-8 rounded-lg bg-primary-100 flex items-center justify-center text-primary-600 text-sm">
-                            <i class="fas fa-camera"></i>
-                        </span>
-                        Foto Profil & Akun
-                    </h2>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- Username -->
-                        
-                        
-                        <!-- Password -->
-                        <div>
-                            <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password <span class="text-red-500">*</span></label>
-                            <div class="relative">
-                                <i class="fas fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                                <input type="password" id="password" name="password" placeholder="Min. 8 karakter" required autocomplete="new-password" onkeyup="checkStrength(this.value)" class="w-full pl-10 pr-12 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
-                                <div id="strengthMeter" class="strength-meter hidden"></div>
-                            </div>
-                            <div class="flex items-center gap-2 mt-2">
-                                <span id="strengthText" class="text-xs font-medium"></span>
-                                <label class="flex items-center gap-1 cursor-pointer text-xs text-gray-600">
-                                    <input type="checkbox" onchange="togglePasswordVisibility('password', this)"> Lihat Password
-                                </label>
-                            </div>
-                            @error('password')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
-                        </div>
-                        
-                        <!-- Konfirmasi Password -->
-                        <div>
-                            <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mb-1">Konfirmasi Password <span class="text-red-500">*</span></label>
-                            <div class="relative">
-                                <i class="fas fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                                <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Ulangi password" required autocomplete="new-password" onkeyup="verifyPasswordMatch(this.value)" class="w-full pl-10 pr-10 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
-                                <i id="matchIcon" class="fas fa-check absolute right-3 top-1/2 -translate-y-1/2 text-green-500 hidden"></i>
-                                <i id="unmatchIcon" class="fas fa-times absolute right-3 top-1/2 -translate-y-1/2 text-red-500 hidden"></i>
-                            </div>
-                            @error('password_confirmation')<p class="mt-1 text-xs text-red-600">{{ $message }}</p>@enderror
-                        </div>
-                        
-                        <!-- Kirim Email & Password -->
-                        <div>
-                            <label class="flex items-center gap-2 cursor-pointer p-3 bg-gray-50 rounded-lg">
-                                <input type="checkbox" id="kirim_invitation" checked onchange="enableDisableFields()">
-                                <span class="text-sm font-medium text-gray-700">Kirim Email Undangan Login</span>
-                            </label>
-                            <p class="text-xs text-gray-500 mt-1">Send email invitation to student's email address</p>
-                        </div>
-                        
-                        <!-- Subject Email -->
-                        <div id="subjectEmailField" class="opacity-100 transition-opacity md:col-span-1">
-                            <label for="email_subject" class="block text-sm font-medium text-gray-700 mb-1">Subjek Email</label>
-                            <input type="text" id="email_subject" name="email_subject" value="Undangan Login - E-Learning Platform" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all">
-                        </div>
-                        
-                        <!-- Body Email -->
-                        <div id="bodyEmailField" class="opacity-100 transition-opacity md:col-span-1">
-                            <label for="email_body" class="block text-sm font-medium text-gray-700 mb-1">Isi Email</label>
-                            <textarea id="email_body" name="email_body" rows="2" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all resize-none">Selamat datang di E-Learning Platform!
-
-Gunakan kredensial berikut untuk login:
-Username: [username_anda]
-
-Silakan segera ubah password Anda setelah login.
-
-Terima kasih,
-Tim E-Learning</textarea>
-                        </div>
-                    </div>
-                </div>
                 
                 <!-- Form Actions -->
                 <div class="flex flex-col sm:flex-row justify-end gap-3 pt-6 border-t">

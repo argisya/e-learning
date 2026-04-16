@@ -6,16 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrangTuaSiswa extends Model
 {
-    protected $table = 'orangtua_siswa';
-    protected $primaryKey = 'id_orangtua';
+    protected $table = 'orangtuasiswa';
+    protected $primaryKey = 'id_orangtua_siswa';
 
     public $incrementing = true;
     protected $keyType = 'int';
 
     protected $fillable = [
-        'id_user',
-        'nama_orangtua',
-        'alamat',
-        'no_telepon',
+        'nis',
+        'id_orangtua',
+        'status_hubungan'
     ];
 }
