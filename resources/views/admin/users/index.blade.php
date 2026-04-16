@@ -142,7 +142,7 @@
                         <th scope="col" class="px-6 py-4 text-left">Role</th>
                         <th scope="col" class="px-6 py-4 text-left">Status</th>
                         <th scope="col" class="px-6 py-4 text-left">Terdaftar</th>
-                        <th scope="col" class="px-6 py-4 text-right hidden lg:table-cell">Aksi</th>
+                        <th scope="col" class="px-6 py-4 text-center hidden lg:table-cell">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 bg-white">
@@ -198,17 +198,17 @@
                             {{ \Carbon\Carbon::parse($user->created_at)->translatedFormat('d M Y') }}
                         </td>
                         
-                        <td class="px-6 py-4 text-right hidden lg:table-cell">
+                        <td class="px-6 py-4 text-right whitespace-nowrap">
                             <div class="flex items-center justify-end gap-2">
-                                <button 
-                                class="icon-btn icon-edit" 
-                                onclick="window.location.href=`{{ route('admin.users.edit', $user->id_user) }}`"
-                                title="Edit">
+                                <a href="" class="inline-flex items-center justify-center w-9 h-9 text-blue-500 hover:text-blue-700 rounded hover:bg-blue-50 transition-colors" title="Lihat Detail">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a href="{{ route('admin.users.edit', $user->id_user) }}" class="inline-flex items-center justify-center w-9 h-9 text-yellow-500 hover:text-yellow-700 rounded hover:bg-yellow-50 transition-colors" title="Edit">
                                     <i class="fas fa-pen"></i>
-                                </button>
-                                <button class="icon-btn icon-delete" onclick="confirmDelete({{ $user->id_user }})" title="Hapus">
-                                    <i class="fas fa-trash"></i>
-                                </button>
+                                </a>
+                                    <button onclick="confirmDelete('{{ route('admin.users.destroy', $user->id_user) }}')" class="inline-flex items-center justify-center w-9 h-9 text-red-500 hover:text-red-700 rounded hover:bg-red-50 transition-colors" title="Hapus">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
                             </div>
                         </td>
                     </tr>
@@ -247,140 +247,14 @@
     </div>
 </div>
 @endsection
-    
-    <!-- ================= MODALS ================= -->
-    
-    <!-- Modal View Detail -->
-    <div id="modalView1" class="modal fixed inset-0 z-[100] hidden overflow-y-auto">
-        <div class="flex items-center justify-center min-h-screen px-4">
-            <div class="fixed inset-0 bg-gray-500 bg-opacity-75" onclick="closeModal('modalView1')"></div>
-            <div class="relative bg-white rounded-xl max-w-md w-full mx-4">
-                <div class="sticky top-0 bg-gradient-to-r from-primary-500 to-secondary-500 px-6 py-4 text-white flex items-center justify-between">
-                    <h3 class="text-lg font-bold">Detail User</h3>
-                    <button onclick="closeModal('modalView1')" class="hover:text-gray-200"><i class="fas fa-times"></i></button>
-                </div>
-                <div class="p-6">
-                    <div class="flex items-center gap-4 mb-6 pb-6 border-b">
-                        <img src="{{ asset('images/avatar.jpg') }}" alt="Profile" class="w-20 h-20 rounded-full object-cover border-4 border-primary-100">
-                        <div>
-                            <h4 class="text-xl font-bold text-gray-800">Admin Utama</h4>
-                            <span class="badge badge-admin">Administrator</span>
-                            <p class="text-xs text-gray-400 mt-1">ID: ADM001</p>
-                        </div>
-                    </div>
-                    <dl class="space-y-4 text-sm">
-                        <div class="grid grid-cols-2 gap-4">
-                            <dt class="font-medium text-gray-500">Username</dt>
-                            <dd class="text-gray-800">admin</dd>
-                            
-                            <dt class="font-medium text-gray-500">Email</dt>
-                            <dd class="text-gray-800">admin@sekolah.sch.id</dd>
-                            
-                            <dt class="font-medium text-gray-500">Status</dt>
-                            <dd class="text-gray-800">
-                                <span class="inline-flex items-center gap-1">
-                                    <span class="status-dot status-active"></span> Aktif
-                                </span>
-                            </dd>
-                            
-                            <dt class="font-medium text-gray-500">Dibuat</dt>
-                            <dd class="text-gray-800">15 Januari 2024</dd>
-                            
-                            <dt class="font-medium text-gray-500">Login Terakhir</dt>
-                            <dd class="text-gray-800">2 menit yang lalu</dd>
-                        </div>
-                    </dl>
-                </div>
-                <div class="sticky bottom-0 bg-gray-50 px-6 py-4 border-t flex justify-end gap-3">
-                    <button onclick="closeModal('modalView1')" class="btn-secondary px-4 py-2 rounded-lg">Tutup</button>
-                    <button class="btn-primary px-4 py-2 rounded-lg">Edit User</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Modal Delete Confirmation -->
-    <div id="modalDeleteConfirmation" class="modal fixed inset-0 z-[100] hidden overflow-y-auto">
-        <div class="flex items-center justify-center min-h-screen px-4">
-            <div class="fixed inset-0 bg-gray-500 bg-opacity-75" onclick="closeModal('modalDeleteConfirmation')"></div>
-            <div class="relative bg-white rounded-xl max-w-md w-full mx-4 p-6">
-                <div class="flex flex-col items-center text-center">
-                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
-                        <i class="fas fa-exclamation-triangle text-red-600 text-3xl"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-800 mb-2">Konfirmasi Hapus User</h3>
-                    <p class="text-gray-600 text-sm mb-6">Apakah Anda yakin ingin menghapus user ini? Data tidak dapat dikembalikan!</p>
-                    <form action="{{ route('admin.users.destroy', $user->id_user) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <div class="flex justify-center gap-3 w-full">
-                            <button type="button" onclick="closeModal('modalDeleteConfirmation')" class="flex-1 px-4 py-2.5 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors font-medium">Batal</button>
-                            <button type="submit" class="flex-1 px-4 py-2.5 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors font-medium">Hapus User</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Modal Filter -->
-    <div id="modalFilter" class="modal fixed inset-0 z-[100] hidden overflow-y-auto">
-        <div class="flex items-center justify-center min-h-screen px-4">
-            <div class="fixed inset-0 bg-gray-500 bg-opacity-75" onclick="closeModal('modalFilter')"></div>
-            <div class="relative bg-white rounded-xl max-w-lg w-full mx-4 p-6">
-                <div class="flex items-center justify-between mb-6">
-                    <h3 class="text-lg font-bold text-gray-800">Filter Data User</h3>
-                    <button onclick="closeModal('modalFilter')" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times"></i></button>
-                </div>
-                <form class="space-y-6">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Role</label>
-                        <select class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none appearance-none bg-white">
-                            <option value="">Semua Role</option>
-                            <option value="admin">Administrator</option>
-                            <option value="guru">Guru</option>
-                            <option value="siswa">Siswa</option>
-                            <option value="staff">Staff</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
-                        <div class="flex gap-4">
-                            <label class="flex items-center gap-2 cursor-pointer">
-                                <input type="radio" name="status_filter" checked>
-                                <span>Aktif</span>
-                            </label>
-                            <label class="flex items-center gap-2 cursor-pointer">
-                                <input type="radio" name="status_filter">
-                                <span>Tidak Aktif</span>
-                            </label>
-                            <label class="flex items-center gap-2 cursor-pointer">
-                                <input type="radio" name="status_filter">
-                                <span>Semua</span>
-                            </label>
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Daftar</label>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-xs text-gray-500 mb-1">Dari</label>
-                                <input type="date" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none">
-                            </div>
-                            <div>
-                                <label class="block text-xs text-gray-500 mb-1">Sampai</label>
-                                <input type="date" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex justify-end gap-3 pt-4 border-t">
-                        <button type="button" onclick="closeModal('modalFilter')" class="btn-secondary px-4 py-2.5 rounded-lg">Reset</button>
-                        <button type="submit" class="btn-primary px-4 py-2.5 rounded-lg">Terapkan Filter</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+
+@include('layouts.partials.modal.delete')
+
+@push('scripts')
+    @vite([
+        'resources/js/modal.js',
+    ])
+@endpush
     
     <style>
         .icon-btn {
@@ -415,8 +289,3 @@
         }
     </style>
     
-    @push('scripts')
-        @vite([
-            'resources/js/modal.js',
-        ])
-    @endpush

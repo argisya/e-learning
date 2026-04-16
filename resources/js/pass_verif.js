@@ -79,22 +79,6 @@
             }
         }
         
-        // Form Validation
-        document.getElementById('createForm').addEventListener('submit', function(e) {
-            const inputs = this.querySelectorAll('[required]');
-            let isValid = true;
-            let hasError = false;
-            
-            inputs.forEach(input => {
-                if (!input.checkValidity()) {
-                    isValid = false;
-                    input.classList.add('border-red-500');
-                    setTimeout(() => input.classList.remove('border-red-500'), 1000);
-                    hasError = true;
-                } else {
-                    input.classList.remove('border-red-500');
-                }
-            });
             
             // Check password match
             const password = document.getElementById('password').value;
@@ -117,7 +101,7 @@
                 e.preventDefault();
                 alert('Harap lengkapi semua field yang wajib diisi!');
             }
-        });
+        
         
         // Disable New Password Fields
         window.disableNewPasswordFields = function(keepSame) {
